@@ -34,6 +34,20 @@ public class VentanaInicio {
 		System.out.println(contratistas);
 		*/
 		
+		/*
+		CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
+		Criptomoneda criptomoneda = new Criptomoneda("SUSHI",16.36,"defi Token");
+		criptomonedaDAO.insertarRegistro(criptomoneda);
+		criptomonedaDAO.eliminarRegistro("SUSHI");
+		boolean flags[]=new boolean[2];
+		flags[0]=true;
+		criptomoneda.setPrecioUnidad(17);
+		criptomonedaDAO.modificarRegistro(criptomoneda, flags);
+		ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda WHERE precioUnidad = 17");
+		System.out.println(criptomonedas);
+		*/
+		
+		
 		
 		
 	}

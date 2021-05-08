@@ -57,7 +57,6 @@ public class ContratistaDAO {
 		}
 		
 		sql+=(" WHERE contratistaId = "+c.getContratistaId());
-		System.out.println(sql);
 		resultado = conexion.ejecutarInstruccion(sql);
 		
 		return resultado;
@@ -69,7 +68,6 @@ public class ContratistaDAO {
 		ResultSet rs;
 		
 		rs = conexion.ejecutarConsulta(filtro);
-		//SELECT * FROM Alumnos WHERE prod_name = 'Microsoft 10-20 Keyboard' AND prod_price < 30;
 		try {
 			if (rs.next()) {
 				do {
