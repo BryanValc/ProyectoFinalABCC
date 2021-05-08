@@ -59,6 +59,21 @@ public class VentanaInicio {
 		ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE fechaOrden = '08-Jun-2021'");
 		System.out.println(ordenes);
 		*/
+		
+		/*
+		PoolDAO poolDAO = new PoolDAO();
+		Pool pool = new Pool("F2P", 70000000L, 32000, 16000);
+		poolDAO.insertarRegistro(pool);
+		poolDAO.eliminarRegistro("F2P");
+		pool.setPotenciaDeMinadoMHs(160000000L);
+		pool.setCantidadDeMineros(32000);
+		boolean flags[]=new boolean[3];
+		flags[0]=true;
+		poolDAO.modificarRegistro(pool, flags);
+		ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool WHERE poolId = 'F2P'");
+		System.out.println(pools);
+		*/
+		
 	}
 
 }

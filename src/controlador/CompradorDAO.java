@@ -97,6 +97,7 @@ public class CompradorDAO {
 		ResultSet rs;
 		
 		rs = conexion.ejecutarConsulta(filtro);
+		//SELECT * FROM Alumnos WHERE prod_name = 'Microsoft 10-20 Keyboard' AND prod_price < 30;
 		try {
 			if (rs.next()) {
 				do {

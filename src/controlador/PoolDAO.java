@@ -6,69 +6,69 @@ import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import conexionBD.ConexionBD;
-import modelo.Orden;
+import modelo.Pool;
 
-public class OrdenDAO {
-
-	ConexionBD conexion;
+public class PoolDAO {
 	
-	public OrdenDAO() {
+ConexionBD conexion;
+	
+	public PoolDAO() {
 		conexion = new ConexionBD();
 	}
 	
-	public boolean insertarRegistro(Orden o) {
+	public boolean insertarRegistro(Pool p) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Orden VALUES("
-				+ o.getOrdenId()+","
-				+ "'"+o.getFechaOrden()+"',"
-				+o.getCompradorId()+","
-				+o.getHorasDeOperacion()
+		String sql="INSERT INTO Pool VALUES("
+				+ "'"+p.getPoolId()+"',"
+				+ p.getPotenciaDeMinadoMHs()+","
+				+ p.getCantidadDeTrabajadores()+","
+				+ p.getCantidadDeMineros()+""
 				+ ")";
 		resultado = conexion.ejecutarInstruccion(sql);
 		
 		return resultado;
 	}
 	
-	public boolean eliminarRegistro(long ordenId) {
+	public boolean eliminarRegistro(String poolId) {
 		boolean resultado = false;
 		
-		String sql="DELETE FROM Orden WHERE ordenId = "+ordenId;
+		String sql="DELETE FROM Pool WHERE poolId = '"+poolId+"'";
 		resultado = conexion.ejecutarInstruccion(sql);
 		
 		return resultado;
 	}
 	
-	public boolean modificarRegistro(Orden o, boolean flags[]) {
+	public boolean modificarRegistro(Pool p, boolean flags[]) {
 		boolean resultado = false;
 		boolean primero=true;
 		
-		String sql = "UPDATE Orden SET ";
+		String sql = "UPDATE Pool SET ";
 		
 		if (flags[0]) {
 			if (!primero) {sql+=", ";
 			}else {primero = false;}
-			sql+=("fechaOrden='"+o.getFechaOrden()+"'");
+			sql+=("potenciaDeMinadoMHs="+p.getPotenciaDeMinadoMHs());
 		}
 		if (flags[1]) {
 			if (!primero) {sql+=", ";
 			}else {primero = false;}
-			sql+=("compradorId="+o.getCompradorId());
+			sql+=("cantidadDeTrabajadores="+p.getCantidadDeTrabajadores());
 		}
 		if (flags[2]) {
 			if (!primero) {sql+=", ";
 			}else {primero = false;}
-			sql+=("horasDeOperacion="+o.getHorasDeOperacion());
+			sql+=("cantidadDeMineros="+p.getCantidadDeMineros());
 		}
 		
-		sql+=(" WHERE ordenId = "+o.getOrdenId());
+		sql+=(" WHERE poolId = '"+p.getPoolId()+"'");
 		resultado = conexion.ejecutarInstruccion(sql);
 		
 		return resultado;
 	}
-	
-	public ArrayList<Orden> buscarOrdenes(String filtro){
-		ArrayList<Orden> listaOrdenes = new ArrayList<Orden>();
+
+	public ArrayList<Pool> buscarPools(String filtro){
+		ArrayList<Pool> listaPools = new ArrayList<Pool>();
 		
 		ResultSet rs;
 		
@@ -76,9 +76,9 @@ public class OrdenDAO {
 		try {
 			if (rs.next()) {
 				do {
-					listaOrdenes.add(new Orden(
-							rs.getLong(1),
-							rs.getString(2),
+					listaPools.add(new Pool(
+							rs.getString(1),
+							rs.getLong(2),
 							rs.getInt(3),
 							rs.getInt(4)));
 				} while (rs.next());			}
@@ -86,7 +86,7 @@ public class OrdenDAO {
 			e.printStackTrace();
 		}
 		
-		return listaOrdenes;
+		return listaPools;
 	}
-	
+
 }
