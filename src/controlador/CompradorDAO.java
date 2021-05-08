@@ -14,7 +14,6 @@ public class CompradorDAO {
 	
 	public CompradorDAO() {
 		conexion = new ConexionBD();
-		//this.conexion = conexion;
 	}
 	
 	public boolean insertarRegistro(Comprador c) {
@@ -58,7 +57,7 @@ public class CompradorDAO {
 		if (flags[1]) {
 			if (!primero) {sql+=", ";
 			}else {primero = false;}
-			sql+=("Wallet='"+c.getWallet()+"'");
+			sql+=("wallet='"+c.getWallet()+"'");
 		}
 		if (flags[2]) {
 			if (!primero) {sql+=", ";
