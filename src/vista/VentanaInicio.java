@@ -47,9 +47,18 @@ public class VentanaInicio {
 		System.out.println(criptomonedas);
 		*/
 		
-		
-		
-		
+		/*
+		OrdenDAO ordenDAO = new OrdenDAO();
+		Orden orden = new Orden(9000000000000L,"08-May-2021",1212,5);
+		ordenDAO.insertarRegistro(orden);
+		ordenDAO.eliminarRegistro(9000000000000L);
+		orden.setFechaOrden("08-Jun-2021");
+		boolean flags[]=new boolean[3];
+		flags[0]=true;
+		ordenDAO.modificarRegistro(orden, flags);
+		ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE fechaOrden = '08-Jun-2021'");
+		System.out.println(ordenes);
+		*/
 	}
 
 }
