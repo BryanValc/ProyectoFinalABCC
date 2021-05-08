@@ -74,6 +74,18 @@ public class VentanaInicio {
 		System.out.println(pools);
 		*/
 		
+		/*
+		OrdenDePotencia odp = new OrdenDePotencia(12345678910111213L, 9000000000000L, "SUSHI", 2121, "F2P", 5, 80);
+		OrdenDePotenciaDAO odpDAO = new OrdenDePotenciaDAO();
+		odpDAO.insertarRegistro(odp);	
+		odpDAO.eliminarRegistro(12345678910111213L);
+		odp.setPrecioFiat(160);
+		boolean flags[]=new boolean[6];
+		flags[5]=true;
+		odpDAO.modificarRegistro(odp, flags);
+		ArrayList<OrdenDePotencia> ordenesDePotencia = odpDAO.buscarOrdenesDePotencia("SELECT * FROM OrdenDePotencia WHERE compraId = 12345678910111213");
+		System.out.println(ordenesDePotencia);
+		*/
 	}
 
 }
