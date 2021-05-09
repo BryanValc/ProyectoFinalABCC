@@ -17,6 +17,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.security.AllPermission;
 import java.sql.SQLException;
 
@@ -98,7 +100,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JTable tablas[]=new JTable[6];
 	JScrollPane sp[] = new JScrollPane[6];
 	
-	public void actualizarTabla(JTable tabla,String sql,JScrollPane sp,JPanel panel,int x, int y, int width, int height) {
+	public void actualizarTablaComprador(String sql) {
 		ResultSetTableModel modeloDatos =null;
 		try {
 			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
@@ -107,31 +109,173 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
-
-		panel.remove(sp);
-		tabla = new JTable(modeloDatos);
-		tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+		panelComprador.remove(sp[0]);
+		tablas[0] = new JTable(modeloDatos);
+		tablas[0].addMouseListener(new java.awt.event.MouseAdapter() {
 		    @Override
 		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTabla(panel);
+		    	obtenerRegistroTablaComprador();
 		    }
 		});
-		sp = new JScrollPane(tabla);
-		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp.setBounds(x, y, width, height);
-		panel.add(sp);
-		panel.setVisible(true);
+		sp[0] = new JScrollPane(tablas[0]);
+		sp[0].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[0].setBounds(25, 300, 735, 200);
+		panelComprador.add(sp[0]);
+		panelComprador.setVisible(true);
 	}
-	public void obtenerRegistroTabla(JPanel panel) {
-		System.out.println("se obtuvo el registro");
-		/*numControl.setText((String) tabla.getValueAt(tabla.getSelectedRow(),0));
-		nombre.setText((String) tabla.getValueAt(tabla.getSelectedRow(),1));
-		primerAp.setText((String) tabla.getValueAt(tabla.getSelectedRow(),2));
-		segundoAp.setText((String) tabla.getValueAt(tabla.getSelectedRow(),3));
-		comboEdad.setSelectedIndex((int)(tabla.getValueAt(tabla.getSelectedRow(),4))-1);
-		comboSemestre.setSelectedIndex((int)(tabla.getValueAt(tabla.getSelectedRow(),5))-1);
-		comboCarrera.setSelectedItem(tabla.getValueAt(tabla.getSelectedRow(),6));*/
+	public void obtenerRegistroTablaComprador() {
+		for (int i = 0; i < jtfsComprador.length; i++) {
+			jtfsComprador[i].setText(""+tablas[0].getValueAt(tablas[0].getSelectedRow(),i));
+		}
+		
+	}
+	public void actualizarTablaContratista(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelContratista.remove(sp[1]);
+		tablas[1] = new JTable(modeloDatos);
+		tablas[1].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaContratista();
+		    }
+		});
+		sp[1] = new JScrollPane(tablas[1]);
+		sp[1].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[1].setBounds(25, 200, 800, 200);
+		panelContratista.add(sp[1]);
+		panelContratista.setVisible(true);
+	}
+	public void obtenerRegistroTablaContratista() {
+		for (int i = 0; i < jtfsContratista.length; i++) {
+			jtfsContratista[i].setText(""+tablas[1].getValueAt(tablas[1].getSelectedRow(),i));
+		}
+		
+	}
+	public void actualizarTablaCriptomoneda(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelCriptomoneda.remove(sp[2]);
+		tablas[2] = new JTable(modeloDatos);
+		tablas[2].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaCriptomoneda();
+		    }
+		});
+		sp[2] = new JScrollPane(tablas[2]);
+		sp[2].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[2].setBounds(25, 200, 750, 200);
+		panelCriptomoneda.add(sp[2]);
+		panelCriptomoneda.setVisible(true);
+	}
+	public void obtenerRegistroTablaCriptomoneda() {
+		for (int i = 0; i < jtfsCriptomoneda.length; i++) {
+			jtfsCriptomoneda[i].setText(""+tablas[2].getValueAt(tablas[2].getSelectedRow(),i));
+		}
+		
+	}
+	public void actualizarTablaPool(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelPool.remove(sp[3]);
+		tablas[3] = new JTable(modeloDatos);
+		tablas[3].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaPool();
+		    }
+		});
+		sp[3] = new JScrollPane(tablas[3]);
+		sp[3].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[3].setBounds(25, 200, 700, 200);
+		panelPool.add(sp[3]);
+		panelPool.setVisible(true);
+	}
+	public void obtenerRegistroTablaPool() {
+		for (int i = 0; i < jtfsPool.length; i++) {
+			jtfsPool[i].setText(""+tablas[3].getValueAt(tablas[3].getSelectedRow(),i));
+		}
+		
+	}
+	public void actualizarTablaOrden(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelOrden.remove(sp[4]);
+		tablas[4] = new JTable(modeloDatos);
+		tablas[4].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaOrden();
+		    }
+		});
+		sp[4] = new JScrollPane(tablas[4]);
+		sp[4].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[4].setBounds(25, 200, 700, 200);
+		panelOrden.add(sp[4]);
+		panelOrden.setVisible(true);
+	}
+	public void obtenerRegistroTablaOrden() {
+		jtfsOrden[0].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),0));
+		jtfsOrden[1].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),1));
+		comboCompradorIdOrden.setSelectedItem(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),2));
+		jtfsOrden[2].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),3));
+	}
+	public void actualizarTablaOrdenDePotencia(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelOrdenDePotencia.remove(sp[5]);
+		tablas[5] = new JTable(modeloDatos);
+		tablas[5].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaOrdenDePotencia();
+		    }
+		});
+		sp[5] = new JScrollPane(tablas[5]);
+		sp[5].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[5].setBounds(25, 275, 700, 200);
+		panelOrdenDePotencia.add(sp[5]);
+		panelOrdenDePotencia.setVisible(true);
+	}
+	public void obtenerRegistroTablaOrdenDePotencia() {
+		jtfsOrdenDePotencia[0].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),0));
+		comboOrdenIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),1));
+		comboCriptomonedaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),2));
+		comboContratistaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),3));
+		comboPoolIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),4));
+		jtfsOrdenDePotencia[1].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),5));
+		jtfsOrdenDePotencia[2].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),6));
 	}
 	
 	public Interfaz() {
@@ -840,7 +984,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
 			}
-			actualizarTabla(tablas[0], "SELECT * FROM Comprador", sp[0], panelComprador, 25, 300, 735, 200);
+			actualizarTablaComprador("SELECT * FROM Comprador");
 			frameComprador.setBounds(x, y, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
@@ -872,7 +1016,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
 			}
-			actualizarTabla(tablas[1], "SELECT * FROM Contratista", sp[1], panelContratista, 25, 200, 800, 200);
+			actualizarTablaContratista("SELECT * FROM Contratista");
 			frameContratista.setBounds(x, y, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
@@ -904,7 +1048,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
 			}
-			actualizarTabla(tablas[2], "SELECT * FROM Criptomoneda", sp[2], panelCriptomoneda, 25, 200, 750, 200);
+			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 			frameCriptomoneda.setBounds(x, y, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
@@ -936,7 +1080,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
 			}
-			actualizarTabla(tablas[3], "SELECT * FROM Pool", sp[3], panelPool, 25, 200, 700, 200);
+			actualizarTablaPool("SELECT * FROM Pool");
 			framePool.setBounds(x, y, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
@@ -971,7 +1115,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
 			}
-			actualizarTabla(tablas[4], "SELECT * FROM Orden", sp[4], panelOrden, 25, 200, 700, 200);
+			actualizarTablaOrden("SELECT * FROM Orden");
 			frameOrden.setBounds(x, y, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
@@ -1012,7 +1156,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
 			}
-			actualizarTabla(tablas[2], "SELECT * FROM OrdenDePotencia", sp[2], panelOrdenDePotencia, 25, 275, 700, 200);
+			actualizarTablaOrdenDePotencia("SELECT * FROM OrdenDePotencia");
 			frameOrdenDePotencia.setBounds(x, y, 1300, 800);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
