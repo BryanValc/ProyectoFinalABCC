@@ -79,6 +79,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JTextField jtfsOrden[] = new JTextField[3];
 	JTextField jtfsOrdenDePotencia[] = new JTextField[3];
 	
+	JComboBox<String> comboCompradorIdOrden = new JComboBox<String>();
+	JComboBox<String> comboOrdenIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboCriptomonedaIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
+	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -348,6 +354,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrden[1]=new JTextField();
 		jtfsOrden[1].setBounds(400, 80, 150, 20);
 		panelOrden.add(jtfsOrden[1]);
+		comboCompradorIdOrden.setBounds(400, 110, 150, 20);
+		panelOrden.add(comboCompradorIdOrden);
 		jtfsOrden[2]=new JTextField();
 		jtfsOrden[2].setBounds(400, 140, 150, 20);
 		panelOrden.add(jtfsOrden[2]);
@@ -391,6 +399,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrdenDePotencia[0]=new JTextField();
 		jtfsOrdenDePotencia[0].setBounds(430, 50, 150, 20);
 		panelOrdenDePotencia.add(jtfsOrdenDePotencia[0]);
+		comboOrdenIdOrdenDePotencia.setBounds(430, 80, 150, 20);
+		panelOrdenDePotencia.add(comboOrdenIdOrdenDePotencia);
+		comboCriptomonedaIdOrdenDePotencia.setBounds(430, 110, 150, 20);
+		panelOrdenDePotencia.add(comboCriptomonedaIdOrdenDePotencia);
+		comboContratistaIdOrdenDePotencia.setBounds(430, 140, 150, 20);
+		panelOrdenDePotencia.add(comboContratistaIdOrdenDePotencia);
+		comboPoolIdOrdenDePotencia.setBounds(430, 170, 150, 20);
+		panelOrdenDePotencia.add(comboPoolIdOrdenDePotencia);
 		jtfsOrdenDePotencia[1]=new JTextField();
 		jtfsOrdenDePotencia[1].setBounds(430, 200, 150, 20);
 		panelOrdenDePotencia.add(jtfsOrdenDePotencia[1]);
@@ -488,6 +504,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		menuBar.add(pool);
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
+		
 	}
 	
 	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
@@ -602,6 +619,27 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		x+=plusX;
 		y+=plusY;
+		
+		comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
+		comboOrdenIdOrdenDePotencia.removeAllItems();
+		comboCriptomonedaIdOrdenDePotencia.removeAllItems();
+		comboContratistaIdOrdenDePotencia.removeAllItems();
+		comboPoolIdOrdenDePotencia.removeAllItems();
+		CompradorDAO compradorDAO = new CompradorDAO();
+		OrdenDAO ordenDAO = new OrdenDAO();
+		CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
+		ContratistaDAO contratistaDAO = new ContratistaDAO();
+		PoolDAO poolDAO = new PoolDAO();
+		ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
+		ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+		ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+		ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
+		ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
+		for(Comprador i:compradores) {	comboCompradorIdOrden.addItem(""+i.getCompradorId());}
+		for(Orden i:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+i.getOrdenId());}
+		for(Criptomoneda i:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+i.getCriptomonedaId());}
+		for(Contratista i:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+i.getContratistaId());}
+		for(Pool i:pools) {	comboPoolIdOrdenDePotencia.addItem(""+i.getPoolId());}//debe ir hasta el FINAL
 		
 	}
 	
