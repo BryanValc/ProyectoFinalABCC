@@ -73,6 +73,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JLabel lblsOrdenDePotencia[] = new JLabel[7];
 	
 	JTextField jtfsComprador[] = new JTextField[8];
+	JTextField jtfsContratista[] = new JTextField[3];
+	JTextField jtfsCriptomoneda[] = new JTextField[3];
+	JTextField jtfsPool[] = new JTextField[4];
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -135,7 +138,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[1].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z'))||(code==KeyEvent.VK_BACK_SPACE))&&jtfsComprador[1].getText().length()<150) {
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsComprador[1].setEditable(true);
 				}else{
 					jtfsComprador[1].setEditable(false);
@@ -197,8 +200,43 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		for(int i=0;i<lblsContratista.length;i+=1) {
 			lblsContratista[i]=new JLabel(stringsContratista[i]);
 			lblsContratista[i].setBounds(250, 50+(i*30), 150, 20);
+			jtfsContratista[i]=new JTextField();
+			jtfsContratista[i].setBounds(400, 50+(i*30), 250, 20);
 			panelContratista.add(lblsContratista[i]);
+			panelContratista.add(jtfsContratista[i]);
 		}
+		jtfsContratista[0].addKeyListener(new KeyAdapter() {//validacion
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsContratista[0].getText().length()<7||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsContratista[0].setEditable(true);
+				}else{
+					jtfsContratista[0].setEditable(false);
+				}
+			}
+		});
+		jtfsContratista[1].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsContratista[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsContratista[1].setEditable(true);
+				}else{
+					jtfsContratista[1].setEditable(false);
+				}
+			}
+		});
+		jtfsContratista[2].addKeyListener(new KeyAdapter() {//validacion
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsContratista[2].getText().length()<5||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsContratista[2].setEditable(true);
+				}else{
+					jtfsContratista[2].setEditable(false);
+				}
+			}
+		});
+		
+		
 		for(int i=0;i<lblsCriptomoneda.length;i+=1) {
 			lblsCriptomoneda[i]=new JLabel(stringsCriptomoneda[i]);
 			lblsCriptomoneda[i].setBounds(250, 50+(i*30), 150, 20);
