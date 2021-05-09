@@ -663,62 +663,63 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public String consultaComprador() {
 		String sql = "SELECT * FROM Comprador ";
 		boolean primero=true;
-		if(!jtfsComprador[0].equals("")) {
+		if(!jtfsComprador[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("CompradorId="+jtfsComprador[0].getText());
 		}
-		if(!jtfsComprador[1].equals("")) {
+		if(!jtfsComprador[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
 		}
-		if(!jtfsComprador[2].equals("")) {
+		if(!jtfsComprador[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
 		}
-		if(!jtfsComprador[3].equals("")) {
+		if(!jtfsComprador[3].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Direccion='"+jtfsComprador[3].getText()+"'");
 		}
-		if(!jtfsComprador[4].equals("")) {
+		if(!jtfsComprador[4].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Ciudad='"+jtfsComprador[4].getText()+"'");
 		}
-		if(!jtfsComprador[5].equals("")) {
+		if(!jtfsComprador[5].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Estado='"+jtfsComprador[5].getText()+"'");
 		}
-		if(!jtfsComprador[6].equals("")) {
+		if(!jtfsComprador[6].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Telefono='"+jtfsComprador[6].getText()+"'");
 		}
-		if(!jtfsComprador[7].equals("")) {
+		if(!jtfsComprador[7].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("Email='"+jtfsComprador[7].getText()+"'");
 		}
+		System.out.println(sql);
 		return sql;
 	}
 	public String consultaContratista() {
 		String sql = "SELECT * FROM Contratista ";
 		boolean primero=true;
-		if(!jtfsContratista[0].equals("")) {
+		if(!jtfsContratista[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("ContratistaId="+jtfsContratista[0].getText());
 		}
-		if(!jtfsContratista[1].equals("")) {
+		if(!jtfsContratista[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("NombreContratista='"+jtfsContratista[1].getText()+"'");
 		}
-		if(!jtfsContratista[2].equals("")) {
+		if(!jtfsContratista[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("MesesOperando="+jtfsContratista[2].getText());
@@ -728,17 +729,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public String consultaCriptomoneda() {
 		String sql = "SELECT * FROM Criptomoneda ";
 		boolean primero=true;
-		if(!jtfsCriptomoneda[0].equals("")) {
+		if(!jtfsCriptomoneda[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("CriptomonedaId='"+jtfsCriptomoneda[0].getText()+"'");
 		}
-		if(!jtfsCriptomoneda[1].equals("")) {
+		if(!jtfsCriptomoneda[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("PrecioUnidad="+jtfsCriptomoneda[1].getText());
 		}
-		if(!jtfsCriptomoneda[2].equals("")) {
+		if(!jtfsCriptomoneda[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("DescripcionUnidad='"+jtfsCriptomoneda[2].getText()+"'");
@@ -748,22 +749,22 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public String consultaPool() {
 		String sql = "SELECT * FROM Pool ";
 		boolean primero=true;
-		if(!jtfsPool[0].equals("")) {
+		if(!jtfsPool[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("PoolId='"+jtfsPool[0].getText()+"'");
 		}
-		if(!jtfsPool[1].equals("")) {
+		if(!jtfsPool[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("PotenciaDeMinadoMHs="+jtfsPool[1].getText());
 		}
-		if(!jtfsPool[2].equals("")) {
+		if(!jtfsPool[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("CantidadDeTrabajadores="+jtfsPool[2].getText());
 		}
-		if(!jtfsPool[3].equals("")) {
+		if(!jtfsPool[3].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("CantidadDeMineros="+jtfsPool[3].getText());
@@ -773,12 +774,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public String consultaOrden() {
 		String sql = "SELECT * FROM Orden ";
 		boolean primero=true;
-		if(!jtfsOrden[0].equals("")) {
+		if(!jtfsOrden[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("ordenId="+jtfsOrden[0].getText());
 		}
-		if(!jtfsOrden[1].equals("")) {
+		if(!jtfsOrden[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("fechaOrden='"+jtfsOrden[1].getText()+"'");
@@ -788,7 +789,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			primero=false;
 			sql+=("compradorId="+comboCompradorIdOrden.getSelectedItem());
 		}
-		if(!jtfsOrden[2].equals("")) {
+		if(!jtfsOrden[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("horasDeOperacion="+jtfsOrden[2].getText());
@@ -798,7 +799,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public String consultaOrdenDePotencia() {
 		String sql = "SELECT * FROM Orden ";
 		boolean primero=true;
-		if(!jtfsOrdenDePotencia[0].equals("")) {
+		if(!jtfsOrdenDePotencia[0].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("compraId="+jtfsOrdenDePotencia[0].getText());
@@ -823,12 +824,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			primero=false;
 			sql+=("poolId='"+comboPoolIdOrdenDePotencia.getSelectedItem()+"'");
 		}
-		if(!jtfsOrdenDePotencia[1].equals("")) {
+		if(!jtfsOrdenDePotencia[1].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("cantidadDeCriptomonedas="+jtfsOrdenDePotencia[1].getText());
 		}
-		if(!jtfsOrdenDePotencia[2].equals("")) {
+		if(!jtfsOrdenDePotencia[2].getText().equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
 			sql+=("precioFiat="+jtfsOrdenDePotencia[2].getText());
@@ -1170,6 +1171,40 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			y=0;
 		}
 		
+		if (src==interacciones[0][0]) {
+			int lleno=1;
+			for(JTextField i:jtfsComprador) {
+				if (i.getText().equals("")) {
+					lleno*=0;
+				}
+			};
+			if(!validate(jtfsComprador[7].getText())) {
+				JOptionPane.showMessageDialog(null,"Email no válido");
+			}else if (lleno==1) {
+				CompradorDAO compradorDAO = new CompradorDAO();
+				Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
+						jtfsComprador[1].getText(),
+						jtfsComprador[2].getText(),
+						jtfsComprador[3].getText(),
+						jtfsComprador[4].getText(),
+						jtfsComprador[5].getText(),
+						jtfsComprador[6].getText(),
+						jtfsComprador[7].getText());
+				compradorDAO.insertarRegistro(comprador);
+			}else {
+				JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
+			}
+		}else if(src==interacciones[0][1]) {
+			metodoQueRestableceTODO(jtfsComprador);
+		}else if(src==interacciones[0][2]) {
+			frameComprador.setVisible(false);
+			panelComprador.setVisible(false);
+		}else if(src==interacciones[0][3]) {
+			String sql = consultaComprador();
+			actualizarTablaComprador(sql);
+		}
+		
+		
 		for (int i = 0; i < interacciones.length; i++) {
 			for (int j = 0; j < interacciones[i].length; j++) {
 				if ((src==interacciones[i][j]||src==menuItems[i][j])&&src!=menuItems[i][1]) {
@@ -1214,84 +1249,6 @@ public class VentanaInicio {
 			}
 		});
 		
-		/*
-		CompradorDAO compradorDAO = new CompradorDAO();
-		Comprador comprador = new Comprador(1212, "Bryan", "1x1E1SA123123", "Arq Damaso", "Jerez", "Zacatecas", "494-118-9287", "bryan.valdez117@outlook.es");
-		compradorDAO.insertarRegistro(comprador);
-		compradorDAO.eliminarRegistro(1212);
-		Comprador comprador2 = new Comprador(1212, "Juan", "1x1E1SA123123", "Arq Damaso", "Zacatecas", "Zacatecas", "494-118-9287", "bryan.valdez117@outlook.es");
-		boolean flags[]=new boolean[7];
-		flags[0]=true;
-		compradorDAO.modificarRegistro(comprador2, flags);
-		ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador WHERE nombre = 'Bryan'");
-		System.out.println(compradores);
-		*/
-		
-		/*
-		ContratistaDAO contratistaDAO = new ContratistaDAO();
-		Contratista contratista = new Contratista(2121, "Bryan",1177);
-		contratistaDAO.insertarRegistro(contratista);
-		contratistaDAO.eliminarRegistro(2121);
-		Contratista contratista2 = new Contratista(2121, "Leo",11);
-		boolean flags[]=new boolean[2];
-		flags[0]=true;
-		contratistaDAO.modificarRegistro(contratista2, flags);
-		ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista WHERE nombreContratista = 'Leo'");
-		System.out.println(contratistas);
-		*/
-		
-		/*
-		CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
-		Criptomoneda criptomoneda = new Criptomoneda("SUSHI",16.36,"defi Token");
-		criptomonedaDAO.insertarRegistro(criptomoneda);
-		criptomonedaDAO.eliminarRegistro("SUSHI");
-		boolean flags[]=new boolean[2];
-		flags[0]=true;
-		criptomoneda.setPrecioUnidad(17);
-		criptomonedaDAO.modificarRegistro(criptomoneda, flags);
-		ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda WHERE precioUnidad = 17");
-		System.out.println(criptomonedas);
-		*/
-		
-		/*
-		OrdenDAO ordenDAO = new OrdenDAO();
-		Orden orden = new Orden(9000000000000L,"08-May-2021",1212,5);
-		ordenDAO.insertarRegistro(orden);
-		ordenDAO.eliminarRegistro(9000000000000L);
-		orden.setFechaOrden("08-Jun-2021");
-		boolean flags[]=new boolean[3];
-		flags[0]=true;
-		ordenDAO.modificarRegistro(orden, flags);
-		ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE fechaOrden = '08-Jun-2021'");
-		System.out.println(ordenes);
-		*/
-		
-		/*
-		PoolDAO poolDAO = new PoolDAO();
-		Pool pool = new Pool("F2P", 70000000L, 32000, 16000);
-		poolDAO.insertarRegistro(pool);
-		poolDAO.eliminarRegistro("F2P");
-		pool.setPotenciaDeMinadoMHs(160000000L);
-		pool.setCantidadDeMineros(32000);
-		boolean flags[]=new boolean[3];
-		flags[0]=true;
-		poolDAO.modificarRegistro(pool, flags);
-		ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool WHERE poolId = 'F2P'");
-		System.out.println(pools);
-		*/
-		
-		/*
-		OrdenDePotencia odp = new OrdenDePotencia(12345678910111213L, 9000000000000L, "SUSHI", 2121, "F2P", 5, 80);
-		OrdenDePotenciaDAO odpDAO = new OrdenDePotenciaDAO();
-		odpDAO.insertarRegistro(odp);	
-		odpDAO.eliminarRegistro(12345678910111213L);
-		odp.setPrecioFiat(160);
-		boolean flags[]=new boolean[6];
-		flags[5]=true;
-		odpDAO.modificarRegistro(odp, flags);
-		ArrayList<OrdenDePotencia> ordenesDePotencia = odpDAO.buscarOrdenesDePotencia("SELECT * FROM OrdenDePotencia WHERE compraId = 12345678910111213");
-		System.out.println(ordenesDePotencia);
-		*/
 	}
 
 }
