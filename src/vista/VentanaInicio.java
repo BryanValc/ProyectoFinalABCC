@@ -240,8 +240,42 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		for(int i=0;i<lblsCriptomoneda.length;i+=1) {
 			lblsCriptomoneda[i]=new JLabel(stringsCriptomoneda[i]);
 			lblsCriptomoneda[i].setBounds(250, 50+(i*30), 150, 20);
+			jtfsCriptomoneda[i]=new JTextField();
+			jtfsCriptomoneda[i].setBounds(400, 50+(i*30), 250, 20);
 			panelCriptomoneda.add(lblsCriptomoneda[i]);
+			panelCriptomoneda.add(jtfsCriptomoneda[i]);
 		}
+		jtfsCriptomoneda[0].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsCriptomoneda[0].getText().length()<20||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsCriptomoneda[0].setEditable(true);
+				}else{
+					jtfsCriptomoneda[0].setEditable(false);
+				}
+			}
+		});
+		jtfsCriptomoneda[1].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9')||(ke.getKeyChar() == '.'&&!jtfsCriptomoneda[1].getText().contains(".")))&&jtfsCriptomoneda[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsCriptomoneda[1].setEditable(true);
+				}else{
+					jtfsCriptomoneda[1].setEditable(false);
+				}
+			}
+		});
+		jtfsCriptomoneda[2].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsCriptomoneda[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsCriptomoneda[2].setEditable(true);
+				}else{
+					jtfsCriptomoneda[2].setEditable(false);
+				}
+			}
+		});
+		
 		for(int i=0;i<lblsPool.length;i+=1) {
 			lblsPool[i]=new JLabel(stringsPool[i]);
 			lblsPool[i].setBounds(250, 50+(i*30), 150, 20);
