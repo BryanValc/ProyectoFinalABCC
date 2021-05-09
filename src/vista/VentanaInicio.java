@@ -770,78 +770,162 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		int plusX = 30;
 		int plusY = 30;
 		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {
+			interacciones[0][0].setVisible(true);
+			interacciones[0][0].setEnabled(true);
+			interacciones[0][3].setVisible(true);
+			interacciones[0][3].setEnabled(true);
 			if(src==menuItems[0][0]) {
+				interacciones[0][3].setVisible(false);
+				interacciones[0][3].setEnabled(false);
+				interacciones[0][0].setText("Agregar");
+				interacciones[0][0].setToolTipText("Agrega un nuevo comprador a la tabla");
 				lblOpComprador.setText("Altas");
 			}else if(src==menuItems[0][1]) {
+				interacciones[0][0].setText("Eliminar");
+				interacciones[0][0].setToolTipText("Elimina el comprador de la tabla");
 				lblOpComprador.setText("Bajas");
 			}else if(src==menuItems[0][2]) {
+				interacciones[0][0].setText("Modificar");
+				interacciones[0][0].setToolTipText("Modifica el comprador seleccionado");
 				lblOpComprador.setText("Cambios");
 			}else if(src==menuItems[0][3]) {
+				interacciones[0][0].setVisible(false);
+				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
 			}
 			frameComprador.setBounds(x, y, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {
+			interacciones[1][0].setVisible(true);
+			interacciones[1][0].setEnabled(true);
+			interacciones[1][3].setVisible(true);
+			interacciones[1][3].setEnabled(true);
 			if(src==menuItems[1][0]) {
+				interacciones[1][3].setVisible(false);
+				interacciones[1][3].setEnabled(false);
+				interacciones[1][0].setText("Agregar");
+				interacciones[1][0].setToolTipText("Agrega un nuevo contratista a la tabla");
 				lblOpContratista.setText("Altas");
 			}else if(src==menuItems[1][1]) {
+				interacciones[1][0].setText("Eliminar");
+				interacciones[1][0].setToolTipText("Elimina el contratista de la tabla");
 				lblOpContratista.setText("Bajas");
 			}else if(src==menuItems[1][2]) {
+				interacciones[1][0].setText("Modificar");
+				interacciones[1][0].setToolTipText("Modifica el contratista seleccionado");
 				lblOpContratista.setText("Cambios");
 			}else if(src==menuItems[1][3]) {
+				interacciones[1][0].setVisible(false);
+				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
 			}
 			frameContratista.setBounds(x, y, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {
+			interacciones[2][0].setVisible(true);
+			interacciones[2][0].setEnabled(true);
+			interacciones[2][3].setVisible(true);
+			interacciones[2][3].setEnabled(true);
 			if(src==menuItems[2][0]) {
+				interacciones[2][3].setVisible(false);
+				interacciones[2][3].setEnabled(false);
+				interacciones[2][0].setText("Agregar");
+				interacciones[2][0].setToolTipText("Agrega una nueva criptomoneda a la tabla");
 				lblOpCriptomoneda.setText("Altas");
 			}else if(src==menuItems[2][1]) {
+				interacciones[2][0].setText("Eliminar");
+				interacciones[2][0].setToolTipText("Elimina la criptomoneda de la tabla");
 				lblOpCriptomoneda.setText("Bajas");
 			}else if(src==menuItems[2][2]) {
+				interacciones[2][0].setText("Modificar");
+				interacciones[2][0].setToolTipText("Modifica la criptomoneda seleccionada");
 				lblOpCriptomoneda.setText("Cambios");
 			}else if(src==menuItems[2][3]) {
+				interacciones[2][0].setVisible(false);
+				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
 			}
 			frameCriptomoneda.setBounds(x, y, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {
+			interacciones[3][0].setVisible(true);
+			interacciones[3][0].setEnabled(true);
+			interacciones[3][3].setVisible(true);
+			interacciones[3][3].setEnabled(true);
 			if(src==menuItems[3][0]) {
+				interacciones[3][3].setVisible(false);
+				interacciones[3][3].setEnabled(false);
+				interacciones[3][0].setText("Agregar");
+				interacciones[3][0].setToolTipText("Agrega una nueva pool a la tabla");
 				lblOpPool.setText("Altas");
 			}else if(src==menuItems[3][1]) {
+				interacciones[3][0].setText("Eliminar");
+				interacciones[3][0].setToolTipText("Elimina la pool de la tabla");
 				lblOpPool.setText("Bajas");
 			}else if(src==menuItems[3][2]) {
+				interacciones[3][0].setText("Modificar");
+				interacciones[3][0].setToolTipText("Modifica la pool seleccionada");
 				lblOpPool.setText("Cambios");
 			}else if(src==menuItems[3][3]) {
+				interacciones[3][0].setVisible(false);
+				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
 			}
 			framePool.setBounds(x, y, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
 		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {
+			interacciones[4][0].setVisible(true);
+			interacciones[4][0].setEnabled(true);
+			interacciones[4][3].setVisible(true);
+			interacciones[4][3].setEnabled(true);
 			if(src==menuItems[4][0]) {
+				interacciones[4][3].setVisible(false);
+				interacciones[4][3].setEnabled(false);
+				interacciones[4][0].setText("Agregar");
+				interacciones[4][0].setToolTipText("Agrega una nueva orden a la tabla");
 				lblOpOrden.setText("Altas");
 			}else if(src==menuItems[4][1]) {
+				interacciones[4][0].setText("Eliminar");
+				interacciones[4][0].setToolTipText("Elimina la orden de la tabla");
 				lblOpOrden.setText("Bajas");
 			}else if(src==menuItems[4][2]) {
+				interacciones[4][0].setText("Modificar");
+				interacciones[4][0].setToolTipText("Modifica la orden seleccionada");
 				lblOpOrden.setText("Cambios");
 			}else if(src==menuItems[4][3]) {
+				interacciones[4][0].setVisible(false);
+				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
 			}
 			frameOrden.setBounds(x, y, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {
+			interacciones[5][0].setVisible(true);
+			interacciones[5][0].setEnabled(true);
+			interacciones[5][3].setVisible(true);
+			interacciones[5][3].setEnabled(true);
 			if(src==menuItems[5][0]) {
+				interacciones[5][3].setVisible(false);
+				interacciones[5][3].setEnabled(false);
+				interacciones[5][0].setText("Agregar");
+				interacciones[5][0].setToolTipText("Agrega una nueva orden de potencia a la tabla");
 				lblOpOrdenDePotencia.setText("Altas");
 			}else if(src==menuItems[5][1]) {
+				interacciones[5][0].setText("Eliminar");
+				interacciones[5][0].setToolTipText("Elimina la orden de potencia de la tabla");
 				lblOpOrdenDePotencia.setText("Bajas");
 			}else if(src==menuItems[5][2]) {
+				interacciones[5][0].setText("Modificar");
+				interacciones[5][0].setToolTipText("Modifica la orden de potencia seleccionada");
 				lblOpOrdenDePotencia.setText("Cambios");
 			}else if(src==menuItems[5][3]) {
+				interacciones[5][0].setVisible(false);
+				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
 			}
 			frameOrdenDePotencia.setBounds(x, y, 1300, 800);
