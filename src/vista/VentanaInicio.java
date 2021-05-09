@@ -899,6 +899,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[4][3].setVisible(true);
 			interacciones[4][3].setEnabled(true);
 			for(JTextField i:jtfsOrden) {	i.setEditable(true);};
+			comboCompradorIdOrden.setEnabled(true);
 			if(src==menuItems[4][0]) {
 				interacciones[4][3].setVisible(false);
 				interacciones[4][3].setEnabled(false);
@@ -909,6 +910,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				metodoQueRestableceTODO(jtfsOrden);
 				for(JTextField i:jtfsOrden) {	i.setEditable(false);};
 				jtfsOrden[0].setEditable(true);
+				comboCompradorIdOrden.setSelectedIndex(-1);
+				comboCompradorIdOrden.setEnabled(false);
 				interacciones[4][0].setText("Eliminar");
 				interacciones[4][0].setToolTipText("Elimina la orden de la tabla");
 				lblOpOrden.setText("Bajas");
@@ -930,6 +933,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[5][3].setVisible(true);
 			interacciones[5][3].setEnabled(true);
 			for(JTextField i:jtfsOrdenDePotencia) {	i.setEditable(true);};
+			comboOrdenIdOrdenDePotencia.setEnabled(true);
+			comboCriptomonedaIdOrdenDePotencia.setEnabled(true);
+			comboContratistaIdOrdenDePotencia.setEnabled(true);
+			comboPoolIdOrdenDePotencia.setEnabled(true);
 			if(src==menuItems[5][0]) {
 				interacciones[5][3].setVisible(false);
 				interacciones[5][3].setEnabled(false);
@@ -940,6 +947,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				metodoQueRestableceTODO(jtfsOrdenDePotencia);
 				for(JTextField i:jtfsOrdenDePotencia) {	i.setEditable(false);};
 				jtfsOrdenDePotencia[0].setEditable(true);
+				comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
+				comboOrdenIdOrdenDePotencia.setEnabled(false);
+				comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
+				comboCriptomonedaIdOrdenDePotencia.setEnabled(false);
+				comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
+				comboContratistaIdOrdenDePotencia.setEnabled(false);
+				comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
+				comboPoolIdOrdenDePotencia.setEnabled(false);
 				interacciones[5][0].setText("Eliminar");
 				interacciones[5][0].setToolTipText("Elimina la orden de potencia de la tabla");
 				lblOpOrdenDePotencia.setText("Bajas");
@@ -965,26 +980,34 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			y=0;
 		}
 		
-		comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
-		comboOrdenIdOrdenDePotencia.removeAllItems();
-		comboCriptomonedaIdOrdenDePotencia.removeAllItems();
-		comboContratistaIdOrdenDePotencia.removeAllItems();
-		comboPoolIdOrdenDePotencia.removeAllItems();
-		CompradorDAO compradorDAO = new CompradorDAO();
-		OrdenDAO ordenDAO = new OrdenDAO();
-		CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
-		ContratistaDAO contratistaDAO = new ContratistaDAO();
-		PoolDAO poolDAO = new PoolDAO();
-		ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
-		ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
-		ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
-		ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
-		ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
-		for(Comprador i:compradores) {	comboCompradorIdOrden.addItem(""+i.getCompradorId());}
-		for(Orden i:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+i.getOrdenId());}
-		for(Criptomoneda i:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+i.getCriptomonedaId());}
-		for(Contratista i:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+i.getContratistaId());}
-		for(Pool i:pools) {	comboPoolIdOrdenDePotencia.addItem(""+i.getPoolId());}//debe ir hasta el FINAL
+		for (int i = 0; i < interacciones.length; i++) {
+			for (int j = 0; j < interacciones[i].length; j++) {
+				if ((src==interacciones[i][j]||src==menuItems[i][j])&&src!=menuItems[i][1]) {
+					comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
+					comboOrdenIdOrdenDePotencia.removeAllItems();
+					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
+					comboContratistaIdOrdenDePotencia.removeAllItems();
+					comboPoolIdOrdenDePotencia.removeAllItems();
+					CompradorDAO compradorDAO = new CompradorDAO();
+					OrdenDAO ordenDAO = new OrdenDAO();
+					CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
+					ContratistaDAO contratistaDAO = new ContratistaDAO();
+					PoolDAO poolDAO = new PoolDAO();
+					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
+					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
+					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
+					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
+					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
+					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
+					for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
+					for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}//debe ir hasta el FINAL
+				}
+			}
+		}
+		
+		
 		
 	}
 	
