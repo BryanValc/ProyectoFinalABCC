@@ -21,14 +21,6 @@ import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.*;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import controlador.*;
@@ -62,6 +54,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 	JDesktopPane dp = new JDesktopPane();
 	
+	JLabel lblOpComprador = new JLabel("");
+	JLabel lblOpContratista = new JLabel("");
+	JLabel lblOpCriptomoneda = new JLabel("");
+	JLabel lblOpPool = new JLabel("");
+	JLabel lblOpOrden = new JLabel("");
+	JLabel lblOpOrdenDePotencia = new JLabel("");
+	
 	public Interfaz() {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -79,10 +78,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		panelYFrame(panelPool, framePool, new Color(255, 196, 172), "Pool");
 		panelYFrame(panelOrden, frameOrden, new Color(255, 209, 172), "Orden");
 		panelYFrame(panelOrdenDePotencia, frameOrdenDePotencia, new Color(255, 234, 172), "Orden De Potencia");
+		
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpComprador,panelComprador,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpContratista,panelContratista,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpCriptomoneda,panelCriptomoneda,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpPool,panelPool,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrden,panelOrden,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrdenDePotencia,panelOrdenDePotencia,new Font("Calibri", Font.BOLD, 50));
+		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
 		add(dp);
-		
 	}
 	
 	public void panelYFrame(JPanel panel,JInternalFrame frame,Color color,String titulo) {
@@ -104,19 +110,19 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			for (int j = 0; j < menuItems[i].length; j++) {
 				switch (j) {
 				case 0:
-					menuItems[i][j]=new JMenuItem("registrar");
+					menuItems[i][j]=new JMenuItem("Registrar");
 					menuItems[i][j].setBackground(new Color(180, 255, 180));
 					break;
 				case 1:
-					menuItems[i][j]=new JMenuItem("eliminar");
+					menuItems[i][j]=new JMenuItem("Eliminar");
 					menuItems[i][j].setBackground(new Color(255, 180, 180));
 					break;
 				case 2:
-					menuItems[i][j]=new JMenuItem("modificar");
+					menuItems[i][j]=new JMenuItem("Modificar");
 					menuItems[i][j].setBackground(new Color(255, 220, 180));
 					break;
 				case 3:
-					menuItems[i][j]=new JMenuItem("buscar");
+					menuItems[i][j]=new JMenuItem("Buscar");
 					menuItems[i][j].setBackground(new Color(180, 180, 255));
 					break;
 				default:break;
@@ -141,6 +147,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 	}
 	
+	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
+		label.setBounds(x, y, width, height);
+		label.setFont(font);
+		panel.add(label);
+	}
+	
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
 		
@@ -151,32 +163,56 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		Object src =arg0.getSource();
 		int plusX = 30;
 		int plusY = 30;
-		if (src==menuItems) {
-			System.out.println("xd");
+		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {
+			if(src==menuItems[0][0]) {lblOpComprador.setText("Altas");}
+			else if(src==menuItems[0][1]) {lblOpComprador.setText("Bajas");}
+			else if(src==menuItems[0][2]) {lblOpComprador.setText("Cambios");}
+			else if(src==menuItems[0][3]) {lblOpComprador.setText("Consultas");}
 			frameComprador.setBounds(x, x, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
-		}else if(src==menuItems[1][0]) {
+		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {
+			if(src==menuItems[1][0]) {lblOpContratista.setText("Altas");}
+			else if(src==menuItems[1][1]) {lblOpContratista.setText("Bajas");}
+			else if(src==menuItems[1][2]) {lblOpContratista.setText("Cambios");}
+			else if(src==menuItems[1][3]) {lblOpContratista.setText("Consultas");}
 			frameContratista.setBounds(x, x, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
-		}else if(src==menuItems[2][0]) {
+		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {
+			if(src==menuItems[2][0]) {lblOpCriptomoneda.setText("Altas");}
+			else if(src==menuItems[2][1]) {lblOpCriptomoneda.setText("Bajas");}
+			else if(src==menuItems[2][2]) {lblOpCriptomoneda.setText("Cambios");}
+			else if(src==menuItems[2][3]) {lblOpCriptomoneda.setText("Consultas");}
 			frameCriptomoneda.setBounds(x, x, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
-		}else if(src==menuItems[3][0]) {
+		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {
+			if(src==menuItems[3][0]) {lblOpPool.setText("Altas");}
+			else if(src==menuItems[3][1]) {lblOpPool.setText("Bajas");}
+			else if(src==menuItems[3][2]) {lblOpPool.setText("Cambios");}
+			else if(src==menuItems[3][3]) {lblOpPool.setText("Consultas");}
 			framePool.setBounds(x, x, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
-		}else if(src==menuItems[4][0]) {
+		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {
+			if(src==menuItems[4][0]) {lblOpOrden.setText("Altas");}
+			else if(src==menuItems[4][1]) {lblOpOrden.setText("Bajas");}
+			else if(src==menuItems[4][2]) {lblOpOrden.setText("Cambios");}
+			else if(src==menuItems[4][3]) {lblOpOrden.setText("Consultas");}
 			frameOrden.setBounds(x, x, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
-		}else if(src==menuItems[5][0]) {
+		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {
+			if(src==menuItems[5][0]) {lblOpOrdenDePotencia.setText("Altas");}
+			else if(src==menuItems[5][1]) {lblOpOrdenDePotencia.setText("Bajas");}
+			else if(src==menuItems[5][2]) {lblOpOrdenDePotencia.setText("Cambios");}
+			else if(src==menuItems[5][3]) {lblOpOrdenDePotencia.setText("Consultas");}
 			frameOrdenDePotencia.setBounds(x, x, 1300, 800);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
 		}
+		
 		if (x==300||y==300) {
 			x=0;
 			y=0;
