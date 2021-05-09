@@ -119,13 +119,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		for(int i=0;i<lblsComprador.length;i+=1) {
 			lblsComprador[i]=new JLabel(stringsComprador[i]);
-			lblsComprador[i].setBounds(250, 50+(i*30), 150, 20);
+			lblsComprador[i].setBounds(250, 50+(i*30), 100, 20);
 			jtfsComprador[i]=new JTextField();
-			jtfsComprador[i].setBounds(400, 50+(i*30), 250, 20);
+			jtfsComprador[i].setBounds(350, 50+(i*30), 250, 20);
 			panelComprador.add(lblsComprador[i]);
 			panelComprador.add(jtfsComprador[i]);
 		}
-		jtfsComprador[0].addKeyListener(new KeyAdapter() {//validacion
+		jtfsComprador[0].addKeyListener(new KeyAdapter() {//validacion entero
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsComprador[0].getText().length()<10||(code==KeyEvent.VK_BACK_SPACE)) {
@@ -135,7 +135,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		jtfsComprador[1].addKeyListener(new KeyAdapter() {
+		jtfsComprador[1].addKeyListener(new KeyAdapter() {//validacion letras
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE)) {
@@ -145,7 +145,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		jtfsComprador[2].addKeyListener(new KeyAdapter() {
+		jtfsComprador[2].addKeyListener(new KeyAdapter() {//validacion tamaño
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if (jtfsComprador[2].getText().length()<100||code==KeyEvent.VK_BACK_SPACE) {
@@ -195,7 +195,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		
+		jtfsComprador[7].addKeyListener(new KeyAdapter() {//validacion tamaño
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsComprador[7].getText().length()<50||code==KeyEvent.VK_BACK_SPACE) {
+					jtfsComprador[7].setEditable(true);
+				}else{
+					jtfsComprador[7].setEditable(false);
+				}
+			}
+		});
 		
 		for(int i=0;i<lblsContratista.length;i+=1) {
 			lblsContratista[i]=new JLabel(stringsContratista[i]);
@@ -205,7 +214,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			panelContratista.add(lblsContratista[i]);
 			panelContratista.add(jtfsContratista[i]);
 		}
-		jtfsContratista[0].addKeyListener(new KeyAdapter() {//validacion
+		jtfsContratista[0].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsContratista[0].getText().length()<7||(code==KeyEvent.VK_BACK_SPACE)) {
@@ -225,7 +234,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		jtfsContratista[2].addKeyListener(new KeyAdapter() {//validacion
+		jtfsContratista[2].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsContratista[2].getText().length()<5||(code==KeyEvent.VK_BACK_SPACE)) {
@@ -239,9 +248,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		for(int i=0;i<lblsCriptomoneda.length;i+=1) {
 			lblsCriptomoneda[i]=new JLabel(stringsCriptomoneda[i]);
-			lblsCriptomoneda[i].setBounds(250, 50+(i*30), 150, 20);
+			lblsCriptomoneda[i].setBounds(250, 50+(i*30), 110, 20);
 			jtfsCriptomoneda[i]=new JTextField();
-			jtfsCriptomoneda[i].setBounds(400, 50+(i*30), 250, 20);
+			jtfsCriptomoneda[i].setBounds(360, 50+(i*30), 250, 20);
 			panelCriptomoneda.add(lblsCriptomoneda[i]);
 			panelCriptomoneda.add(jtfsCriptomoneda[i]);
 		}
@@ -255,7 +264,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		jtfsCriptomoneda[1].addKeyListener(new KeyAdapter() {
+		jtfsCriptomoneda[1].addKeyListener(new KeyAdapter() {//validacion double
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9')||(ke.getKeyChar() == '.'&&!jtfsCriptomoneda[1].getText().contains(".")))&&jtfsCriptomoneda[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
@@ -279,8 +288,53 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		for(int i=0;i<lblsPool.length;i+=1) {
 			lblsPool[i]=new JLabel(stringsPool[i]);
 			lblsPool[i].setBounds(250, 50+(i*30), 150, 20);
+			jtfsPool[i]=new JTextField();
+			jtfsPool[i].setBounds(400, 50+(i*30), 150, 20);
 			panelPool.add(lblsPool[i]);
+			panelPool.add(jtfsPool[i]);
 		}
+		jtfsPool[0].addKeyListener(new KeyAdapter() {//validacion tamaño
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsPool[0].getText().length()<10||code==KeyEvent.VK_BACK_SPACE) {
+					jtfsPool[0].setEditable(true);
+				}else{
+					jtfsPool[0].setEditable(false);
+				}
+			}
+		});
+		jtfsPool[1].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsPool[1].getText().length()<19||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsPool[1].setEditable(true);
+				}else{
+					jtfsPool[1].setEditable(false);
+				}
+			}
+		});
+		jtfsPool[2].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsPool[2].getText().length()<10||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsPool[2].setEditable(true);
+				}else{
+					jtfsPool[2].setEditable(false);
+				}
+			}
+		});
+		jtfsPool[3].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsPool[3].getText().length()<10||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsPool[3].setEditable(true);
+				}else{
+					jtfsPool[3].setEditable(false);
+				}
+			}
+		});
+		
+		
 		for(int i=0;i<lblsOrden.length;i+=1) {
 			lblsOrden[i]=new JLabel(stringsOrden[i]);
 			lblsOrden[i].setBounds(250, 50+(i*30), 150, 20);
@@ -350,9 +404,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		menuBar.add(pool);
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
-		
-		
-		
 	}
 	
 	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
