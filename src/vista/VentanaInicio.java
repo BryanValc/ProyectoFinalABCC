@@ -58,12 +58,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 	JDesktopPane dp = new JDesktopPane();
 	
-	JLabel lblOpComprador = new JLabel("");
-	JLabel lblOpContratista = new JLabel("");
-	JLabel lblOpCriptomoneda = new JLabel("");
-	JLabel lblOpPool = new JLabel("");
-	JLabel lblOpOrden = new JLabel("");
-	JLabel lblOpOrdenDePotencia = new JLabel("");
+	JLabel lblOpComprador = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpContratista = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpCriptomoneda = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpPool = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpOrden = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpOrdenDePotencia = new JLabel("", SwingConstants.CENTER);
 	
 	JLabel lblsComprador[] = new JLabel[8];
 	JLabel lblsContratista[] = new JLabel[3];
@@ -84,6 +84,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JComboBox<String> comboCriptomonedaIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
+	
+	JButton interacciones[][] = new JButton[6][4];
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -111,12 +113,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		panelYFrame(panelOrden, frameOrden, new Color(255, 209, 172), "Orden");
 		panelYFrame(panelOrdenDePotencia, frameOrdenDePotencia, new Color(255, 234, 172), "Orden De Potencia");
 		
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpComprador,panelComprador,new Font("Calibri", Font.BOLD, 50));
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpContratista,panelContratista,new Font("Calibri", Font.BOLD, 50));
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpCriptomoneda,panelCriptomoneda,new Font("Calibri", Font.BOLD, 50));
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpPool,panelPool,new Font("Calibri", Font.BOLD, 50));
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrden,panelOrden,new Font("Calibri", Font.BOLD, 50));
-		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrdenDePotencia,panelOrdenDePotencia,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpComprador,panelComprador,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpContratista,panelContratista,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpCriptomoneda,panelCriptomoneda,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpPool,panelPool,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpOrden,panelOrden,new Font("Calibri", Font.BOLD, 50));
+		modificarYAñadirLabel(0, 25, 250, 40,lblOpOrdenDePotencia,panelOrdenDePotencia,new Font("Calibri", Font.BOLD, 50));
 		
 		//===============================================================================================================Formulario======================================
 		String stringsComprador[]= {"ID Comprador","Nombre","Wallet","Dirección","Ciudad","Estado","Teléfono","Email"};
@@ -445,6 +447,29 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
+		
+		for(JButton i:interacciones[0]) {
+			panelComprador.add(i);
+		}
+		for(JButton i:interacciones[1]) {
+			i.setLocation(700, i.getY());
+			panelContratista.add(i);
+		}
+		for(JButton i:interacciones[2]) {
+			panelCriptomoneda.add(i);
+		}
+		for(JButton i:interacciones[3]) {
+			i.setLocation(600, i.getY());
+			panelPool.add(i);
+		}
+		for(JButton i:interacciones[4]) {
+			i.setLocation(600, i.getY());
+			panelOrden.add(i);
+		}
+		for(JButton i:interacciones[5]) {
+			i.setLocation(600, i.getY());
+			panelOrdenDePotencia.add(i);
+		}
 		//==================================================================================================Fin Formulario======================================
 		
 		dp.setLocation(0, 0);
@@ -661,12 +686,48 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		for(JMenuItem i:menuItems[4]) {	orden.add(i);}
 		for(JMenuItem i:menuItems[5]) {	ordenDePotencia.add(i);}
 		
+		for (int i=0;i<interacciones.length;i+=1) {
+			for (int j = 0; j < interacciones[i].length; j++) {
+				switch (j) {
+				case 0:
+					interacciones[i][j]=new JButton("Interaccion principal");
+					interacciones[i][j].setBounds(650, 50, 100, 20);
+					interacciones[i][j].setBackground(new Color(180, 255, 180));
+					interacciones[i][j].setToolTipText("Interaccion principal");
+					break;
+				case 1:
+					interacciones[i][j]=new JButton("Borrar");
+					interacciones[i][j].setBounds(650, 100, 100, 20);
+					interacciones[i][j].setBackground(new Color(255, 180, 180));
+					interacciones[i][j].setToolTipText("Limpia todos los campos");
+					break;
+				case 2:
+					interacciones[i][j]=new JButton("Cancelar");
+					interacciones[i][j].setBounds(650, 150, 100, 20);
+					interacciones[i][j].setBackground(new Color(255, 220, 180));
+					interacciones[i][j].setToolTipText("Cierra la ventana");
+					break;
+				case 3:
+					interacciones[i][j]=new JButton("Buscar");
+					interacciones[i][j].setBounds(650, 200, 100, 20);
+					interacciones[i][j].setBackground(new Color(180, 180, 255));
+					interacciones[i][j].setToolTipText("Busca registros y actualiza la tabla según los campos");
+					break;
+				default:break;
+				}
+				
+				interacciones[i][j].addActionListener(this);
+			}
+		}
+		
 		menuBar.add(comprador);
 		menuBar.add(contratista);
 		menuBar.add(criptomoneda);
 		menuBar.add(pool);
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
+		
+		
 		
 	}
 	
@@ -718,7 +779,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[0][3]) {
 				lblOpComprador.setText("Consultas");
 			}
-			frameComprador.setBounds(x, x, 1300, 800);
+			frameComprador.setBounds(x, y, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {
@@ -731,7 +792,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[1][3]) {
 				lblOpContratista.setText("Consultas");
 			}
-			frameContratista.setBounds(x, x, 1300, 800);
+			frameContratista.setBounds(x, y, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {
@@ -744,7 +805,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[2][3]) {
 				lblOpCriptomoneda.setText("Consultas");
 			}
-			frameCriptomoneda.setBounds(x, x, 1300, 800);
+			frameCriptomoneda.setBounds(x, y, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {
@@ -757,7 +818,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[3][3]) {
 				lblOpPool.setText("Consultas");
 			}
-			framePool.setBounds(x, x, 1300, 800);
+			framePool.setBounds(x, y, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
 		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {
@@ -770,7 +831,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[4][3]) {
 				lblOpOrden.setText("Consultas");
 			}
-			frameOrden.setBounds(x, x, 1300, 800);
+			frameOrden.setBounds(x, y, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {
@@ -783,17 +844,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}else if(src==menuItems[5][3]) {
 				lblOpOrdenDePotencia.setText("Consultas");
 			}
-			frameOrdenDePotencia.setBounds(x, x, 1300, 800);
+			frameOrdenDePotencia.setBounds(x, y, 1300, 800);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
 		}
 		
+		
+		x+=plusX;
+		y+=plusY;
 		if (x==300||y==300) {
 			x=0;
 			y=0;
 		}
-		x+=plusX;
-		y+=plusY;
 		
 		comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
 		comboOrdenIdOrdenDePotencia.removeAllItems();
