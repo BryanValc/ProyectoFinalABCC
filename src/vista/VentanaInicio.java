@@ -1,13 +1,204 @@
 package vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.security.AllPermission;
+import java.sql.SQLException;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.*;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 import controlador.*;
 import modelo.*;
 
+class Interfaz extends JFrame implements ActionListener, ItemListener{
+	int x=0;
+	int y=0;
+	
+	JMenuBar menuBar = new JMenuBar();
+	JMenu comprador = new JMenu("Comprador");
+	JMenu contratista = new JMenu("Contratista");
+	JMenu criptomoneda = new JMenu("Criptomoneda");
+	JMenu pool = new JMenu("Pool");
+	JMenu orden = new JMenu("Orden");
+	JMenu ordenDePotencia = new JMenu("Orden de potencia");
+	JMenuItem menuItems[][]=new JMenuItem[6][4];
+	
+	JInternalFrame frameComprador=new JInternalFrame();
+	JInternalFrame frameContratista=new JInternalFrame();
+	JInternalFrame frameCriptomoneda=new JInternalFrame();
+	JInternalFrame framePool=new JInternalFrame();
+	JInternalFrame frameOrden=new JInternalFrame();
+	JInternalFrame frameOrdenDePotencia=new JInternalFrame();
+	JPanel panelComprador = new JPanel();
+	JPanel panelContratista = new JPanel();
+	JPanel panelCriptomoneda = new JPanel();
+	JPanel panelPool = new JPanel();
+	JPanel panelOrden = new JPanel();
+	JPanel panelOrdenDePotencia = new JPanel();
+	
+	JDesktopPane dp = new JDesktopPane();
+	
+	public Interfaz() {
+		getContentPane().setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(1315,862);
+		setLocationRelativeTo(null);
+		setTitle("NiceHash");
+		setVisible(true);
+		
+		asignacion();
+		setJMenuBar(menuBar);
+		
+		panelYFrame(panelComprador, frameComprador, new Color(255, 172, 212), "Comprador");
+		panelYFrame(panelContratista, frameContratista, new Color(255, 172, 188), "Contratista");
+		panelYFrame(panelCriptomoneda, frameCriptomoneda, new Color(255, 172, 172), "Criptomoneda");
+		panelYFrame(panelPool, framePool, new Color(255, 196, 172), "Pool");
+		panelYFrame(panelOrden, frameOrden, new Color(255, 209, 172), "Orden");
+		panelYFrame(panelOrdenDePotencia, frameOrdenDePotencia, new Color(255, 234, 172), "Orden De Potencia");
+		dp.setLocation(0, 0);
+		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
+		add(dp);
+		
+	}
+	
+	public void panelYFrame(JPanel panel,JInternalFrame frame,Color color,String titulo) {
+		panel.setLayout(null);
+		panel.setBounds(0, 0, 1300, 800);
+		panel.setBackground(color);
+		frame.setBounds(0, 0, 1300, 800);
+		frame.setTitle(titulo);
+		frame.add(panel);
+		frame.setResizable(true);
+		frame.setMaximumSize(new Dimension(1300,800));
+		//frame.setClosable(true);
+		//frame.setAutoscrolls(true);
+		dp.add(frame);
+	}
+	
+	public void asignacion() {
+		for (int i=0;i<menuItems.length;i+=1) {
+			for (int j = 0; j < menuItems[i].length; j++) {
+				switch (j) {
+				case 0:
+					menuItems[i][j]=new JMenuItem("registrar");
+					menuItems[i][j].setBackground(new Color(180, 255, 180));
+					break;
+				case 1:
+					menuItems[i][j]=new JMenuItem("eliminar");
+					menuItems[i][j].setBackground(new Color(255, 180, 180));
+					break;
+				case 2:
+					menuItems[i][j]=new JMenuItem("modificar");
+					menuItems[i][j].setBackground(new Color(255, 220, 180));
+					break;
+				case 3:
+					menuItems[i][j]=new JMenuItem("buscar");
+					menuItems[i][j].setBackground(new Color(180, 180, 255));
+					break;
+				default:break;
+				}
+				menuItems[i][j].addActionListener(this);
+			}
+		}
+		
+		for(JMenuItem i:menuItems[0]) {	comprador.add(i);}
+		for(JMenuItem i:menuItems[1]) {	contratista.add(i);}
+		for(JMenuItem i:menuItems[2]) {	criptomoneda.add(i);}
+		for(JMenuItem i:menuItems[3]) {	pool.add(i);}
+		for(JMenuItem i:menuItems[4]) {	orden.add(i);}
+		for(JMenuItem i:menuItems[5]) {	ordenDePotencia.add(i);}
+		
+		menuBar.add(comprador);
+		menuBar.add(contratista);
+		menuBar.add(criptomoneda);
+		menuBar.add(pool);
+		menuBar.add(orden);
+		menuBar.add(ordenDePotencia);
+		
+	}
+	
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		Object src =arg0.getSource();
+		int plusX = 30;
+		int plusY = 30;
+		if (src==menuItems) {
+			System.out.println("xd");
+			frameComprador.setBounds(x, x, 1300, 800);
+			frameComprador.toFront();
+			frameComprador.setVisible(true);
+		}else if(src==menuItems[1][0]) {
+			frameContratista.setBounds(x, x, 1300, 800);
+			frameContratista.toFront();
+			frameContratista.setVisible(true);
+		}else if(src==menuItems[2][0]) {
+			frameCriptomoneda.setBounds(x, x, 1300, 800);
+			frameCriptomoneda.toFront();
+			frameCriptomoneda.setVisible(true);
+		}else if(src==menuItems[3][0]) {
+			framePool.setBounds(x, x, 1300, 800);
+			framePool.toFront();
+			framePool.setVisible(true);
+		}else if(src==menuItems[4][0]) {
+			frameOrden.setBounds(x, x, 1300, 800);
+			frameOrden.toFront();
+			frameOrden.setVisible(true);
+		}else if(src==menuItems[5][0]) {
+			frameOrdenDePotencia.setBounds(x, x, 1300, 800);
+			frameOrdenDePotencia.toFront();
+			frameOrdenDePotencia.setVisible(true);
+		}
+		if (x==300||y==300) {
+			x=0;
+			y=0;
+		}
+		x+=plusX;
+		y+=plusY;
+		
+	}
+	
+}
+
 public class VentanaInicio {
 
 	public static void main(String[] args) {
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new Interfaz();
+			}
+		});
+		
 		/*
 		CompradorDAO compradorDAO = new CompradorDAO();
 		Comprador comprador = new Comprador(1212, "Bryan", "1x1E1SA123123", "Arq Damaso", "Jerez", "Zacatecas", "494-118-9287", "bryan.valdez117@outlook.es");
