@@ -95,6 +95,45 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		       return matcher.find();
 		     }
 	
+	JTable tablas[]=new JTable[6];
+	JScrollPane sp[] = new JScrollPane[6];
+	
+	public void actualizarTabla(JTable tabla,String sql,JScrollPane sp,JPanel panel,int x, int y, int width, int height) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
+
+		panel.remove(sp);
+		tabla = new JTable(modeloDatos);
+		tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTabla(panel);
+		    }
+		});
+		sp = new JScrollPane(tabla);
+		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp.setBounds(x, y, width, height);
+		panel.add(sp);
+		panel.setVisible(true);
+	}
+	public void obtenerRegistroTabla(JPanel panel) {
+		System.out.println("se obtuvo el registro");
+		/*numControl.setText((String) tabla.getValueAt(tabla.getSelectedRow(),0));
+		nombre.setText((String) tabla.getValueAt(tabla.getSelectedRow(),1));
+		primerAp.setText((String) tabla.getValueAt(tabla.getSelectedRow(),2));
+		segundoAp.setText((String) tabla.getValueAt(tabla.getSelectedRow(),3));
+		comboEdad.setSelectedIndex((int)(tabla.getValueAt(tabla.getSelectedRow(),4))-1);
+		comboSemestre.setSelectedIndex((int)(tabla.getValueAt(tabla.getSelectedRow(),5))-1);
+		comboCarrera.setSelectedItem(tabla.getValueAt(tabla.getSelectedRow(),6));*/
+	}
+	
 	public Interfaz() {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -720,6 +759,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 		}
 		
+		for (int i = 0; i < sp.length; i++) {
+			sp[i]=new JScrollPane();
+		}
+		
 		menuBar.add(comprador);
 		menuBar.add(contratista);
 		menuBar.add(criptomoneda);
@@ -797,6 +840,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
 			}
+			actualizarTabla(tablas[0], "SELECT * FROM Comprador", sp[0], panelComprador, 25, 300, 735, 200);
 			frameComprador.setBounds(x, y, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
@@ -828,6 +872,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
 			}
+			actualizarTabla(tablas[1], "SELECT * FROM Contratista", sp[1], panelContratista, 25, 200, 800, 200);
 			frameContratista.setBounds(x, y, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
@@ -859,6 +904,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
 			}
+			actualizarTabla(tablas[2], "SELECT * FROM Criptomoneda", sp[2], panelCriptomoneda, 25, 200, 750, 200);
 			frameCriptomoneda.setBounds(x, y, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
@@ -890,6 +936,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
 			}
+			actualizarTabla(tablas[3], "SELECT * FROM Pool", sp[3], panelPool, 25, 200, 700, 200);
 			framePool.setBounds(x, y, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
@@ -924,6 +971,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
 			}
+			actualizarTabla(tablas[4], "SELECT * FROM Orden", sp[4], panelOrden, 25, 200, 700, 200);
 			frameOrden.setBounds(x, y, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
@@ -947,13 +995,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				metodoQueRestableceTODO(jtfsOrdenDePotencia);
 				for(JTextField i:jtfsOrdenDePotencia) {	i.setEditable(false);};
 				jtfsOrdenDePotencia[0].setEditable(true);
-				comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
+				metodoQueRestableceTODO(comboOrdenIdOrdenDePotencia,comboCriptomonedaIdOrdenDePotencia,comboContratistaIdOrdenDePotencia,comboPoolIdOrdenDePotencia);
 				comboOrdenIdOrdenDePotencia.setEnabled(false);
-				comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
 				comboCriptomonedaIdOrdenDePotencia.setEnabled(false);
-				comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
 				comboContratistaIdOrdenDePotencia.setEnabled(false);
-				comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
 				comboPoolIdOrdenDePotencia.setEnabled(false);
 				interacciones[5][0].setText("Eliminar");
 				interacciones[5][0].setToolTipText("Elimina la orden de potencia de la tabla");
@@ -967,6 +1012,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
 			}
+			actualizarTabla(tablas[2], "SELECT * FROM OrdenDePotencia", sp[2], panelOrdenDePotencia, 25, 275, 700, 200);
 			frameOrdenDePotencia.setBounds(x, y, 1300, 800);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
