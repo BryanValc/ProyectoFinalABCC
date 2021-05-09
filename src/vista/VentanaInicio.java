@@ -118,6 +118,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrden,panelOrden,new Font("Calibri", Font.BOLD, 50));
 		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrdenDePotencia,panelOrdenDePotencia,new Font("Calibri", Font.BOLD, 50));
 		
+		//===============================================================================================================Formulario======================================
 		String stringsComprador[]= {"ID Comprador","Nombre","Wallet","Dirección","Ciudad","Estado","Teléfono","Email"};
 		String stringsContratista[]= {"ID Contratista","Nombre del contratista","Meses operando"};
 		String stringsCriptomoneda[]= {"ID Criptomoneda","Precio Unitario","Descripciónn"};
@@ -146,7 +147,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[1].addKeyListener(new KeyAdapter() {//validacion letras
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE)) {
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsComprador[1].setEditable(true);
 				}else{
 					jtfsComprador[1].setEditable(false);
@@ -176,7 +177,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[4].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[4].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[4].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsComprador[4].setEditable(true);
 				}else{
 					jtfsComprador[4].setEditable(false);
@@ -186,7 +187,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[5].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[5].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[5].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsComprador[5].setEditable(true);
 				}else{
 					jtfsComprador[5].setEditable(false);
@@ -235,7 +236,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsContratista[1].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsContratista[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsContratista[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsContratista[1].setEditable(true);
 				}else{
 					jtfsContratista[1].setEditable(false);
@@ -444,25 +445,77 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		});
-		
+		//==================================================================================================Fin Formulario======================================
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
 		add(dp);
 	}
 	
-	public void panelYFrame(JPanel panel,JInternalFrame frame,Color color,String titulo) {
-		panel.setLayout(null);
-		panel.setBounds(0, 0, 1300, 800);
-		panel.setBackground(color);
-		frame.setBounds(0, 0, 1300, 800);
-		frame.setTitle(titulo);
-		frame.add(panel);
-		frame.setResizable(true);
-		frame.setMaximumSize(new Dimension(1300,800));
-		//frame.setClosable(true);
-		//frame.setAutoscrolls(true);
-		dp.add(frame);
+	public String consultaComprador() {
+		String sql = "SELECT * FROM Comprador ";
+		boolean primero=true;
+		if(!jtfsComprador[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CompradorId="+jtfsComprador[0].getText());
+		}
+		if(!jtfsComprador[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
+		}
+		if(!jtfsComprador[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
+		}
+		if(!jtfsComprador[3].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Direccion='"+jtfsComprador[3].getText()+"'");
+		}
+		if(!jtfsComprador[4].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Ciudad='"+jtfsComprador[4].getText()+"'");
+		}
+		if(!jtfsComprador[5].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Estado='"+jtfsComprador[5].getText()+"'");
+		}
+		if(!jtfsComprador[6].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Telefono='"+jtfsComprador[6].getText()+"'");
+		}
+		if(!jtfsComprador[7].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Email='"+jtfsComprador[7].getText()+"'");
+		}
+		return sql;
+	}
+	public String consultaContratista() {
+		String sql = "SELECT * FROM Contratista ";
+		boolean primero=true;
+		if(!jtfsContratista[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CompradorId="+jtfsComprador[0].getText());
+		}
+		if(!jtfsContratista[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
+		}
+		if(!jtfsContratista[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
+		}
+		return sql;
 	}
 	
 	public void asignacion() {
@@ -505,6 +558,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
 		
+	}
+	
+	public void panelYFrame(JPanel panel,JInternalFrame frame,Color color,String titulo) {
+		panel.setLayout(null);
+		panel.setBounds(0, 0, 1300, 800);
+		panel.setBackground(color);
+		frame.setBounds(0, 0, 1300, 800);
+		frame.setTitle(titulo);
+		frame.add(panel);
+		frame.setResizable(true);
+		frame.setMaximumSize(new Dimension(1300,800));
+		dp.add(frame);
 	}
 	
 	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
