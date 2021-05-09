@@ -562,7 +562,71 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		return sql;
 	}
-	
+	public String consultaOrden() {
+		String sql = "SELECT * FROM Orden ";
+		boolean primero=true;
+		if(!jtfsOrden[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("ordenId="+jtfsOrden[0].getText());
+		}
+		if(!jtfsOrden[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("fechaOrden='"+jtfsOrden[1].getText()+"'");
+		}
+		if(comboCompradorIdOrden.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("compradorId="+comboCompradorIdOrden.getSelectedItem());
+		}
+		if(!jtfsOrden[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("horasDeOperacion="+jtfsOrden[2].getText());
+		}
+		return sql;
+	}
+	public String consultaOrdenDePotencia() {
+		String sql = "SELECT * FROM Orden ";
+		boolean primero=true;
+		if(!jtfsOrdenDePotencia[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("compraId="+jtfsOrdenDePotencia[0].getText());
+		}
+		if(comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("ordenId="+comboOrdenIdOrdenDePotencia.getSelectedItem());
+		}
+		if(comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("criptomonedaId='"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+"'");
+		}
+		if(comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("contratistaId="+comboContratistaIdOrdenDePotencia.getSelectedItem());
+		}
+		if(comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("poolId='"+comboPoolIdOrdenDePotencia.getSelectedItem()+"'");
+		}
+		if(!jtfsOrdenDePotencia[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("cantidadDeCriptomonedas="+jtfsOrdenDePotencia[1].getText());
+		}
+		if(!jtfsOrdenDePotencia[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("precioFiat="+jtfsOrdenDePotencia[2].getText());
+		}
+		return sql;
+	}
 	
 	public void asignacion() {
 		for (int i=0;i<menuItems.length;i+=1) {
