@@ -6,6 +6,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,6 +27,8 @@ import javax.swing.border.Border;
 
 import controlador.*;
 import modelo.*;
+
+
 
 class Interfaz extends JFrame implements ActionListener, ItemListener{
 	int x=0;
@@ -61,6 +65,23 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JLabel lblOpOrden = new JLabel("");
 	JLabel lblOpOrdenDePotencia = new JLabel("");
 	
+	JLabel lblsComprador[] = new JLabel[8];
+	JLabel lblsContratista[] = new JLabel[3];
+	JLabel lblsCriptomoneda[] = new JLabel[3];
+	JLabel lblsPool[] = new JLabel[4];
+	JLabel lblsOrden[] = new JLabel[4];
+	JLabel lblsOrdenDePotencia[] = new JLabel[7];
+	
+	JTextField jtfsComprador[] = new JTextField[8];
+	
+	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+	public static boolean validate(String emailStr) {
+		       Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+		       return matcher.find();
+		     }
+	
 	public Interfaz() {
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -85,6 +106,119 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		modificarYAñadirLabel(25, 25, 250, 40,lblOpPool,panelPool,new Font("Calibri", Font.BOLD, 50));
 		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrden,panelOrden,new Font("Calibri", Font.BOLD, 50));
 		modificarYAñadirLabel(25, 25, 250, 40,lblOpOrdenDePotencia,panelOrdenDePotencia,new Font("Calibri", Font.BOLD, 50));
+		
+		String stringsComprador[]= {"ID Comprador","Nombre","Wallet","Dirección","Ciudad","Estado","Teléfono","Email"};
+		String stringsContratista[]= {"ID Contratista","Nombre del contratista","Meses operando"};
+		String stringsCriptomoneda[]= {"ID Criptomoneda","Precio Unitario","Descripciónn"};
+		String stringsPool[]= {"ID Pool","Potencia MH/s","Cantidad de trabajadores","Cantidad de mineros"};
+		String stringsOrden[]= {"ID Orden","Fecha de orden","ID Comprador","Horas de operación"};
+		String stringsOrdenDePotencia[]= {"ID Comprador","Nombre","Wallet","Direccion","Ciudad","Estado","Telefono","Email"};
+		
+		for(int i=0;i<lblsComprador.length;i+=1) {
+			lblsComprador[i]=new JLabel(stringsComprador[i]);
+			lblsComprador[i].setBounds(250, 50+(i*30), 150, 20);
+			jtfsComprador[i]=new JTextField();
+			jtfsComprador[i].setBounds(400, 50+(i*30), 250, 20);
+			panelComprador.add(lblsComprador[i]);
+			panelComprador.add(jtfsComprador[i]);
+		}
+		jtfsComprador[0].addKeyListener(new KeyAdapter() {//validacion
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsComprador[0].getText().length()<10||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsComprador[0].setEditable(true);
+				}else{
+					jtfsComprador[0].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[1].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z'))||(code==KeyEvent.VK_BACK_SPACE))&&jtfsComprador[1].getText().length()<150) {
+					jtfsComprador[1].setEditable(true);
+				}else{
+					jtfsComprador[1].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[2].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsComprador[2].getText().length()<100||code==KeyEvent.VK_BACK_SPACE) {
+					jtfsComprador[2].setEditable(true);
+				}else{
+					jtfsComprador[2].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[3].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsComprador[3].getText().length()<100||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsComprador[3].setEditable(true);
+				}else{
+					jtfsComprador[3].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[4].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[4].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsComprador[4].setEditable(true);
+				}else{
+					jtfsComprador[4].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[5].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if ((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')))&&jtfsComprador[5].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsComprador[5].setEditable(true);
+				}else{
+					jtfsComprador[5].setEditable(false);
+				}
+			}
+		});
+		jtfsComprador[6].addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9')||ke.getKeyChar() == '-')&&jtfsComprador[6].getText().length()<15||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsComprador[6].setEditable(true);
+				}else{
+					jtfsComprador[6].setEditable(false);
+				}
+			}
+		});
+		
+		
+		for(int i=0;i<lblsContratista.length;i+=1) {
+			lblsContratista[i]=new JLabel(stringsContratista[i]);
+			lblsContratista[i].setBounds(250, 50+(i*30), 150, 20);
+			panelContratista.add(lblsContratista[i]);
+		}
+		for(int i=0;i<lblsCriptomoneda.length;i+=1) {
+			lblsCriptomoneda[i]=new JLabel(stringsCriptomoneda[i]);
+			lblsCriptomoneda[i].setBounds(250, 50+(i*30), 150, 20);
+			panelCriptomoneda.add(lblsCriptomoneda[i]);
+		}
+		for(int i=0;i<lblsPool.length;i+=1) {
+			lblsPool[i]=new JLabel(stringsPool[i]);
+			lblsPool[i].setBounds(250, 50+(i*30), 150, 20);
+			panelPool.add(lblsPool[i]);
+		}
+		for(int i=0;i<lblsOrden.length;i+=1) {
+			lblsOrden[i]=new JLabel(stringsOrden[i]);
+			lblsOrden[i].setBounds(250, 50+(i*30), 150, 20);
+			panelOrden.add(lblsOrden[i]);
+		}
+		for(int i=0;i<lblsOrdenDePotencia.length;i+=1) {
+			lblsOrdenDePotencia[i]=new JLabel(stringsOrdenDePotencia[i]);
+			lblsOrdenDePotencia[i].setBounds(250, 50+(i*30), 150, 20);
+			panelOrdenDePotencia.add(lblsOrdenDePotencia[i]);
+		}
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
@@ -145,6 +279,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
 		
+		
+		
 	}
 	
 	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
@@ -164,50 +300,80 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		int plusX = 30;
 		int plusY = 30;
 		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {
-			if(src==menuItems[0][0]) {lblOpComprador.setText("Altas");}
-			else if(src==menuItems[0][1]) {lblOpComprador.setText("Bajas");}
-			else if(src==menuItems[0][2]) {lblOpComprador.setText("Cambios");}
-			else if(src==menuItems[0][3]) {lblOpComprador.setText("Consultas");}
+			if(src==menuItems[0][0]) {
+				lblOpComprador.setText("Altas");
+			}else if(src==menuItems[0][1]) {
+				lblOpComprador.setText("Bajas");
+			}else if(src==menuItems[0][2]) {
+				lblOpComprador.setText("Cambios");
+			}else if(src==menuItems[0][3]) {
+				lblOpComprador.setText("Consultas");
+			}
 			frameComprador.setBounds(x, x, 1300, 800);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {
-			if(src==menuItems[1][0]) {lblOpContratista.setText("Altas");}
-			else if(src==menuItems[1][1]) {lblOpContratista.setText("Bajas");}
-			else if(src==menuItems[1][2]) {lblOpContratista.setText("Cambios");}
-			else if(src==menuItems[1][3]) {lblOpContratista.setText("Consultas");}
+			if(src==menuItems[1][0]) {
+				lblOpContratista.setText("Altas");
+			}else if(src==menuItems[1][1]) {
+				lblOpContratista.setText("Bajas");
+			}else if(src==menuItems[1][2]) {
+				lblOpContratista.setText("Cambios");
+			}else if(src==menuItems[1][3]) {
+				lblOpContratista.setText("Consultas");
+			}
 			frameContratista.setBounds(x, x, 1300, 800);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {
-			if(src==menuItems[2][0]) {lblOpCriptomoneda.setText("Altas");}
-			else if(src==menuItems[2][1]) {lblOpCriptomoneda.setText("Bajas");}
-			else if(src==menuItems[2][2]) {lblOpCriptomoneda.setText("Cambios");}
-			else if(src==menuItems[2][3]) {lblOpCriptomoneda.setText("Consultas");}
+			if(src==menuItems[2][0]) {
+				lblOpCriptomoneda.setText("Altas");
+			}else if(src==menuItems[2][1]) {
+				lblOpCriptomoneda.setText("Bajas");
+			}else if(src==menuItems[2][2]) {
+				lblOpCriptomoneda.setText("Cambios");
+			}else if(src==menuItems[2][3]) {
+				lblOpCriptomoneda.setText("Consultas");
+			}
 			frameCriptomoneda.setBounds(x, x, 1300, 800);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {
-			if(src==menuItems[3][0]) {lblOpPool.setText("Altas");}
-			else if(src==menuItems[3][1]) {lblOpPool.setText("Bajas");}
-			else if(src==menuItems[3][2]) {lblOpPool.setText("Cambios");}
-			else if(src==menuItems[3][3]) {lblOpPool.setText("Consultas");}
+			if(src==menuItems[3][0]) {
+				lblOpPool.setText("Altas");
+			}else if(src==menuItems[3][1]) {
+				lblOpPool.setText("Bajas");
+			}else if(src==menuItems[3][2]) {
+				lblOpPool.setText("Cambios");
+			}else if(src==menuItems[3][3]) {
+				lblOpPool.setText("Consultas");
+			}
 			framePool.setBounds(x, x, 1300, 800);
 			framePool.toFront();
 			framePool.setVisible(true);
 		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {
-			if(src==menuItems[4][0]) {lblOpOrden.setText("Altas");}
-			else if(src==menuItems[4][1]) {lblOpOrden.setText("Bajas");}
-			else if(src==menuItems[4][2]) {lblOpOrden.setText("Cambios");}
-			else if(src==menuItems[4][3]) {lblOpOrden.setText("Consultas");}
+			if(src==menuItems[4][0]) {
+				lblOpOrden.setText("Altas");
+			}else if(src==menuItems[4][1]) {
+				lblOpOrden.setText("Bajas");
+			}else if(src==menuItems[4][2]) {
+				lblOpOrden.setText("Cambios");
+			}else if(src==menuItems[4][3]) {
+				lblOpOrden.setText("Consultas");
+			}
 			frameOrden.setBounds(x, x, 1300, 800);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {
-			if(src==menuItems[5][0]) {lblOpOrdenDePotencia.setText("Altas");}
-			else if(src==menuItems[5][1]) {lblOpOrdenDePotencia.setText("Bajas");}
-			else if(src==menuItems[5][2]) {lblOpOrdenDePotencia.setText("Cambios");}
-			else if(src==menuItems[5][3]) {lblOpOrdenDePotencia.setText("Consultas");}
+			if(src==menuItems[5][0]) {
+				lblOpOrdenDePotencia.setText("Altas");
+			}else if(src==menuItems[5][1]) {
+				lblOpOrdenDePotencia.setText("Bajas");
+			}else if(src==menuItems[5][2]) {
+				lblOpOrdenDePotencia.setText("Cambios");
+			}else if(src==menuItems[5][3]) {
+				lblOpOrdenDePotencia.setText("Consultas");
+			}
 			frameOrdenDePotencia.setBounds(x, x, 1300, 800);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
