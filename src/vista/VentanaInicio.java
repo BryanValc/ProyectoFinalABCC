@@ -503,20 +503,66 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsContratista[0].equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CompradorId="+jtfsComprador[0].getText());
+			sql+=("ContratistaId="+jtfsContratista[0].getText());
 		}
 		if(!jtfsContratista[1].equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
+			sql+=("NombreContratista='"+jtfsContratista[1].getText()+"'");
 		}
 		if(!jtfsContratista[2].equals("")) {
 			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
+			sql+=("MesesOperando="+jtfsContratista[2].getText());
 		}
 		return sql;
 	}
+	public String consultaCriptomoneda() {
+		String sql = "SELECT * FROM Criptomoneda ";
+		boolean primero=true;
+		if(!jtfsCriptomoneda[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CriptomonedaId='"+jtfsCriptomoneda[0].getText()+"'");
+		}
+		if(!jtfsCriptomoneda[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PrecioUnidad="+jtfsCriptomoneda[1].getText());
+		}
+		if(!jtfsCriptomoneda[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("DescripcionUnidad='"+jtfsCriptomoneda[2].getText()+"'");
+		}
+		return sql;
+	}
+	public String consultaPool() {
+		String sql = "SELECT * FROM Pool ";
+		boolean primero=true;
+		if(!jtfsPool[0].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PoolId='"+jtfsPool[0].getText()+"'");
+		}
+		if(!jtfsPool[1].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PotenciaDeMinadoMHs="+jtfsPool[1].getText());
+		}
+		if(!jtfsPool[2].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CantidadDeTrabajadores="+jtfsPool[2].getText());
+		}
+		if(!jtfsPool[3].equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CantidadDeMineros="+jtfsPool[3].getText());
+		}
+		return sql;
+	}
+	
 	
 	public void asignacion() {
 		for (int i=0;i<menuItems.length;i+=1) {
