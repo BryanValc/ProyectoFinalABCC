@@ -76,6 +76,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JTextField jtfsContratista[] = new JTextField[3];
 	JTextField jtfsCriptomoneda[] = new JTextField[3];
 	JTextField jtfsPool[] = new JTextField[4];
+	JTextField jtfsOrden[] = new JTextField[3];
+	JTextField jtfsOrdenDePotencia[] = new JTextField[3];
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -340,6 +342,47 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			lblsOrden[i].setBounds(250, 50+(i*30), 150, 20);
 			panelOrden.add(lblsOrden[i]);
 		}
+		jtfsOrden[0]=new JTextField();
+		jtfsOrden[0].setBounds(400, 50, 150, 20);
+		panelOrden.add(jtfsOrden[0]);
+		jtfsOrden[1]=new JTextField();
+		jtfsOrden[1].setBounds(400, 80, 150, 20);
+		panelOrden.add(jtfsOrden[1]);
+		jtfsOrden[2]=new JTextField();
+		jtfsOrden[2].setBounds(400, 140, 150, 20);
+		panelOrden.add(jtfsOrden[2]);
+		
+		jtfsOrden[0].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsOrden[0].getText().length()<19||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsOrden[0].setEditable(true);
+				}else{
+					jtfsOrden[0].setEditable(false);
+				}
+			}
+		});
+		jtfsOrden[1].addKeyListener(new KeyAdapter() {//validacion tamaño
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (jtfsOrden[1].getText().length()<11||code==KeyEvent.VK_BACK_SPACE) {
+					jtfsOrden[1].setEditable(true);
+				}else{
+					jtfsOrden[1].setEditable(false);
+				}
+			}
+		});
+		jtfsOrden[2].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsOrden[2].getText().length()<7||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsOrden[2].setEditable(true);
+				}else{
+					jtfsOrden[2].setEditable(false);
+				}
+			}
+		});
+		
 		for(int i=0;i<lblsOrdenDePotencia.length;i+=1) {
 			lblsOrdenDePotencia[i]=new JLabel(stringsOrdenDePotencia[i]);
 			lblsOrdenDePotencia[i].setBounds(250, 50+(i*30), 150, 20);
@@ -410,6 +453,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		label.setBounds(x, y, width, height);
 		label.setFont(font);
 		panel.add(label);
+	}
+	
+	public void metodoQueRestableceTODO(Component...componentesGraficos) {
+		for (Component c: componentesGraficos) {
+			if (c instanceof JComboBox) {
+				((JComboBox<?>)c).setSelectedIndex(-1);
+			}else if (c instanceof JTextField) {
+				((JTextField)c).setText("");
+			}
+		}
 	}
 	
 	@Override
