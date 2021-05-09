@@ -117,7 +117,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		String stringsCriptomoneda[]= {"ID Criptomoneda","Precio Unitario","Descripciónn"};
 		String stringsPool[]= {"ID Pool","Potencia MH/s","Cantidad de trabajadores","Cantidad de mineros"};
 		String stringsOrden[]= {"ID Orden","Fecha de orden","ID Comprador","Horas de operación"};
-		String stringsOrdenDePotencia[]= {"ID Comprador","Nombre","Wallet","Direccion","Ciudad","Estado","Telefono","Email"};
+		String stringsOrdenDePotencia[]= {"ID Compra","ID Orden","ID Criptomoneda","ID Contratista","ID Pool","Cantidad de criptomonedas","Precio fiat"};
 		
 		for(int i=0;i<lblsComprador.length;i+=1) {
 			lblsComprador[i]=new JLabel(stringsComprador[i]);
@@ -385,9 +385,50 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		for(int i=0;i<lblsOrdenDePotencia.length;i+=1) {
 			lblsOrdenDePotencia[i]=new JLabel(stringsOrdenDePotencia[i]);
-			lblsOrdenDePotencia[i].setBounds(250, 50+(i*30), 150, 20);
+			lblsOrdenDePotencia[i].setBounds(250, 50+(i*30), 180, 20);
 			panelOrdenDePotencia.add(lblsOrdenDePotencia[i]);
 		}
+		jtfsOrdenDePotencia[0]=new JTextField();
+		jtfsOrdenDePotencia[0].setBounds(430, 50, 150, 20);
+		panelOrdenDePotencia.add(jtfsOrdenDePotencia[0]);
+		jtfsOrdenDePotencia[1]=new JTextField();
+		jtfsOrdenDePotencia[1].setBounds(430, 200, 150, 20);
+		panelOrdenDePotencia.add(jtfsOrdenDePotencia[1]);
+		jtfsOrdenDePotencia[2]=new JTextField();
+		jtfsOrdenDePotencia[2].setBounds(430, 230, 150, 20);
+		panelOrdenDePotencia.add(jtfsOrdenDePotencia[2]);
+		
+		jtfsOrdenDePotencia[0].addKeyListener(new KeyAdapter() {//validacion entero
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9'))&&jtfsOrdenDePotencia[0].getText().length()<19||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsOrdenDePotencia[0].setEditable(true);
+				}else{
+					jtfsOrdenDePotencia[0].setEditable(false);
+				}
+			}
+		});
+		jtfsOrdenDePotencia[1].addKeyListener(new KeyAdapter() {//validacion double
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9')||(ke.getKeyChar() == '.'&&!jtfsOrdenDePotencia[1].getText().contains(".")))&&jtfsOrdenDePotencia[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsOrdenDePotencia[1].setEditable(true);
+				}else{
+					jtfsOrdenDePotencia[1].setEditable(false);
+				}
+			}
+		});
+		jtfsOrdenDePotencia[2].addKeyListener(new KeyAdapter() {//validacion double
+			public void keyPressed(KeyEvent ke) {
+				int code=ke.getKeyCode();
+				if (((ke.getKeyChar() >= '0'&&ke.getKeyChar() <= '9')||(ke.getKeyChar() == '.'&&!jtfsOrdenDePotencia[2].getText().contains(".")))&&jtfsOrdenDePotencia[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)) {
+					jtfsOrdenDePotencia[2].setEditable(true);
+				}else{
+					jtfsOrdenDePotencia[2].setEditable(false);
+				}
+			}
+		});
+		
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
