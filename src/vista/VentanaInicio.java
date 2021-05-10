@@ -148,7 +148,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		});
 		sp[1] = new JScrollPane(tablas[1]);
 		sp[1].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[1].setBounds(25, 200, 800, 200);
+		sp[1].setBounds(25, 245, 800, 200);
 		panelContratista.add(sp[1]);
 		panelContratista.setVisible(true);
 	}
@@ -177,7 +177,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		});
 		sp[2] = new JScrollPane(tablas[2]);
 		sp[2].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[2].setBounds(25, 200, 750, 200);
+		sp[2].setBounds(25, 245, 750, 200);
 		panelCriptomoneda.add(sp[2]);
 		panelCriptomoneda.setVisible(true);
 	}
@@ -206,7 +206,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		});
 		sp[3] = new JScrollPane(tablas[3]);
 		sp[3].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[3].setBounds(25, 200, 700, 200);
+		sp[3].setBounds(25, 245, 700, 200);
 		panelPool.add(sp[3]);
 		panelPool.setVisible(true);
 	}
@@ -235,7 +235,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		});
 		sp[4] = new JScrollPane(tablas[4]);
 		sp[4].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[4].setBounds(25, 200, 700, 200);
+		sp[4].setBounds(25, 245, 700, 200);
 		panelOrden.add(sp[4]);
 		panelOrden.setVisible(true);
 	}
@@ -1243,6 +1243,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			panelComprador.setVisible(false);
 		}else if(src==interacciones[0][3]) {
 			String sql = consultaComprador();
+			actualizarTablaComprador(sql);
+		}
+		
+		if (src==interacciones[1][0]) {
+			
+		}else if (src==interacciones[1][1]) {
+			metodoQueRestableceTODO(jtfsContratista);
+		}else if (src==interacciones[1][2]) {
+			frameContratista.setVisible(false);
+			panelContratista.setVisible(false);
+		}else if (src==interacciones[1][3]) {
+			String sql = consultaContratista();
 			actualizarTablaComprador(sql);
 		}
 		
