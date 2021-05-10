@@ -1201,9 +1201,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
 				}
 				break;
-			case "Eliminar":
-				compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()));
-				break;
+			case "Eliminar":compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()));break;
 			case "Modificar":
 				int vacio =0;
 				boolean flags[]= new boolean[7];
@@ -1213,8 +1211,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 						vacio+=1;
 					}
 				}
-				
-				if(flags[6]&&!validate(jtfsComprador[7].getText())) {
+				if (jtfsComprador[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador");
+				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {
 					JOptionPane.showMessageDialog(null,"Email no válido");
 				}else if(vacio==0){
 					JOptionPane.showMessageDialog(null,"No se está ingresando nada");
@@ -1227,11 +1226,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					compradorDAO.modificarRegistro(comprador,flags);
+					if (compradorDAO.modificarRegistro(comprador,flags)) {
+						JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+					}else{
+						JOptionPane.showMessageDialog(null,"No se pudo modificar el comprador");
+					}
 				}
 				break;
-			default:
-				break;
+			default:break;
 			}
 			actualizarTablaComprador("SELECT * FROM Comprador");
 		}else if(src==interacciones[0][1]) {
