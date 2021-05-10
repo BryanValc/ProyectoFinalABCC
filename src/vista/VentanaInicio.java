@@ -1172,28 +1172,68 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[0][0]) {
-			int lleno=1;
-			for(JTextField i:jtfsComprador) {
-				if (i.getText().equals("")) {
-					lleno*=0;
+			CompradorDAO compradorDAO = new CompradorDAO();
+			switch (interacciones[0][0].getText()) {
+			case "Agregar":
+				int lleno=1;
+				for(JTextField i:jtfsComprador) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				};
+				if(!validate(jtfsComprador[7].getText())) {
+					JOptionPane.showMessageDialog(null,"Email no válido");
+				}else if (lleno==1) {
+					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
+							jtfsComprador[1].getText(),
+							jtfsComprador[2].getText(),
+							jtfsComprador[3].getText(),
+							jtfsComprador[4].getText(),
+							jtfsComprador[5].getText(),
+							jtfsComprador[6].getText(),
+							jtfsComprador[7].getText());
+					if (compradorDAO.insertarRegistro(comprador)) {
+						JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
 				}
-			};
-			if(!validate(jtfsComprador[7].getText())) {
-				JOptionPane.showMessageDialog(null,"Email no válido");
-			}else if (lleno==1) {
-				CompradorDAO compradorDAO = new CompradorDAO();
-				Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
-						jtfsComprador[1].getText(),
-						jtfsComprador[2].getText(),
-						jtfsComprador[3].getText(),
-						jtfsComprador[4].getText(),
-						jtfsComprador[5].getText(),
-						jtfsComprador[6].getText(),
-						jtfsComprador[7].getText());
-				compradorDAO.insertarRegistro(comprador);
-			}else {
-				JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
+				break;
+			case "Eliminar":
+				compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()));
+				break;
+			case "Modificar":
+				int vacio =0;
+				boolean flags[]= new boolean[7];
+				for (int i = 0; i < flags.length; i++) {
+					flags[i]=!jtfsComprador[i+1].getText().equals("");
+					if (flags[i]) {
+						vacio+=1;
+					}
+				}
+				
+				if(flags[6]&&!validate(jtfsComprador[7].getText())) {
+					JOptionPane.showMessageDialog(null,"Email no válido");
+				}else if(vacio==0){
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada");
+				}else{
+					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
+							jtfsComprador[1].getText(),
+							jtfsComprador[2].getText(),
+							jtfsComprador[3].getText(),
+							jtfsComprador[4].getText(),
+							jtfsComprador[5].getText(),
+							jtfsComprador[6].getText(),
+							jtfsComprador[7].getText());
+					compradorDAO.modificarRegistro(comprador,flags);
+				}
+				break;
+			default:
+				break;
 			}
+			actualizarTablaComprador("SELECT * FROM Comprador");
 		}else if(src==interacciones[0][1]) {
 			metodoQueRestableceTODO(jtfsComprador);
 		}else if(src==interacciones[0][2]) {
