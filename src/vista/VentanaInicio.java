@@ -1238,7 +1238,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
 				}
 				break;
-			case "Eliminar":compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()));break;
+			case "Eliminar":
+				if (jtfsComprador[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador a eliminar");
+				}else {
+					if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {
+						JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");
+					}
+				}
+				break;
 			case "Modificar":
 				int vacio =0;
 				boolean flags[]= new boolean[7];
@@ -1253,7 +1263,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {
 					JOptionPane.showMessageDialog(null,"Email no válido");
 				}else if(vacio==0){
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada");
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else{
 					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
 							jtfsComprador[1].getText(),
@@ -1285,7 +1295,69 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[1][0]) {
-			
+			ContratistaDAO contratistaDAO = new ContratistaDAO();
+			switch (interacciones[1][0].getText()) {
+			case "Agregar":
+				int lleno=1;
+				for(JTextField i:jtfsContratista) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				}
+				if (lleno==1) {
+					Contratista contratista = new Contratista(
+							Integer.parseInt(jtfsContratista[0].getText()),
+							jtfsContratista[1].getText(),
+							Integer.parseInt(jtfsContratista[2].getText()));
+					if (contratistaDAO.insertarRegistro(contratista)) {
+						JOptionPane.showMessageDialog(null,"Contratista agregado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un contratista");
+				}
+				break;
+			case "Eliminar":
+				if (jtfsContratista[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "No se esta especificando el ID del contratista a eliminar");
+				}else {
+					if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {
+						JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");
+					}
+				}
+				
+				break;
+			case "Modificar":
+				int vacio=0;
+				boolean flags[]=new boolean[2];
+				for (int i = 0; i < flags.length; i++) {
+					flags[i]=!jtfsContratista[i+1].getText().equals("");
+					if (flags[i]) {
+						vacio+=1;
+					}
+				}
+				if (jtfsContratista[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID del contratista");
+				}else if (vacio==0) {
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else {
+					Contratista contratista = new Contratista(
+							Integer.parseInt(jtfsContratista[0].getText()),
+							jtfsContratista[1].getText(),
+							Integer.parseInt(jtfsContratista[2].getText()));
+					if (contratistaDAO.modificarRegistro(contratista, flags)) {
+						JOptionPane.showMessageDialog(null, "Contratista modificado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null, "No se pudo modificar el contratista");
+					}
+				}
+				
+				break;
+			default:break;
+			}
 			actualizarTablaContratista("SELECT * FROM Contratista");
 		}else if(src==interacciones[1][1]) {
 			metodoQueRestableceTODO(jtfsContratista);
