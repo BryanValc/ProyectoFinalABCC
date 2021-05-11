@@ -1232,7 +1232,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (compradorDAO.insertarRegistro(comprador)) {
 						JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
 					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador");
+						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
@@ -1312,7 +1312,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (contratistaDAO.insertarRegistro(contratista)) {
 						JOptionPane.showMessageDialog(null,"Contratista agregado exitosamente");
 					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista");
+						JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista, quizá ya hay uno con el mismo ID");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un contratista");
@@ -1328,7 +1328,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 						JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");
 					}
 				}
-				
 				break;
 			case "Modificar":
 				int vacio=0;
@@ -1371,7 +1370,68 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[2][0]) {
-			
+			CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
+			switch (interacciones[2][0].getText()) {
+			case "Agregar":
+				int lleno=1;
+				for (JTextField i:jtfsCriptomoneda) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				}
+				if (lleno==1) {
+					Criptomoneda criptomoneda = new Criptomoneda(
+							jtfsCriptomoneda[0].getText(),
+							Double.parseDouble(jtfsCriptomoneda[1].getText()), 
+							jtfsCriptomoneda[2].getText());
+					if (criptomonedaDAO.insertarRegistro(criptomoneda)) {
+						JOptionPane.showMessageDialog(null, "Criptomoneda agregada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null, "No se pudo agregar la criptomoneda, quizá ya hay una con el mismo ID");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una criptomoneda");
+				}
+				break;
+			case "Eliminar":
+				if (jtfsCriptomoneda[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda a eliminar");
+				}else {
+					if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {
+						JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");
+					}
+				}
+				
+				break;
+			case "Modificar":
+				int vacio=0;
+				boolean flags[]=new boolean[2];
+				for (int i = 0; i < flags.length; i++) {
+					flags[i]=!jtfsCriptomoneda[i+1].getText().equals("");
+					if (flags[i]) {
+						vacio+=1;
+					}
+				}
+				if (jtfsCriptomoneda[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda");
+				}else if (vacio==0) {
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else {
+					Criptomoneda criptomoneda = new Criptomoneda(
+							jtfsCriptomoneda[0].getText(),
+							Double.parseDouble(jtfsCriptomoneda[1].getText()), 
+							jtfsCriptomoneda[2].getText());
+					if (criptomonedaDAO.modificarRegistro(criptomoneda, flags)) {
+						JOptionPane.showMessageDialog(null,"Criptomoneda modificada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo modificar la criptomoneda");
+					}
+				}
+				break;
+			default:break;
+			}
 			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 		}else if(src==interacciones[2][1]) {
 			metodoQueRestableceTODO(jtfsCriptomoneda);
