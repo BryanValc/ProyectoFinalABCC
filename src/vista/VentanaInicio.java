@@ -663,7 +663,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
-		dp.setBackground(new Color(162, 59, 87));
+		dp.setBackground(Color.DARK_GRAY);
 		add(dp);
 	}
 	
@@ -922,7 +922,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		menuBar.add(orden);
 		menuBar.add(ordenDePotencia);
 		
-		
+		frameComprador.setMaximumSize(new Dimension(785,550));
+		frameContratista.setMaximumSize(new Dimension(850,495));
+		frameCriptomoneda.setMaximumSize(new Dimension(800,495));
+		framePool.setMaximumSize(new Dimension(750,495));
+		frameOrden.setMaximumSize(new Dimension(750,495));
+		frameOrdenDePotencia.setMaximumSize(new Dimension(750,525));
 		
 	}
 	
@@ -934,7 +939,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		frame.setTitle(titulo);
 		frame.add(panel);
 		frame.setResizable(true);
-		frame.setMaximumSize(new Dimension(1300,800));
 		dp.add(frame);
 	}
 	
@@ -994,7 +998,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaComprador("SELECT * FROM Comprador");
 			if (frameComprador!=lastOpent) {
-				frameComprador.setBounds(x, y, 1300, 800);
+				frameComprador.setBounds(x, y, 785, 550);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1031,7 +1035,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaContratista("SELECT * FROM Contratista");
 			if (frameContratista!=lastOpent) {
-				frameContratista.setBounds(x, y, 1300, 800);
+				frameContratista.setBounds(x, y, 850, 495);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1068,7 +1072,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 			if (frameCriptomoneda!=lastOpent) {
-				frameCriptomoneda.setBounds(x, y, 1300, 800);
+				frameCriptomoneda.setBounds(x, y, 800, 495);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1105,7 +1109,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaPool("SELECT * FROM Pool");
 			if (framePool!=lastOpent) {
-				framePool.setBounds(x, y, 1300, 800);
+				framePool.setBounds(x, y, 750, 495);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1145,7 +1149,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaOrden("SELECT * FROM Orden");
 			if (frameOrden!=lastOpent) {
-				frameOrden.setBounds(x, y, 1300, 800);
+				frameOrden.setBounds(x, y, 750, 495);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1194,7 +1198,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			}
 			actualizarTablaOrdenDePotencia("SELECT * FROM OrdenDePotencia");
 			if (frameOrdenDePotencia!=lastOpent) {
-				framePool.setBounds(x, y, 1300, 800);
+				frameOrdenDePotencia.setBounds(x, y, 750, 525);
 				x+=plusX;
 				y+=plusY;
 			}
@@ -1603,7 +1607,86 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[5][0]) {
-			
+			OrdenDePotenciaDAO ordenDePotenciaDAO = new OrdenDePotenciaDAO();
+			switch (interacciones[5][0].getText()) {
+			case "Agregar":
+				int lleno = 1;
+				for (JTextField i:jtfsOrdenDePotencia) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				}
+				if (	comboOrdenIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboContratistaIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboPoolIdOrdenDePotencia.getSelectedIndex()==-1) {
+					lleno*=0;
+				}
+				if (lleno==1) {
+					OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
+							Long.parseLong(jtfsOrdenDePotencia[0].getText()),
+							Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
+							(String)comboCriptomonedaIdOrdenDePotencia.getSelectedItem(),
+							Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
+							(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
+							Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
+							Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
+					if (ordenDePotenciaDAO.insertarRegistro(ordenDePotencia)) {
+						JOptionPane.showMessageDialog(null,"Orden de potencia agregada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar la orden de potencia, quizá ya hay una con el mismo ID");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden de potencia");
+				}
+				
+				break;
+			case "Eliminar":
+				if (jtfsOrdenDePotencia[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia a eliminar");
+				}else {
+					if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {
+						JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");
+					}
+				}
+				break;
+			case "Modificar":
+				int vacio=0;
+				boolean flags[]=new boolean[6];
+				flags[0]=comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1;
+				flags[1]=comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1;
+				flags[2]=comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1;
+				flags[3]=comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1;
+				flags[4]=!jtfsOrdenDePotencia[1].getText().equals("");
+				flags[5]=!jtfsOrdenDePotencia[2].getText().equals("");
+				for (boolean i:flags) {
+					if (i) {
+						vacio+=1;
+					}
+				}
+				if (jtfsOrdenDePotencia[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia");
+				}else if (vacio==0) {
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else {
+					OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
+							Long.parseLong(jtfsOrdenDePotencia[0].getText()),
+							Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
+							(String)comboCriptomonedaIdOrdenDePotencia.getSelectedItem(),
+							Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
+							(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
+							Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
+							Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
+					if (ordenDePotenciaDAO.modificarRegistro(ordenDePotencia, flags)) {
+						JOptionPane.showMessageDialog(null,"Orden de potencia modificada exitosamente");
+					}
+				}
+				
+				break;
+			default:break;
+			}
 			actualizarTablaOrdenDePotencia("SELECT * FROM OrdenDePotencia");
 		}else if(src==interacciones[5][1]) {
 			metodoQueRestableceTODO(jtfsOrdenDePotencia);
