@@ -1549,14 +1549,45 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Eliminar":
-				
+				if (jtfsOrden[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden a eliminar");
+				}else {
+					if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {
+						JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");
+					}
+				}
 				break;
 			case "Modificar":
-				
+				int vacio =0;
+				boolean flags[]=new boolean[3];
+				flags[0]=!jtfsOrden[1].getText().equals("");
+				flags[1]=comboCompradorIdOrden.getSelectedIndex()!=-1;
+				flags[2]=!jtfsOrden[2].getText().equals("");
+				for (boolean i:flags) {
+					if (i) {
+						vacio+=1;
+					}
+				}
+				if (jtfsOrden[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden");
+				}else if(vacio==0){
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else {
+					Orden orden = new Orden(
+							Long.parseLong(jtfsOrden[0].getText()),
+							jtfsOrden[1].getText(),
+							Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()),
+							Integer.parseInt(jtfsOrden[2].getText()));
+					if (ordenDAO.modificarRegistro(orden, flags)) {
+						JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo modificar la orden, quizá la misma es llamada en otro tipo de registro");
+					}
+				}
 				break;
-
-			default:
-				break;
+			default:break;
 			}
 			actualizarTablaOrden("SELECT * FROM Orden");
 		}else if(src==interacciones[4][1]) {
