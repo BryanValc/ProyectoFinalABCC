@@ -1445,7 +1445,69 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[3][0]) {
-			
+			PoolDAO poolDAO = new PoolDAO();
+			switch (interacciones[3][0].getText()) {
+			case "Agregar":
+				int lleno=1;
+				for(JTextField i:jtfsPool) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				};
+				if (lleno==1) {
+					Pool pool = new Pool(
+							jtfsPool[0].getText(),
+							Long.parseLong(jtfsPool[1].getText()),
+							Integer.parseInt(jtfsPool[2].getText()),
+							Integer.parseInt(jtfsPool[3].getText()));
+					if (poolDAO.insertarRegistro(pool)) {
+						JOptionPane.showMessageDialog(null,"Pool agregada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar la pool, quizá ya hay una con el mismo ID");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una pool");
+				}
+				break;
+			case "Eliminar":
+				if (jtfsPool[0].getText().equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool a eliminar");
+				}else {
+					if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {
+						JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");
+					}
+				}
+				break;
+			case "Modificar":
+				int vacio=0;
+				boolean flags[]=new boolean[3];
+				for (int i = 0; i < flags.length; i++) {
+					flags[i]=!jtfsPool[i+1].getText().equals("");
+					if (flags[i]) {
+						vacio+=1;
+					}
+				}
+				if (jtfsPool[0].equals("")) {
+					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool");
+				}else if (vacio==0) {
+					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else {
+					Pool pool = new Pool(
+							jtfsPool[0].getText(),
+							Long.parseLong(jtfsPool[1].getText()),
+							Integer.parseInt(jtfsPool[2].getText()),
+							Integer.parseInt(jtfsPool[3].getText()));
+					if (poolDAO.modificarRegistro(pool, flags)) {
+						JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
+					}else{
+						JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");
+					}
+				}
+				break;
+			default:break;
+			}
 			actualizarTablaPool("SELECT * FROM Pool");
 		}else if(src==interacciones[3][1]) {
 			metodoQueRestableceTODO(jtfsPool);
@@ -1459,7 +1521,43 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[4][0]) {
-			
+			OrdenDAO ordenDAO = new OrdenDAO();
+			switch (interacciones[4][0].getText()) {
+			case "Agregar":
+				int lleno=1;
+				for(JTextField i:jtfsOrden) {
+					if (i.getText().equals("")) {
+						lleno*=0;
+					}
+				};
+				if (comboCompradorIdOrden.getSelectedIndex()==-1) {
+					lleno*=0;
+				}
+				if (lleno==1) {
+					Orden orden = new Orden(
+							Long.parseLong(jtfsOrden[0].getText()), 
+							jtfsOrden[1].getText(), 
+							Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()), 
+							Integer.parseInt(jtfsOrden[2].getText()));
+					if (ordenDAO.insertarRegistro(orden)) {
+						JOptionPane.showMessageDialog(null,"Orden agregada exitosamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar la orden, quizá ya hay una con el mismo ID");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden");
+				}
+				break;
+			case "Eliminar":
+				
+				break;
+			case "Modificar":
+				
+				break;
+
+			default:
+				break;
+			}
 			actualizarTablaOrden("SELECT * FROM Orden");
 		}else if(src==interacciones[4][1]) {
 			metodoQueRestableceTODO(jtfsOrden);
