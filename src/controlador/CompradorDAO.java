@@ -5,16 +5,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import javax.swing.JOptionPane;
+
 import conexionBD.ConexionBD;
 import modelo.Comprador;
 
 public class CompradorDAO {
 	
-	/*ConexionBD conexion;
+	private static CompradorDAO compradorDAO=null;
 	
-	public CompradorDAO() {
-		conexion = new ConexionBD();
-	}*/
+	private CompradorDAO() {
+		
+	}
+	public static synchronized CompradorDAO getInstance() {
+		if (compradorDAO == null) {
+			compradorDAO = new CompradorDAO();
+		}
+		return compradorDAO;
+	}
 	
 	public boolean insertarRegistro(Comprador c) {
 		boolean resultado = false;

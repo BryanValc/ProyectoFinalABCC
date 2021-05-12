@@ -41,6 +41,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 	int x=0;
 	int y=0;
+	CompradorDAO compradorDAO = CompradorDAO.getInstance();
+	ContratistaDAO contratistaDAO = ContratistaDAO.getInstance();
 	JMenuBar menuBar = new JMenuBar();//=================MenuBar
 	JMenu comprador = new JMenu("Comprador");
 	JMenu contratista = new JMenu("Contratista");
@@ -1236,7 +1238,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[0][0]) {
-			CompradorDAO compradorDAO = new CompradorDAO();
 			switch (interacciones[0][0].getText()) {
 			case "Agregar":
 				int lleno=1;
@@ -1252,8 +1253,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					if (compradorDAO.insertarRegistro(comprador)) {	JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");	}
+					try  {
+						if (compradorDAO.insertarRegistro(comprador)) {
+							JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
+						}
+					}catch(Exception e) {
+						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
+						}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");	}
 				break;
 			case "Eliminar":
@@ -1612,7 +1618,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
 					comboContratistaIdOrdenDePotencia.removeAllItems();
 					comboPoolIdOrdenDePotencia.removeAllItems();
-					CompradorDAO compradorDAO = new CompradorDAO();
 					OrdenDAO ordenDAO = new OrdenDAO();
 					CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
 					ContratistaDAO contratistaDAO = new ContratistaDAO();
