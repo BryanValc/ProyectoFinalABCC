@@ -9,24 +9,23 @@ import conexionBD.ConexionBD;
 import modelo.Orden;
 
 public class OrdenDAO {
-
-	/*ConexionBD conexion;
 	
-	public OrdenDAO() {
-		conexion = new ConexionBD();
-	}*/
+	private static OrdenDAO ordenDAO=null;
+	
+	private OrdenDAO() {
+		
+	}
+	
+	public static synchronized OrdenDAO getInstance(){
+		if (ordenDAO==null) {
+			ordenDAO = new OrdenDAO();
+		}
+		return ordenDAO;
+	}
 	
 	public boolean insertarRegistro(Orden o) {
 		boolean resultado = false;
-		
-		/*String sql="INSERT INTO Orden VALUES("
-				+ o.getOrdenId()+","
-				+ "'"+o.getFechaOrden()+"',"
-				+o.getCompradorId()+","
-				+o.getHorasDeOperacion()
-				+ ")";*/
 		resultado = ConexionBD.agregarRegistro(o);
-		
 		return resultado;
 	}
 	
@@ -42,27 +41,7 @@ public class OrdenDAO {
 	public boolean modificarRegistro(Orden o, boolean flags[]) {
 		boolean resultado = false;
 		boolean primero=true;
-		
-		/*String sql = "UPDATE Orden SET ";
-		
-		if (flags[0]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("fechaOrden='"+o.getFechaOrden()+"'");
-		}
-		if (flags[1]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("compradorId="+o.getCompradorId());
-		}
-		if (flags[2]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("horasDeOperacion="+o.getHorasDeOperacion());
-		}
-		sql+=(" WHERE ordenId = "+o.getOrdenId());*/
 		resultado = ConexionBD.actualizarRegistro(o);
-		
 		return resultado;
 	}
 	

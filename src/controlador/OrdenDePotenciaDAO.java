@@ -10,78 +10,35 @@ import modelo.OrdenDePotencia;
 
 public class OrdenDePotenciaDAO {
 	
-	/*ConexionBD conexion;
+	private static OrdenDePotenciaDAO ordenDePotenciaDAO=null;
 	
-	public OrdenDePotenciaDAO() {
-		conexion = new ConexionBD();
-	}*/
+	private OrdenDePotenciaDAO() {
+		
+	}
+	
+	public static synchronized OrdenDePotenciaDAO getInstance(){
+		if (ordenDePotenciaDAO==null) {
+			ordenDePotenciaDAO = new OrdenDePotenciaDAO();
+		}
+		return ordenDePotenciaDAO;
+	}
 	
 	public boolean insertarRegistro(OrdenDePotencia o) {
 		boolean resultado = false;
-		
-		/*String sql="INSERT INTO OrdenDePotencia VALUES("
-				+ o.getCompraId()+","
-				+ o.getOrdenId()+","
-				+ "'"+o.getCriptomonedaId()+"',"
-				+ o.getContratistaId()+","
-				+ "'"+o.getPoolId()+"',"
-				+ o.getCantidadDeCriptomonedas()+","
-				+ o.getPrecioFiat()
-				+ ")";*/
 		resultado = ConexionBD.agregarRegistro(o);
-		
 		return resultado;
 	}
 	
 	public boolean eliminarRegistro(long compraId) {
 		boolean resultado = false;
-		
 		String sql="DELETE FROM OrdenDePotencia WHERE compraId = "+compraId;
 		resultado = ConexionBD.eliminarRegistro(sql);
-		
 		return resultado;
 	}
 	
 	public boolean modificarRegistro(OrdenDePotencia o, boolean flags[]) {
 		boolean resultado = false;
-		/*boolean primero=true;
-		
-		String sql = "UPDATE OrdenDePotencia SET ";
-		
-		if (flags[0]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("ordenId="+o.getOrdenId());
-		}
-		if (flags[1]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("criptomonedaId='"+o.getCriptomonedaId()+"'");
-		}
-		if (flags[2]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("contratistaId="+o.getContratistaId());
-		}
-		if (flags[3]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("poolId='"+o.getPoolId()+"'");
-		}
-		if (flags[4]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("cantidadDeCriptomonedas="+o.getCantidadDeCriptomonedas());
-		}
-		if (flags[5]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("precioFiat="+o.getPrecioFiat());
-		}
-		
-		sql+=(" WHERE compraId = "+o.getCompraId());*/
 		resultado = ConexionBD.actualizarRegistro(o);
-		
 		return resultado;
 	}
 

@@ -43,6 +43,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	int y=0;
 	CompradorDAO compradorDAO = CompradorDAO.getInstance();
 	ContratistaDAO contratistaDAO = ContratistaDAO.getInstance();
+	CriptomonedaDAO criptomonedaDAO = CriptomonedaDAO.getInstance();
+	PoolDAO poolDAO = PoolDAO.getInstance();
+	OrdenDAO ordenDAO = OrdenDAO.getInstance();
+	OrdenDePotenciaDAO ordenDePotenciaDAO = OrdenDePotenciaDAO.getInstance();
 	JMenuBar menuBar = new JMenuBar();//=================MenuBar
 	JMenu comprador = new JMenu("Comprador");
 	JMenu contratista = new JMenu("Contratista");
@@ -672,7 +676,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			primero=false;
 			sql+=("Email='"+jtfsComprador[7].getText()+"'");
 		}
-		System.out.println(sql);
 		return sql;
 	}
 	public void actualizarTablaComprador(String sql) {
@@ -1308,7 +1311,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[1][0]) {
-			ContratistaDAO contratistaDAO = new ContratistaDAO();
 			switch (interacciones[1][0].getText()) {
 			case "Agregar":
 				int lleno=1;
@@ -1364,7 +1366,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[2][0]) {
-			CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
 			switch (interacciones[2][0].getText()) {
 			case "Agregar":
 				int lleno=1;
@@ -1419,7 +1420,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[3][0]) {
-			PoolDAO poolDAO = new PoolDAO();
 			switch (interacciones[3][0].getText()) {
 			case "Agregar":
 				int lleno=1;
@@ -1475,8 +1475,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[4][0]) {
-			OrdenDAO ordenDAO = new OrdenDAO();
-			
 			jtfsOrden[1].setText(comboFecha[0].getSelectedItem()+"-"+comboFecha[1].getSelectedItem()+"-"+comboFecha[2].getSelectedItem());
 			System.out.println(jtfsOrden[1].getText());
 			switch (interacciones[4][0].getText()) {
@@ -1536,7 +1534,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[5][0]) {
-			OrdenDePotenciaDAO ordenDePotenciaDAO = new OrdenDePotenciaDAO();
 			switch (interacciones[5][0].getText()) {
 			case "Agregar":
 				int lleno = 1;
@@ -1618,10 +1615,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
 					comboContratistaIdOrdenDePotencia.removeAllItems();
 					comboPoolIdOrdenDePotencia.removeAllItems();
-					OrdenDAO ordenDAO = new OrdenDAO();
-					CriptomonedaDAO criptomonedaDAO = new CriptomonedaDAO();
-					ContratistaDAO contratistaDAO = new ContratistaDAO();
-					PoolDAO poolDAO = new PoolDAO();
 					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
 					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
 					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");

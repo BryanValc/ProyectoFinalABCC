@@ -10,23 +10,21 @@ import modelo.Pool;
 
 public class PoolDAO {
 	
-	/*ConexionBD conexion;
+	private static PoolDAO poolDAO=null;
 	
-	public PoolDAO() {
-		conexion = new ConexionBD();
-	}*/
+	private PoolDAO() {
+		
+	}
+	public static synchronized PoolDAO getInstance() {
+		if (poolDAO == null) {
+			poolDAO = new PoolDAO();
+		}
+		return poolDAO;
+	}
 	
 	public boolean insertarRegistro(Pool p) {
 		boolean resultado = false;
-		
-		/*String sql="INSERT INTO Pool VALUES("
-				+ "'"+p.getPoolId()+"',"
-				+ p.getPotenciaDeMinadoMHs()+","
-				+ p.getCantidadDeTrabajadores()+","
-				+ p.getCantidadDeMineros()+""
-				+ ")";*/
 		resultado = ConexionBD.agregarRegistro(p);
-		
 		return resultado;
 	}
 	
@@ -41,29 +39,7 @@ public class PoolDAO {
 	
 	public boolean modificarRegistro(Pool p, boolean flags[]) {
 		boolean resultado = false;
-		/*boolean primero=true;
-		
-		String sql = "UPDATE Pool SET ";
-		
-		if (flags[0]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("potenciaDeMinadoMHs="+p.getPotenciaDeMinadoMHs());
-		}
-		if (flags[1]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("cantidadDeTrabajadores="+p.getCantidadDeTrabajadores());
-		}
-		if (flags[2]) {
-			if (!primero) {sql+=", ";
-			}else {primero = false;}
-			sql+=("cantidadDeMineros="+p.getCantidadDeMineros());
-		}
-		
-		sql+=(" WHERE poolId = '"+p.getPoolId()+"'");*/
 		resultado = ConexionBD.actualizarRegistro(p);
-		
 		return resultado;
 	}
 

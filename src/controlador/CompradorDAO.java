@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import javax.swing.JOptionPane;
-
 import conexionBD.ConexionBD;
 import modelo.Comprador;
 

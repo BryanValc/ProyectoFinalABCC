@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import conexionBD.ConexionBD;
-import modelo.Comprador;
 import modelo.Contratista;
 
 public class ContratistaDAO{
