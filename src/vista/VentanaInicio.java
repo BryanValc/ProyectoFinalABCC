@@ -36,8 +36,7 @@ import modelo.*;
 class Interfaz extends JFrame implements ActionListener, ItemListener{
 	int x=0;
 	int y=0;
-	
-	JMenuBar menuBar = new JMenuBar();
+	JMenuBar menuBar = new JMenuBar();//=================MenuBar
 	JMenu comprador = new JMenu("Comprador");
 	JMenu contratista = new JMenu("Contratista");
 	JMenu criptomoneda = new JMenu("Criptomoneda");
@@ -45,7 +44,38 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JMenu orden = new JMenu("Orden");
 	JMenu ordenDePotencia = new JMenu("Orden de potencia");
 	JMenuItem menuItems[][]=new JMenuItem[6][4];
-	
+	JLabel lblOpComprador = new JLabel("", SwingConstants.CENTER);//================Formulario
+	JLabel lblOpContratista = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpCriptomoneda = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpPool = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpOrden = new JLabel("", SwingConstants.CENTER);
+	JLabel lblOpOrdenDePotencia = new JLabel("", SwingConstants.CENTER);
+	JLabel lblsComprador[] = new JLabel[8];
+	JLabel lblsContratista[] = new JLabel[3];
+	JLabel lblsCriptomoneda[] = new JLabel[3];
+	JLabel lblsPool[] = new JLabel[4];
+	JLabel lblsOrden[] = new JLabel[4];
+	JLabel lblsOrdenDePotencia[] = new JLabel[7];
+	JTextField jtfsComprador[] = new JTextField[8];
+	JTextField jtfsContratista[] = new JTextField[3];
+	JTextField jtfsCriptomoneda[] = new JTextField[3];
+	JTextField jtfsPool[] = new JTextField[4];
+	JTextField jtfsOrden[] = new JTextField[3];
+	JTextField jtfsOrdenDePotencia[] = new JTextField[3];
+	JComboBox<String> comboCompradorIdOrden = new JComboBox<String>();
+	JComboBox<String> comboOrdenIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboCriptomonedaIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
+	JButton interacciones[][] = new JButton[6][4];
+	JTable tablas[]=new JTable[6];//=========================Tablas
+	JScrollPane sp[] = new JScrollPane[6];
+	JPanel panelComprador = new JPanel();//======================Paneles y Frames
+	JPanel panelContratista = new JPanel();
+	JPanel panelCriptomoneda = new JPanel();
+	JPanel panelPool = new JPanel();
+	JPanel panelOrden = new JPanel();
+	JPanel panelOrdenDePotencia = new JPanel();
 	JInternalFrame frameComprador=new JInternalFrame();
 	JInternalFrame frameContratista=new JInternalFrame();
 	JInternalFrame frameCriptomoneda=new JInternalFrame();
@@ -53,232 +83,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JInternalFrame frameOrden=new JInternalFrame();
 	JInternalFrame frameOrdenDePotencia=new JInternalFrame();
 	JInternalFrame lastOpent;
-	JPanel panelComprador = new JPanel();
-	JPanel panelContratista = new JPanel();
-	JPanel panelCriptomoneda = new JPanel();
-	JPanel panelPool = new JPanel();
-	JPanel panelOrden = new JPanel();
-	JPanel panelOrdenDePotencia = new JPanel();
-	
 	JDesktopPane dp = new JDesktopPane();
-	
-	JLabel lblOpComprador = new JLabel("", SwingConstants.CENTER);
-	JLabel lblOpContratista = new JLabel("", SwingConstants.CENTER);
-	JLabel lblOpCriptomoneda = new JLabel("", SwingConstants.CENTER);
-	JLabel lblOpPool = new JLabel("", SwingConstants.CENTER);
-	JLabel lblOpOrden = new JLabel("", SwingConstants.CENTER);
-	JLabel lblOpOrdenDePotencia = new JLabel("", SwingConstants.CENTER);
-	
-	JLabel lblsComprador[] = new JLabel[8];
-	JLabel lblsContratista[] = new JLabel[3];
-	JLabel lblsCriptomoneda[] = new JLabel[3];
-	JLabel lblsPool[] = new JLabel[4];
-	JLabel lblsOrden[] = new JLabel[4];
-	JLabel lblsOrdenDePotencia[] = new JLabel[7];
-	
-	JTextField jtfsComprador[] = new JTextField[8];
-	JTextField jtfsContratista[] = new JTextField[3];
-	JTextField jtfsCriptomoneda[] = new JTextField[3];
-	JTextField jtfsPool[] = new JTextField[4];
-	JTextField jtfsOrden[] = new JTextField[3];
-	JTextField jtfsOrdenDePotencia[] = new JTextField[3];
-	
-	JComboBox<String> comboCompradorIdOrden = new JComboBox<String>();
-	JComboBox<String> comboOrdenIdOrdenDePotencia = new JComboBox<String>();
-	JComboBox<String> comboCriptomonedaIdOrdenDePotencia = new JComboBox<String>();
-	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
-	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
-	
-	JButton interacciones[][] = new JButton[6][4];
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
 	public static boolean validate(String emailStr) {
 		       Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
 		       return matcher.find();
 		     }
-	
-	JTable tablas[]=new JTable[6];
-	JScrollPane sp[] = new JScrollPane[6];
-	
-	public void actualizarTablaComprador(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelComprador.remove(sp[0]);
-		tablas[0] = new JTable(modeloDatos);
-		tablas[0].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaComprador();
-		    }
-		});
-		sp[0] = new JScrollPane(tablas[0]);
-		sp[0].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[0].setBounds(25, 300, 735, 200);
-		panelComprador.add(sp[0]);
-		panelComprador.setVisible(true);
-	}
-	public void obtenerRegistroTablaComprador() {
-		for (int i = 0; i < jtfsComprador.length; i++) {
-			jtfsComprador[i].setText(""+tablas[0].getValueAt(tablas[0].getSelectedRow(),i));
-		}
-		
-	}
-	public void actualizarTablaContratista(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelContratista.remove(sp[1]);
-		tablas[1] = new JTable(modeloDatos);
-		tablas[1].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaContratista();
-		    }
-		});
-		sp[1] = new JScrollPane(tablas[1]);
-		sp[1].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[1].setBounds(25, 245, 800, 200);
-		panelContratista.add(sp[1]);
-		panelContratista.setVisible(true);
-	}
-	public void obtenerRegistroTablaContratista() {
-		for (int i = 0; i < jtfsContratista.length; i++) {
-			jtfsContratista[i].setText(""+tablas[1].getValueAt(tablas[1].getSelectedRow(),i));
-		}
-		
-	}
-	public void actualizarTablaCriptomoneda(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelCriptomoneda.remove(sp[2]);
-		tablas[2] = new JTable(modeloDatos);
-		tablas[2].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaCriptomoneda();
-		    }
-		});
-		sp[2] = new JScrollPane(tablas[2]);
-		sp[2].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[2].setBounds(25, 245, 750, 200);
-		panelCriptomoneda.add(sp[2]);
-		panelCriptomoneda.setVisible(true);
-	}
-	public void obtenerRegistroTablaCriptomoneda() {
-		for (int i = 0; i < jtfsCriptomoneda.length; i++) {
-			jtfsCriptomoneda[i].setText(""+tablas[2].getValueAt(tablas[2].getSelectedRow(),i));
-		}
-		
-	}
-	public void actualizarTablaPool(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelPool.remove(sp[3]);
-		tablas[3] = new JTable(modeloDatos);
-		tablas[3].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaPool();
-		    }
-		});
-		sp[3] = new JScrollPane(tablas[3]);
-		sp[3].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[3].setBounds(25, 245, 700, 200);
-		panelPool.add(sp[3]);
-		panelPool.setVisible(true);
-	}
-	public void obtenerRegistroTablaPool() {
-		for (int i = 0; i < jtfsPool.length; i++) {
-			jtfsPool[i].setText(""+tablas[3].getValueAt(tablas[3].getSelectedRow(),i));
-		}
-		
-	}
-	public void actualizarTablaOrden(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelOrden.remove(sp[4]);
-		tablas[4] = new JTable(modeloDatos);
-		tablas[4].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaOrden();
-		    }
-		});
-		sp[4] = new JScrollPane(tablas[4]);
-		sp[4].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[4].setBounds(25, 245, 700, 200);
-		panelOrden.add(sp[4]);
-		panelOrden.setVisible(true);
-	}
-	public void obtenerRegistroTablaOrden() {
-		jtfsOrden[0].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),0));
-		jtfsOrden[1].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),1));
-		comboCompradorIdOrden.setSelectedItem(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),2));
-		jtfsOrden[2].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),3));
-	}
-	public void actualizarTablaOrdenDePotencia(String sql) {
-		ResultSetTableModel modeloDatos =null;
-		try {
-			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		panelOrdenDePotencia.remove(sp[5]);
-		tablas[5] = new JTable(modeloDatos);
-		tablas[5].addMouseListener(new java.awt.event.MouseAdapter() {
-		    @Override
-		    public void mouseClicked(java.awt.event.MouseEvent evt) {
-		    	obtenerRegistroTablaOrdenDePotencia();
-		    }
-		});
-		sp[5] = new JScrollPane(tablas[5]);
-		sp[5].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		sp[5].setBounds(25, 275, 700, 200);
-		panelOrdenDePotencia.add(sp[5]);
-		panelOrdenDePotencia.setVisible(true);
-	}
-	public void obtenerRegistroTablaOrdenDePotencia() {
-		jtfsOrdenDePotencia[0].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),0));
-		comboOrdenIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),1));
-		comboCriptomonedaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),2));
-		comboContratistaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),3));
-		comboPoolIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),4));
-		jtfsOrdenDePotencia[1].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),5));
-		jtfsOrdenDePotencia[2].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),6));
-	}
 	
 	public Interfaz() {
 		getContentPane().setLayout(null);
@@ -667,183 +479,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		add(dp);
 	}
 	
-	public String consultaComprador() {
-		String sql = "SELECT * FROM Comprador ";
-		boolean primero=true;
-		if(!jtfsComprador[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("CompradorId="+jtfsComprador[0].getText());
-		}
-		if(!jtfsComprador[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
-		}
-		if(!jtfsComprador[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
-		}
-		if(!jtfsComprador[3].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Direccion='"+jtfsComprador[3].getText()+"'");
-		}
-		if(!jtfsComprador[4].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Ciudad='"+jtfsComprador[4].getText()+"'");
-		}
-		if(!jtfsComprador[5].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Estado='"+jtfsComprador[5].getText()+"'");
-		}
-		if(!jtfsComprador[6].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Telefono='"+jtfsComprador[6].getText()+"'");
-		}
-		if(!jtfsComprador[7].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("Email='"+jtfsComprador[7].getText()+"'");
-		}
-		System.out.println(sql);
-		return sql;
-	}
-	public String consultaContratista() {
-		String sql = "SELECT * FROM Contratista ";
-		boolean primero=true;
-		if(!jtfsContratista[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("ContratistaId="+jtfsContratista[0].getText());
-		}
-		if(!jtfsContratista[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("NombreContratista='"+jtfsContratista[1].getText()+"'");
-		}
-		if(!jtfsContratista[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("MesesOperando="+jtfsContratista[2].getText());
-		}
-		return sql;
-	}
-	public String consultaCriptomoneda() {
-		String sql = "SELECT * FROM Criptomoneda ";
-		boolean primero=true;
-		if(!jtfsCriptomoneda[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("CriptomonedaId='"+jtfsCriptomoneda[0].getText()+"'");
-		}
-		if(!jtfsCriptomoneda[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("PrecioUnidad="+jtfsCriptomoneda[1].getText());
-		}
-		if(!jtfsCriptomoneda[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("DescripcionUnidad='"+jtfsCriptomoneda[2].getText()+"'");
-		}
-		return sql;
-	}
-	public String consultaPool() {
-		String sql = "SELECT * FROM Pool ";
-		boolean primero=true;
-		if(!jtfsPool[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("PoolId='"+jtfsPool[0].getText()+"'");
-		}
-		if(!jtfsPool[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("PotenciaDeMinadoMHs="+jtfsPool[1].getText());
-		}
-		if(!jtfsPool[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("CantidadDeTrabajadores="+jtfsPool[2].getText());
-		}
-		if(!jtfsPool[3].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("CantidadDeMineros="+jtfsPool[3].getText());
-		}
-		return sql;
-	}
-	public String consultaOrden() {
-		String sql = "SELECT * FROM Orden ";
-		boolean primero=true;
-		if(!jtfsOrden[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("ordenId="+jtfsOrden[0].getText());
-		}
-		if(!jtfsOrden[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("fechaOrden='"+jtfsOrden[1].getText()+"'");
-		}
-		if(comboCompradorIdOrden.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("compradorId="+comboCompradorIdOrden.getSelectedItem());
-		}
-		if(!jtfsOrden[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("horasDeOperacion="+jtfsOrden[2].getText());
-		}
-		return sql;
-	}
-	public String consultaOrdenDePotencia() {
-		String sql = "SELECT * FROM OrdenDePotencia ";
-		boolean primero=true;
-		if(!jtfsOrdenDePotencia[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("compraId="+jtfsOrdenDePotencia[0].getText());
-		}
-		if(comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("ordenId="+comboOrdenIdOrdenDePotencia.getSelectedItem());
-		}
-		if(comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("criptomonedaId='"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+"'");
-		}
-		if(comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("contratistaId="+comboContratistaIdOrdenDePotencia.getSelectedItem());
-		}
-		if(comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("poolId='"+comboPoolIdOrdenDePotencia.getSelectedItem()+"'");
-		}
-		if(!jtfsOrdenDePotencia[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("cantidadDeCriptomonedas="+jtfsOrdenDePotencia[1].getText());
-		}
-		if(!jtfsOrdenDePotencia[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
-			primero=false;
-			sql+=("precioFiat="+jtfsOrdenDePotencia[2].getText());
-		}
-		return sql;
-	}
-	
 	public void asignacion() {
 		for (int i=0;i<menuItems.length;i+=1) {
 			for (int j = 0; j < menuItems[i].length; j++) {
@@ -930,7 +565,15 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		frameOrdenDePotencia.setMaximumSize(new Dimension(750,525));
 		
 	}
-	
+	public void metodoQueRestableceTODO(Component...componentesGraficos) {
+		for (Component c: componentesGraficos) {
+			if (c instanceof JComboBox) {
+				((JComboBox<?>)c).setSelectedIndex(-1);
+			}else if (c instanceof JTextField) {
+				((JTextField)c).setText("");
+			}
+		}
+	}
 	public void panelYFrame(JPanel panel,JInternalFrame frame,Color color,String titulo) {
 		panel.setLayout(null);
 		panel.setBounds(0, 0, 1300, 800);
@@ -941,21 +584,361 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		frame.setResizable(true);
 		dp.add(frame);
 	}
-	
 	public void modificarYAñadirLabel(int x, int y, int width,int height,JLabel label,JPanel panel,Font font) {
 		label.setBounds(x, y, width, height);
 		label.setFont(font);
 		panel.add(label);
 	}
 	
-	public void metodoQueRestableceTODO(Component...componentesGraficos) {
-		for (Component c: componentesGraficos) {
-			if (c instanceof JComboBox) {
-				((JComboBox<?>)c).setSelectedIndex(-1);
-			}else if (c instanceof JTextField) {
-				((JTextField)c).setText("");
-			}
+	public String consultaComprador() {//comprador
+		String sql = "SELECT * FROM Comprador ";
+		boolean primero=true;
+		if(!jtfsComprador[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CompradorId="+jtfsComprador[0].getText());
 		}
+		if(!jtfsComprador[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
+		}
+		if(!jtfsComprador[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
+		}
+		if(!jtfsComprador[3].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Direccion='"+jtfsComprador[3].getText()+"'");
+		}
+		if(!jtfsComprador[4].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Ciudad='"+jtfsComprador[4].getText()+"'");
+		}
+		if(!jtfsComprador[5].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Estado='"+jtfsComprador[5].getText()+"'");
+		}
+		if(!jtfsComprador[6].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Telefono='"+jtfsComprador[6].getText()+"'");
+		}
+		if(!jtfsComprador[7].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("Email='"+jtfsComprador[7].getText()+"'");
+		}
+		System.out.println(sql);
+		return sql;
+	}
+	public void actualizarTablaComprador(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelComprador.remove(sp[0]);
+		tablas[0] = new JTable(modeloDatos);
+		tablas[0].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaComprador();
+		    }
+		});
+		sp[0] = new JScrollPane(tablas[0]);
+		sp[0].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[0].setBounds(25, 300, 735, 200);
+		panelComprador.add(sp[0]);
+		panelComprador.setVisible(true);
+	}
+	public void obtenerRegistroTablaComprador() {
+		for (int i = 0; i < jtfsComprador.length; i++) {
+			jtfsComprador[i].setText(""+tablas[0].getValueAt(tablas[0].getSelectedRow(),i));
+		}
+	}
+	public String consultaContratista() {//Contratista
+		String sql = "SELECT * FROM Contratista ";
+		boolean primero=true;
+		if(!jtfsContratista[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("ContratistaId="+jtfsContratista[0].getText());
+		}
+		if(!jtfsContratista[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("NombreContratista='"+jtfsContratista[1].getText()+"'");
+		}
+		if(!jtfsContratista[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("MesesOperando="+jtfsContratista[2].getText());
+		}
+		return sql;
+	}
+	public void actualizarTablaContratista(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelContratista.remove(sp[1]);
+		tablas[1] = new JTable(modeloDatos);
+		tablas[1].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaContratista();
+		    }
+		});
+		sp[1] = new JScrollPane(tablas[1]);
+		sp[1].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[1].setBounds(25, 245, 800, 200);
+		panelContratista.add(sp[1]);
+		panelContratista.setVisible(true);
+	}
+	public void obtenerRegistroTablaContratista() {
+		for (int i = 0; i < jtfsContratista.length; i++) {
+			jtfsContratista[i].setText(""+tablas[1].getValueAt(tablas[1].getSelectedRow(),i));
+		}
+	}
+	public String consultaCriptomoneda() {//Criptomoneda
+		String sql = "SELECT * FROM Criptomoneda ";
+		boolean primero=true;
+		if(!jtfsCriptomoneda[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CriptomonedaId='"+jtfsCriptomoneda[0].getText()+"'");
+		}
+		if(!jtfsCriptomoneda[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PrecioUnidad="+jtfsCriptomoneda[1].getText());
+		}
+		if(!jtfsCriptomoneda[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("DescripcionUnidad='"+jtfsCriptomoneda[2].getText()+"'");
+		}
+		return sql;
+	}
+	public void actualizarTablaCriptomoneda(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelCriptomoneda.remove(sp[2]);
+		tablas[2] = new JTable(modeloDatos);
+		tablas[2].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaCriptomoneda();
+		    }
+		});
+		sp[2] = new JScrollPane(tablas[2]);
+		sp[2].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[2].setBounds(25, 245, 750, 200);
+		panelCriptomoneda.add(sp[2]);
+		panelCriptomoneda.setVisible(true);
+	}
+	public void obtenerRegistroTablaCriptomoneda() {
+		for (int i = 0; i < jtfsCriptomoneda.length; i++) {
+			jtfsCriptomoneda[i].setText(""+tablas[2].getValueAt(tablas[2].getSelectedRow(),i));
+		}
+	}
+	public String consultaPool() {//Pool
+		String sql = "SELECT * FROM Pool ";
+		boolean primero=true;
+		if(!jtfsPool[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PoolId='"+jtfsPool[0].getText()+"'");
+		}
+		if(!jtfsPool[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("PotenciaDeMinadoMHs="+jtfsPool[1].getText());
+		}
+		if(!jtfsPool[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CantidadDeTrabajadores="+jtfsPool[2].getText());
+		}
+		if(!jtfsPool[3].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("CantidadDeMineros="+jtfsPool[3].getText());
+		}
+		return sql;
+	}
+	public void actualizarTablaPool(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelPool.remove(sp[3]);
+		tablas[3] = new JTable(modeloDatos);
+		tablas[3].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaPool();
+		    }
+		});
+		sp[3] = new JScrollPane(tablas[3]);
+		sp[3].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[3].setBounds(25, 245, 700, 200);
+		panelPool.add(sp[3]);
+		panelPool.setVisible(true);
+	}
+	public void obtenerRegistroTablaPool() {
+		for (int i = 0; i < jtfsPool.length; i++) {
+			jtfsPool[i].setText(""+tablas[3].getValueAt(tablas[3].getSelectedRow(),i));
+		}
+	}
+	
+	public String consultaOrden() {//Orden
+		String sql = "SELECT * FROM Orden ";
+		boolean primero=true;
+		if(!jtfsOrden[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("ordenId="+jtfsOrden[0].getText());
+		}
+		if(!jtfsOrden[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("fechaOrden='"+jtfsOrden[1].getText()+"'");
+		}
+		if(comboCompradorIdOrden.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("compradorId="+comboCompradorIdOrden.getSelectedItem());
+		}
+		if(!jtfsOrden[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("horasDeOperacion="+jtfsOrden[2].getText());
+		}
+		return sql;
+	}
+	public void actualizarTablaOrden(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelOrden.remove(sp[4]);
+		tablas[4] = new JTable(modeloDatos);
+		tablas[4].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaOrden();
+		    }
+		});
+		sp[4] = new JScrollPane(tablas[4]);
+		sp[4].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[4].setBounds(25, 245, 700, 200);
+		panelOrden.add(sp[4]);
+		panelOrden.setVisible(true);
+	}
+	public void obtenerRegistroTablaOrden() {
+		jtfsOrden[0].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),0));
+		jtfsOrden[1].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),1));
+		comboCompradorIdOrden.setSelectedItem(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),2));
+		jtfsOrden[2].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),3));
+	}
+	public String consultaOrdenDePotencia() {//Orden de potencia
+		String sql = "SELECT * FROM OrdenDePotencia ";
+		boolean primero=true;
+		if(!jtfsOrdenDePotencia[0].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("compraId="+jtfsOrdenDePotencia[0].getText());
+		}
+		if(comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("ordenId="+comboOrdenIdOrdenDePotencia.getSelectedItem());
+		}
+		if(comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("criptomonedaId='"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+"'");
+		}
+		if(comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("contratistaId="+comboContratistaIdOrdenDePotencia.getSelectedItem());
+		}
+		if(comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("poolId='"+comboPoolIdOrdenDePotencia.getSelectedItem()+"'");
+		}
+		if(!jtfsOrdenDePotencia[1].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("cantidadDeCriptomonedas="+jtfsOrdenDePotencia[1].getText());
+		}
+		if(!jtfsOrdenDePotencia[2].getText().equals("")) {
+			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			primero=false;
+			sql+=("precioFiat="+jtfsOrdenDePotencia[2].getText());
+		}
+		return sql;
+	}
+	public void actualizarTablaOrdenDePotencia(String sql) {
+		ResultSetTableModel modeloDatos =null;
+		try {
+			modeloDatos = new ResultSetTableModel("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost:3306/NiceHash",sql);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		panelOrdenDePotencia.remove(sp[5]);
+		tablas[5] = new JTable(modeloDatos);
+		tablas[5].addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		    	obtenerRegistroTablaOrdenDePotencia();
+		    }
+		});
+		sp[5] = new JScrollPane(tablas[5]);
+		sp[5].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		sp[5].setBounds(25, 275, 700, 200);
+		panelOrdenDePotencia.add(sp[5]);
+		panelOrdenDePotencia.setVisible(true);
+	}
+	public void obtenerRegistroTablaOrdenDePotencia() {
+		jtfsOrdenDePotencia[0].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),0));
+		comboOrdenIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),1));
+		comboCriptomonedaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),2));
+		comboContratistaIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),3));
+		comboPoolIdOrdenDePotencia.setSelectedItem(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),4));
+		jtfsOrdenDePotencia[1].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),5));
+		jtfsOrdenDePotencia[2].setText(""+tablas[5].getValueAt(tablas[5].getSelectedRow(),6));
 	}
 	
 	@Override
@@ -1207,7 +1190,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			lastOpent=frameOrdenDePotencia;
 		}
 		
-		if (x==300||y==300) {
+		if (x==300||y==300) { 
 			x=0;
 			y=0;
 		}
@@ -1217,11 +1200,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[0][0].getText()) {
 			case "Agregar":
 				int lleno=1;
-				for(JTextField i:jtfsComprador) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				};
+				for(JTextField i:jtfsComprador) {	if (i.getText().equals("")) {	lleno*=0;}};
 				if(!validate(jtfsComprador[7].getText())) {
 					JOptionPane.showMessageDialog(null,"Email no válido");
 				}else if (lleno==1) {
@@ -1233,24 +1212,15 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					if (compradorDAO.insertarRegistro(comprador)) {
-						JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");
-				}
+					if (compradorDAO.insertarRegistro(comprador)) {	JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");	}
+				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");	}
 				break;
 			case "Eliminar":
-				if (jtfsComprador[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador a eliminar");
+				if (jtfsComprador[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador a eliminar");
 				}else {
-					if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {
-						JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");
-					}
+					if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {	JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");	}
 				}
 				break;
 			case "Modificar":
@@ -1258,16 +1228,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				boolean flags[]= new boolean[7];
 				for (int i = 0; i < flags.length; i++) {
 					flags[i]=!jtfsComprador[i+1].getText().equals("");
-					if (flags[i]) {
-						vacio+=1;
-					}
+					if (flags[i]) {	vacio+=1;}
 				}
-				if (jtfsComprador[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador");
-				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {
-					JOptionPane.showMessageDialog(null,"Email no válido");
-				}else if(vacio==0){
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				if (jtfsComprador[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador");
+				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {	JOptionPane.showMessageDialog(null,"Email no válido");
+				}else if(vacio==0){	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else{
 					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
 							jtfsComprador[1].getText(),
@@ -1277,11 +1242,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					if (compradorDAO.modificarRegistro(comprador,flags)) {
-						JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
-					}else{
-						JOptionPane.showMessageDialog(null,"No se pudo modificar el comprador");
-					}
+					if (compradorDAO.modificarRegistro(comprador,flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+					}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar el comprador");	}
 				}
 				break;
 			default:break;
@@ -1303,34 +1265,21 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[1][0].getText()) {
 			case "Agregar":
 				int lleno=1;
-				for(JTextField i:jtfsContratista) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				}
+				for(JTextField i:jtfsContratista) {	if (i.getText().equals("")) {	lleno*=0;	}}
 				if (lleno==1) {
 					Contratista contratista = new Contratista(
 							Integer.parseInt(jtfsContratista[0].getText()),
 							jtfsContratista[1].getText(),
 							Integer.parseInt(jtfsContratista[2].getText()));
-					if (contratistaDAO.insertarRegistro(contratista)) {
-						JOptionPane.showMessageDialog(null,"Contratista agregado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista, quizá ya hay uno con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un contratista");
-				}
+					if (contratistaDAO.insertarRegistro(contratista)) {	JOptionPane.showMessageDialog(null,"Contratista agregado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista, quizá ya hay uno con el mismo ID");	}
+				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un contratista");	}
 				break;
 			case "Eliminar":
-				if (jtfsContratista[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "No se esta especificando el ID del contratista a eliminar");
+				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null, "No se esta especificando el ID del contratista a eliminar");
 				}else {
-					if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {
-						JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");
-					}
+					if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {	JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");}
 				}
 				break;
 			case "Modificar":
@@ -1338,24 +1287,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				boolean flags[]=new boolean[2];
 				for (int i = 0; i < flags.length; i++) {
 					flags[i]=!jtfsContratista[i+1].getText().equals("");
-					if (flags[i]) {
-						vacio+=1;
-					}
+					if (flags[i]) {	vacio+=1;	}
 				}
-				if (jtfsContratista[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID del contratista");
-				}else if (vacio==0) {
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				
+				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del contratista");
+				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					Contratista contratista = new Contratista(
 							Integer.parseInt(jtfsContratista[0].getText()),
 							jtfsContratista[1].getText(),
-							Integer.parseInt(jtfsContratista[2].getText()));
-					if (contratistaDAO.modificarRegistro(contratista, flags)) {
-						JOptionPane.showMessageDialog(null, "Contratista modificado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null, "No se pudo modificar el contratista");
-					}
+							jtfsContratista[2].getText().equals("")?0:Integer.parseInt(jtfsContratista[2].getText()));
+					if (contratistaDAO.modificarRegistro(contratista, flags)) {	JOptionPane.showMessageDialog(null, "Contratista modificado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null, "No se pudo modificar el contratista");	}
 				}
 				
 				break;
@@ -1378,34 +1321,21 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[2][0].getText()) {
 			case "Agregar":
 				int lleno=1;
-				for (JTextField i:jtfsCriptomoneda) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				}
+				for (JTextField i:jtfsCriptomoneda) {	if (i.getText().equals("")) {	lleno*=0;}}
 				if (lleno==1) {
 					Criptomoneda criptomoneda = new Criptomoneda(
 							jtfsCriptomoneda[0].getText(),
 							Double.parseDouble(jtfsCriptomoneda[1].getText()), 
 							jtfsCriptomoneda[2].getText());
-					if (criptomonedaDAO.insertarRegistro(criptomoneda)) {
-						JOptionPane.showMessageDialog(null, "Criptomoneda agregada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null, "No se pudo agregar la criptomoneda, quizá ya hay una con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una criptomoneda");
-				}
+					if (criptomonedaDAO.insertarRegistro(criptomoneda)) {	JOptionPane.showMessageDialog(null, "Criptomoneda agregada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null, "No se pudo agregar la criptomoneda, quizá ya hay una con el mismo ID");	}
+				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una criptomoneda");	}
 				break;
 			case "Eliminar":
-				if (jtfsCriptomoneda[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda a eliminar");
+				if (jtfsCriptomoneda[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda a eliminar");
 				}else {
-					if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {
-						JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");
-					}
+					if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {	JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");}
 				}
 				
 				break;
@@ -1414,24 +1344,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				boolean flags[]=new boolean[2];
 				for (int i = 0; i < flags.length; i++) {
 					flags[i]=!jtfsCriptomoneda[i+1].getText().equals("");
-					if (flags[i]) {
-						vacio+=1;
-					}
+					if (flags[i]) {	vacio+=1;}
 				}
-				if (jtfsCriptomoneda[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda");
-				}else if (vacio==0) {
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				if (jtfsCriptomoneda[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda");
+				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					Criptomoneda criptomoneda = new Criptomoneda(
 							jtfsCriptomoneda[0].getText(),
-							Double.parseDouble(jtfsCriptomoneda[1].getText()), 
+							jtfsCriptomoneda[1].getText().equals("")?0:Double.parseDouble(jtfsCriptomoneda[1].getText()), 
 							jtfsCriptomoneda[2].getText());
-					if (criptomonedaDAO.modificarRegistro(criptomoneda, flags)) {
-						JOptionPane.showMessageDialog(null,"Criptomoneda modificada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo modificar la criptomoneda");
-					}
+					if (criptomonedaDAO.modificarRegistro(criptomoneda, flags)) {	JOptionPane.showMessageDialog(null,"Criptomoneda modificada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la criptomoneda");}
 				}
 				break;
 			default:break;
@@ -1453,35 +1376,22 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[3][0].getText()) {
 			case "Agregar":
 				int lleno=1;
-				for(JTextField i:jtfsPool) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				};
+				for(JTextField i:jtfsPool) {	if (i.getText().equals("")) {lleno*=0;}};
 				if (lleno==1) {
 					Pool pool = new Pool(
 							jtfsPool[0].getText(),
 							Long.parseLong(jtfsPool[1].getText()),
 							Integer.parseInt(jtfsPool[2].getText()),
 							Integer.parseInt(jtfsPool[3].getText()));
-					if (poolDAO.insertarRegistro(pool)) {
-						JOptionPane.showMessageDialog(null,"Pool agregada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar la pool, quizá ya hay una con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una pool");
-				}
+					if (poolDAO.insertarRegistro(pool)) {	JOptionPane.showMessageDialog(null,"Pool agregada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar la pool, quizá ya hay una con el mismo ID");}
+				}else {JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una pool");}
 				break;
 			case "Eliminar":
-				if (jtfsPool[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool a eliminar");
+				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool a eliminar");
 				}else {
-					if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {
-						JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");
-					}
+					if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {	JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");}
 				}
 				break;
 			case "Modificar":
@@ -1489,25 +1399,19 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				boolean flags[]=new boolean[3];
 				for (int i = 0; i < flags.length; i++) {
 					flags[i]=!jtfsPool[i+1].getText().equals("");
-					if (flags[i]) {
-						vacio+=1;
-					}
+					if (flags[i]) {	vacio+=1;}
 				}
-				if (jtfsPool[0].equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool");
-				}else if (vacio==0) {
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool");
+				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					Pool pool = new Pool(
 							jtfsPool[0].getText(),
-							Long.parseLong(jtfsPool[1].getText()),
-							Integer.parseInt(jtfsPool[2].getText()),
-							Integer.parseInt(jtfsPool[3].getText()));
-					if (poolDAO.modificarRegistro(pool, flags)) {
-						JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
-					}else{
-						JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");
-					}
+							jtfsPool[1].getText().equals("")?0:Long.parseLong(jtfsPool[1].getText()),
+							jtfsPool[2].getText().equals("")?0:Integer.parseInt(jtfsPool[2].getText()),
+							jtfsPool[3].getText().equals("")?0:Integer.parseInt(jtfsPool[3].getText()));
+					//System.out.println(pool);
+					if (poolDAO.modificarRegistro(pool, flags)) {	JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
+					}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");}
 				}
 				break;
 			default:break;
@@ -1529,38 +1433,23 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[4][0].getText()) {
 			case "Agregar":
 				int lleno=1;
-				for(JTextField i:jtfsOrden) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				};
-				if (comboCompradorIdOrden.getSelectedIndex()==-1) {
-					lleno*=0;
-				}
+				for(JTextField i:jtfsOrden) {	if (i.getText().equals("")) {	lleno*=0;}};
+				if (comboCompradorIdOrden.getSelectedIndex()==-1) {	lleno*=0;	}
 				if (lleno==1) {
 					Orden orden = new Orden(
 							Long.parseLong(jtfsOrden[0].getText()), 
 							jtfsOrden[1].getText(), 
 							Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()), 
 							Integer.parseInt(jtfsOrden[2].getText()));
-					if (ordenDAO.insertarRegistro(orden)) {
-						JOptionPane.showMessageDialog(null,"Orden agregada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar la orden, quizá ya hay una con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden");
-				}
+					if (ordenDAO.insertarRegistro(orden)) {	JOptionPane.showMessageDialog(null,"Orden agregada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar la orden, quizá ya hay una con el mismo ID");}
+				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden");	}
 				break;
 			case "Eliminar":
-				if (jtfsOrden[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden a eliminar");
+				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden a eliminar");
 				}else {
-					if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {
-						JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");
-					}
+					if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");	}
 				}
 				break;
 			case "Modificar":
@@ -1569,26 +1458,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				flags[0]=!jtfsOrden[1].getText().equals("");
 				flags[1]=comboCompradorIdOrden.getSelectedIndex()!=-1;
 				flags[2]=!jtfsOrden[2].getText().equals("");
-				for (boolean i:flags) {
-					if (i) {
-						vacio+=1;
-					}
-				}
-				if (jtfsOrden[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden");
-				}else if(vacio==0){
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				for (boolean i:flags) {	if (i) {	vacio+=1;}}
+				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden");
+				}else if(vacio==0){	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					Orden orden = new Orden(
 							Long.parseLong(jtfsOrden[0].getText()),
 							jtfsOrden[1].getText(),
-							Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()),
-							Integer.parseInt(jtfsOrden[2].getText()));
-					if (ordenDAO.modificarRegistro(orden, flags)) {
-						JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo modificar la orden, quizá la misma es llamada en otro tipo de registro");
-					}
+							(String)comboCompradorIdOrden.getSelectedItem()==""?0:Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()),
+							jtfsOrden[2].getText().equals("")?0:Integer.parseInt(jtfsOrden[2].getText()));
+					if (ordenDAO.modificarRegistro(orden, flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden, quizá la misma es llamada en otro tipo de registro");}
 				}
 				break;
 			default:break;
@@ -1611,11 +1491,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			switch (interacciones[5][0].getText()) {
 			case "Agregar":
 				int lleno = 1;
-				for (JTextField i:jtfsOrdenDePotencia) {
-					if (i.getText().equals("")) {
-						lleno*=0;
-					}
-				}
+				for (JTextField i:jtfsOrdenDePotencia) {	if (i.getText().equals("")) {	lleno*=0;}}
 				if (	comboOrdenIdOrdenDePotencia.getSelectedIndex()==-1
 						||comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()==-1
 						||comboContratistaIdOrdenDePotencia.getSelectedIndex()==-1
@@ -1631,25 +1507,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
 							Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
 							Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
-					if (ordenDePotenciaDAO.insertarRegistro(ordenDePotencia)) {
-						JOptionPane.showMessageDialog(null,"Orden de potencia agregada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar la orden de potencia, quizá ya hay una con el mismo ID");
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden de potencia");
-				}
+					if (ordenDePotenciaDAO.insertarRegistro(ordenDePotencia)) {	JOptionPane.showMessageDialog(null,"Orden de potencia agregada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar la orden de potencia, quizá ya hay una con el mismo ID");}
+				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden de potencia");}
 				
 				break;
 			case "Eliminar":
-				if (jtfsOrdenDePotencia[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia a eliminar");
+				if (jtfsOrdenDePotencia[0].getText().equals("")) {JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia a eliminar");
 				}else {
-					if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {
-						JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");
-					}
+					if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");}
 				}
 				break;
 			case "Modificar":
@@ -1661,27 +1528,20 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				flags[3]=comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1;
 				flags[4]=!jtfsOrdenDePotencia[1].getText().equals("");
 				flags[5]=!jtfsOrdenDePotencia[2].getText().equals("");
-				for (boolean i:flags) {
-					if (i) {
-						vacio+=1;
-					}
-				}
-				if (jtfsOrdenDePotencia[0].getText().equals("")) {
-					JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia");
-				}else if (vacio==0) {
-					JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				for (boolean i:flags) {	if (i) {	vacio+=1;}}
+				if (jtfsOrdenDePotencia[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia");
+				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
-							Long.parseLong(jtfsOrdenDePotencia[0].getText()),
-							Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
+							jtfsOrdenDePotencia[0].getText().equals("")?0:Long.parseLong(jtfsOrdenDePotencia[0].getText()),
+							(String)comboOrdenIdOrdenDePotencia.getSelectedItem()==""?0:Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
 							(String)comboCriptomonedaIdOrdenDePotencia.getSelectedItem(),
-							Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
+							(String)comboContratistaIdOrdenDePotencia.getSelectedItem()==""?0:Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
 							(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
-							Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
-							Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
-					if (ordenDePotenciaDAO.modificarRegistro(ordenDePotencia, flags)) {
-						JOptionPane.showMessageDialog(null,"Orden de potencia modificada exitosamente");
-					}
+							jtfsOrdenDePotencia[1].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
+							jtfsOrdenDePotencia[2].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
+					if (ordenDePotenciaDAO.modificarRegistro(ordenDePotencia, flags)) {	JOptionPane.showMessageDialog(null,"Orden de potencia modificada exitosamente");
+					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden de potencia");}
 				}
 				
 				break;
@@ -1733,8 +1593,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 			}
 		}
-		
-		
 		
 	}
 	

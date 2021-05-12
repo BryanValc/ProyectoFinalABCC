@@ -10,22 +10,22 @@ import modelo.Comprador;
 import modelo.Contratista;
 
 public class ContratistaDAO {
-
-	ConexionBD conexion;
 	
+	/*ConexionBD conexion;
+
 	public ContratistaDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(Contratista c) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Contratista VALUES("
+		/*String sql="INSERT INTO Contratista VALUES("
 				+ c.getContratistaId()+","
 				+ "'"+c.getNombreContratista()+"',"
 				+ +c.getMesesOperando()
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		resultado = ConexionBD.agregarRegistro(c);
 		
 		return resultado;
 	}
@@ -34,14 +34,14 @@ public class ContratistaDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Contratista WHERE contratistaId = "+contratistaId;
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
 	
 	public boolean modificarRegistro(Contratista c, boolean flags[]) {
 		boolean resultado = false;
-		boolean primero=true;
+		/*boolean primero=true;
 		
 		String sql = "UPDATE Contratista SET ";
 		
@@ -56,8 +56,8 @@ public class ContratistaDAO {
 			sql+=("mesesOperando= "+c.getMesesOperando());
 		}
 		
-		sql+=(" WHERE contratistaId = "+c.getContratistaId());
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE contratistaId = "+c.getContratistaId());*/
+		resultado = ConexionBD.actualizarRegistro(c);
 		
 		return resultado;
 	}
@@ -67,7 +67,7 @@ public class ContratistaDAO {
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		try {
 			if (rs.next()) {
 				do {

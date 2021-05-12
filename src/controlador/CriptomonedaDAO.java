@@ -11,21 +11,21 @@ import modelo.Criptomoneda;
 
 public class CriptomonedaDAO {
 
-	ConexionBD conexion;
+	/*ConexionBD conexion;
 	
 	public CriptomonedaDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(Criptomoneda c) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Criptomoneda VALUES("
+		/*String sql="INSERT INTO Criptomoneda VALUES("
 				+ "'"+c.getCriptomonedaId()+"',"
 				+c.getPrecioUnidad()+","
 				+ "'"+c.getDescripcionUnidad()+"'"
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		resultado = ConexionBD.agregarRegistro(c);
 		
 		return resultado;
 	}
@@ -34,14 +34,14 @@ public class CriptomonedaDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Criptomoneda WHERE criptomonedaId = '"+criptomonedaId+"'";
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
 	
 	public boolean modificarRegistro(Criptomoneda c, boolean flags[]) {
 		boolean resultado = false;
-		boolean primero = true;
+		/*boolean primero = true;
 		
 		String sql = "UPDATE Criptomoneda SET ";
 		
@@ -56,8 +56,8 @@ public class CriptomonedaDAO {
 			sql+=("descripcionUnidad='"+c.getDescripcionUnidad()+"'");
 		}
 		
-		sql+=(" WHERE criptomonedaId = '"+c.getCriptomonedaId()+"'");
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE criptomonedaId = '"+c.getCriptomonedaId()+"'");*/
+		resultado = ConexionBD.actualizarRegistro(c);
 		
 		return resultado;
 	}
@@ -67,7 +67,7 @@ public class CriptomonedaDAO {
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		try {
 			if (rs.next()) {
 				do {

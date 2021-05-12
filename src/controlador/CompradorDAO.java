@@ -19,7 +19,7 @@ public class CompradorDAO {
 	public boolean insertarRegistro(Comprador c) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Comprador VALUES("
+		/*String sql="INSERT INTO Comprador VALUES("
 				+ c.getCompradorId()+","
 				+ "'"+c.getNombre()+"',"
 				+ "'"+c.getWallet()+"',"
@@ -28,8 +28,9 @@ public class CompradorDAO {
 				+ "'"+c.getEstado()+"',"
 				+ "'"+c.getTelefono()+"',"
 				+ "'"+c.getEmail()+"'"
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		
+		resultado = conexion.agregarRegistro(c);
 		
 		return resultado;
 	}
@@ -38,7 +39,7 @@ public class CompradorDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Comprador WHERE compradorId = "+compradorId;
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = conexion.eliminarRegistro(sql);
 		
 		return resultado;
 	}
@@ -47,7 +48,7 @@ public class CompradorDAO {
 		boolean resultado = false;
 		boolean primero=true;
 		
-		String sql = "UPDATE Comprador SET ";
+		/*String sql = "UPDATE Comprador SET ";
 		
 		if (flags[0]) {
 			if (!primero) {sql+=", ";
@@ -85,8 +86,8 @@ public class CompradorDAO {
 			sql+=("email='"+c.getEmail()+"'");
 		}
 		
-		sql+=(" WHERE compradorId = "+c.getCompradorId());
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE compradorId = "+c.getCompradorId());*/
+		resultado = conexion.actualizarRegistro(c);
 		
 		return resultado;
 	}

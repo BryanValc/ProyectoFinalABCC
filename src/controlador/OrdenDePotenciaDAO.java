@@ -10,16 +10,16 @@ import modelo.OrdenDePotencia;
 
 public class OrdenDePotenciaDAO {
 	
-	ConexionBD conexion;
+	/*ConexionBD conexion;
 	
 	public OrdenDePotenciaDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(OrdenDePotencia o) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO OrdenDePotencia VALUES("
+		/*String sql="INSERT INTO OrdenDePotencia VALUES("
 				+ o.getCompraId()+","
 				+ o.getOrdenId()+","
 				+ "'"+o.getCriptomonedaId()+"',"
@@ -27,8 +27,8 @@ public class OrdenDePotenciaDAO {
 				+ "'"+o.getPoolId()+"',"
 				+ o.getCantidadDeCriptomonedas()+","
 				+ o.getPrecioFiat()
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		resultado = ConexionBD.agregarRegistro(o);
 		
 		return resultado;
 	}
@@ -37,14 +37,14 @@ public class OrdenDePotenciaDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM OrdenDePotencia WHERE compraId = "+compraId;
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
 	
 	public boolean modificarRegistro(OrdenDePotencia o, boolean flags[]) {
 		boolean resultado = false;
-		boolean primero=true;
+		/*boolean primero=true;
 		
 		String sql = "UPDATE OrdenDePotencia SET ";
 		
@@ -79,8 +79,8 @@ public class OrdenDePotenciaDAO {
 			sql+=("precioFiat="+o.getPrecioFiat());
 		}
 		
-		sql+=(" WHERE compraId = "+o.getCompraId());
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE compraId = "+o.getCompraId());*/
+		resultado = ConexionBD.actualizarRegistro(o);
 		
 		return resultado;
 	}
@@ -90,7 +90,7 @@ public class OrdenDePotenciaDAO {
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		try {
 			if (rs.next()) {
 				do {

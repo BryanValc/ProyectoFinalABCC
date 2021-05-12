@@ -10,22 +10,22 @@ import modelo.Pool;
 
 public class PoolDAO {
 	
-ConexionBD conexion;
+	/*ConexionBD conexion;
 	
 	public PoolDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(Pool p) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Pool VALUES("
+		/*String sql="INSERT INTO Pool VALUES("
 				+ "'"+p.getPoolId()+"',"
 				+ p.getPotenciaDeMinadoMHs()+","
 				+ p.getCantidadDeTrabajadores()+","
 				+ p.getCantidadDeMineros()+""
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		resultado = ConexionBD.agregarRegistro(p);
 		
 		return resultado;
 	}
@@ -34,14 +34,14 @@ ConexionBD conexion;
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Pool WHERE poolId = '"+poolId+"'";
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
 	
 	public boolean modificarRegistro(Pool p, boolean flags[]) {
 		boolean resultado = false;
-		boolean primero=true;
+		/*boolean primero=true;
 		
 		String sql = "UPDATE Pool SET ";
 		
@@ -61,8 +61,8 @@ ConexionBD conexion;
 			sql+=("cantidadDeMineros="+p.getCantidadDeMineros());
 		}
 		
-		sql+=(" WHERE poolId = '"+p.getPoolId()+"'");
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE poolId = '"+p.getPoolId()+"'");*/
+		resultado = ConexionBD.actualizarRegistro(p);
 		
 		return resultado;
 	}
@@ -72,7 +72,7 @@ ConexionBD conexion;
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		try {
 			if (rs.next()) {
 				do {

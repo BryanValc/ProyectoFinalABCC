@@ -10,22 +10,22 @@ import modelo.Orden;
 
 public class OrdenDAO {
 
-	ConexionBD conexion;
+	/*ConexionBD conexion;
 	
 	public OrdenDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(Orden o) {
 		boolean resultado = false;
 		
-		String sql="INSERT INTO Orden VALUES("
+		/*String sql="INSERT INTO Orden VALUES("
 				+ o.getOrdenId()+","
 				+ "'"+o.getFechaOrden()+"',"
 				+o.getCompradorId()+","
 				+o.getHorasDeOperacion()
-				+ ")";
-		resultado = conexion.ejecutarInstruccion(sql);
+				+ ")";*/
+		resultado = ConexionBD.agregarRegistro(o);
 		
 		return resultado;
 	}
@@ -34,7 +34,7 @@ public class OrdenDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Orden WHERE ordenId = "+ordenId;
-		resultado = conexion.ejecutarInstruccion(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
@@ -43,7 +43,7 @@ public class OrdenDAO {
 		boolean resultado = false;
 		boolean primero=true;
 		
-		String sql = "UPDATE Orden SET ";
+		/*String sql = "UPDATE Orden SET ";
 		
 		if (flags[0]) {
 			if (!primero) {sql+=", ";
@@ -60,9 +60,8 @@ public class OrdenDAO {
 			}else {primero = false;}
 			sql+=("horasDeOperacion="+o.getHorasDeOperacion());
 		}
-		
-		sql+=(" WHERE ordenId = "+o.getOrdenId());
-		resultado = conexion.ejecutarInstruccion(sql);
+		sql+=(" WHERE ordenId = "+o.getOrdenId());*/
+		resultado = ConexionBD.actualizarRegistro(o);
 		
 		return resultado;
 	}
@@ -72,7 +71,7 @@ public class OrdenDAO {
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		try {
 			if (rs.next()) {
 				do {
