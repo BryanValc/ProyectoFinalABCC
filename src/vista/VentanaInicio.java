@@ -72,6 +72,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JComboBox<String> comboCriptomonedaIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
+	JComboBox<String> comboFecha[]=new JComboBox[3];
 	JButton interacciones[][] = new JButton[6][4];
 	JTable tablas[]=new JTable[6];//=========================Tablas
 	JScrollPane sp[] = new JScrollPane[6];
@@ -357,8 +358,37 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrden[0]=new JTextField();
 		jtfsOrden[0].setBounds(400, 50, 150, 20);
 		panelOrden.add(jtfsOrden[0]);
-		jtfsOrden[1]=new JTextField();
-		jtfsOrden[1].setBounds(400, 80, 150, 20);
+		
+		
+		for (int i=0;i<comboFecha.length;i+=1) {
+			comboFecha[i]=new JComboBox<String>();
+			comboFecha[i].setBounds(400+(i*55), 80, 55, 20);
+			panelOrden.add(comboFecha[i]);
+		}
+		for (int i = 1; i <= 31; i+=1) {	
+			if (i<10) {
+				comboFecha[0].addItem("0"+i);
+			}else {
+				comboFecha[0].addItem(""+i);
+			}
+			
+		}
+		comboFecha[1].addItem("Ene");
+		comboFecha[1].addItem("Feb");
+		comboFecha[1].addItem("Mar");
+		comboFecha[1].addItem("Abr");
+		comboFecha[1].addItem("May");
+		comboFecha[1].addItem("Jun");
+		comboFecha[1].addItem("Jul");
+		comboFecha[1].addItem("Ago");
+		comboFecha[1].addItem("Sep");
+		comboFecha[1].addItem("Oct");
+		comboFecha[1].addItem("Nov");
+		comboFecha[1].addItem("Dic");
+		for (int i = 2021; i <= 2100; i+=1) {	comboFecha[2].addItem(""+i);}
+		
+		jtfsOrden[1]=new JTextField();//Se va a reutilizar como buffer
+		//jtfsOrden[1].setBounds(400, 80, 150, 20);
 		panelOrden.add(jtfsOrden[1]);
 		comboCompradorIdOrden.setBounds(400, 110, 150, 20);
 		comboCompradorIdOrden.setToolTipText("Solo se pueden poner compradores que ya estén en la base de datos");
@@ -820,7 +850,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			jtfsPool[i].setText(""+tablas[3].getValueAt(tablas[3].getSelectedRow(),i));
 		}
 	}
-	
 	public String consultaOrden() {//Orden
 		String sql = "SELECT * FROM Orden ";
 		boolean primero=true;
@@ -872,6 +901,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	public void obtenerRegistroTablaOrden() {
 		jtfsOrden[0].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),0));
 		jtfsOrden[1].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),1));
+		comboFecha[0].setSelectedItem(jtfsOrden[1].getText().substring(0,2));
+		comboFecha[1].setSelectedItem(jtfsOrden[1].getText().substring(3,6));
+		comboFecha[2].setSelectedItem(jtfsOrden[1].getText().substring(7,11));
+		
 		comboCompradorIdOrden.setSelectedItem(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),2));
 		jtfsOrden[2].setText(""+tablas[4].getValueAt(tablas[4].getSelectedRow(),3));
 	}
@@ -958,7 +991,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		Object src =arg0.getSource();
 		int plusX = 30;
 		int plusY = 30;
-		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {
+		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {//MenuBar comprador
 			interacciones[0][0].setVisible(true);
 			interacciones[0][0].setEnabled(true);
 			interacciones[0][3].setVisible(true);
@@ -995,7 +1028,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 			lastOpent=frameComprador;
-		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {
+		}else if(src==menuItems[1][0]||src==menuItems[1][1]||src==menuItems[1][2]||src==menuItems[1][3]) {//MenuBar contratista
 			interacciones[1][0].setVisible(true);
 			interacciones[1][0].setEnabled(true);
 			interacciones[1][3].setVisible(true);
@@ -1032,7 +1065,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 			lastOpent=frameContratista;
-		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {
+		}else if(src==menuItems[2][0]||src==menuItems[2][1]||src==menuItems[2][2]||src==menuItems[2][3]) {//MenuBar criptomoneda
 			interacciones[2][0].setVisible(true);
 			interacciones[2][0].setEnabled(true);
 			interacciones[2][3].setVisible(true);
@@ -1069,7 +1102,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 			lastOpent = frameCriptomoneda;
-		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {
+		}else if(src==menuItems[3][0]||src==menuItems[3][1]||src==menuItems[3][2]||src==menuItems[3][3]) {//MenuBar pool
 			interacciones[3][0].setVisible(true);
 			interacciones[3][0].setEnabled(true);
 			interacciones[3][3].setVisible(true);
@@ -1106,7 +1139,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			framePool.toFront();
 			framePool.setVisible(true);
 			lastOpent=framePool;
-		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {
+		}else if(src==menuItems[4][0]||src==menuItems[4][1]||src==menuItems[4][2]||src==menuItems[4][3]) {//MenuBar orden
 			interacciones[4][0].setVisible(true);
 			interacciones[4][0].setEnabled(true);
 			interacciones[4][3].setVisible(true);
@@ -1146,7 +1179,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 			lastOpent=frameOrden;
-		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {
+		}else if(src==menuItems[5][0]||src==menuItems[5][1]||src==menuItems[5][2]||src==menuItems[5][3]) {//MenuBar orden de potencia
 			interacciones[5][0].setVisible(true);
 			interacciones[5][0].setEnabled(true);
 			interacciones[5][3].setVisible(true);
@@ -1255,6 +1288,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			
 			actualizarTablaComprador("SELECT * FROM Comprador");
 		}else if(src==interacciones[0][1]) {
 			metodoQueRestableceTODO(jtfsComprador);
@@ -1416,7 +1450,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsPool[1].getText().equals("")?0:Long.parseLong(jtfsPool[1].getText()),
 							jtfsPool[2].getText().equals("")?0:Integer.parseInt(jtfsPool[2].getText()),
 							jtfsPool[3].getText().equals("")?0:Integer.parseInt(jtfsPool[3].getText()));
-					//System.out.println(pool);
 					if (poolDAO.modificarRegistro(pool, flags)) {	JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
 					}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");}
 				}
@@ -1437,6 +1470,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[4][0]) {
 			OrdenDAO ordenDAO = new OrdenDAO();
+			
+			jtfsOrden[1].setText(comboFecha[0].getSelectedItem()+"-"+comboFecha[1].getSelectedItem()+"-"+comboFecha[2].getSelectedItem());
+			System.out.println(jtfsOrden[1].getText());
 			switch (interacciones[4][0].getText()) {
 			case "Agregar":
 				int lleno=1;
