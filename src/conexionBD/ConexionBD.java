@@ -11,11 +11,12 @@ import modelo.*;
 
 public class ConexionBD {
 	
+	private static ConexionBD conexionBD;
 	private static Connection conexion= null;
 	private static PreparedStatement pstm;
 	private static ResultSet rs;
 	
-	public ConexionBD() {
+	private ConexionBD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
@@ -37,6 +38,13 @@ public class ConexionBD {
 			new ConexionBD();
 		}
 		return conexion;
+	}
+	
+	public static synchronized ConexionBD getInstance() {
+		if (conexionBD == null) {
+			new ConexionBD();
+		}
+		return conexionBD;
 	}
 	
 	static void cerrarConnexion() {

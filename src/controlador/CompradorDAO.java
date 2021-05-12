@@ -10,11 +10,11 @@ import modelo.Comprador;
 
 public class CompradorDAO {
 	
-	ConexionBD conexion;
+	/*ConexionBD conexion;
 	
 	public CompradorDAO() {
 		conexion = new ConexionBD();
-	}
+	}*/
 	
 	public boolean insertarRegistro(Comprador c) {
 		boolean resultado = false;
@@ -30,7 +30,7 @@ public class CompradorDAO {
 				+ "'"+c.getEmail()+"'"
 				+ ")";*/
 		
-		resultado = conexion.agregarRegistro(c);
+		resultado = ConexionBD.agregarRegistro(c);
 		
 		return resultado;
 	}
@@ -39,7 +39,7 @@ public class CompradorDAO {
 		boolean resultado = false;
 		
 		String sql="DELETE FROM Comprador WHERE compradorId = "+compradorId;
-		resultado = conexion.eliminarRegistro(sql);
+		resultado = ConexionBD.eliminarRegistro(sql);
 		
 		return resultado;
 	}
@@ -87,7 +87,7 @@ public class CompradorDAO {
 		}
 		
 		sql+=(" WHERE compradorId = "+c.getCompradorId());*/
-		resultado = conexion.actualizarRegistro(c);
+		resultado = ConexionBD.actualizarRegistro(c);
 		
 		return resultado;
 	}
@@ -97,7 +97,7 @@ public class CompradorDAO {
 		
 		ResultSet rs;
 		
-		rs = conexion.ejecutarConsulta(filtro);
+		rs = ConexionBD.ejecutarConsulta(filtro);
 		//SELECT * FROM Alumnos WHERE prod_name = 'Microsoft 10-20 Keyboard' AND prod_price < 30;
 		try {
 			if (rs.next()) {

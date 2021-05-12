@@ -1,12 +1,14 @@
 
 package vista;
 
+import conexionBD.ConexionBD;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Color;
@@ -34,6 +36,9 @@ import modelo.*;
 
 
 class Interfaz extends JFrame implements ActionListener, ItemListener{
+	
+	ConexionBD conexion = ConexionBD.getInstance();
+	
 	int x=0;
 	int y=0;
 	JMenuBar menuBar = new JMenuBar();//=================MenuBar
@@ -355,6 +360,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrden[1].setBounds(400, 80, 150, 20);
 		panelOrden.add(jtfsOrden[1]);
 		comboCompradorIdOrden.setBounds(400, 110, 150, 20);
+		comboCompradorIdOrden.setToolTipText("Solo se pueden poner compradores que ya estén en la base de datos");
 		panelOrden.add(comboCompradorIdOrden);
 		jtfsOrden[2]=new JTextField();
 		jtfsOrden[2].setBounds(400, 140, 150, 20);
@@ -400,16 +406,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrdenDePotencia[0].setBounds(430, 50, 150, 20);
 		panelOrdenDePotencia.add(jtfsOrdenDePotencia[0]);
 		comboOrdenIdOrdenDePotencia.setBounds(430, 80, 150, 20);
-		comboOrdenIdOrdenDePotencia.setToolTipText("Solo se pueden poner ordenes existentes");
+		comboOrdenIdOrdenDePotencia.setToolTipText("Solo se pueden poner ordenes que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboOrdenIdOrdenDePotencia);
 		comboCriptomonedaIdOrdenDePotencia.setBounds(430, 110, 150, 20);
-		comboCriptomonedaIdOrdenDePotencia.setToolTipText("Solo se pueden poner criptomonedas existentes");
+		comboCriptomonedaIdOrdenDePotencia.setToolTipText("Solo se pueden poner criptomonedas que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboCriptomonedaIdOrdenDePotencia);
 		comboContratistaIdOrdenDePotencia.setBounds(430, 140, 150, 20);
-		comboContratistaIdOrdenDePotencia.setToolTipText("Solo se pueden poner ordenes de potencia existentes");
+		comboContratistaIdOrdenDePotencia.setToolTipText("Solo se pueden poner ordenes de potencia que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboContratistaIdOrdenDePotencia);
 		comboPoolIdOrdenDePotencia.setBounds(430, 170, 150, 20);
-		comboPoolIdOrdenDePotencia.setToolTipText("Solo se pueden poner pools existentes");
+		comboPoolIdOrdenDePotencia.setToolTipText("Solo se pueden poner pools que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboPoolIdOrdenDePotencia);
 		jtfsOrdenDePotencia[1]=new JTextField();
 		jtfsOrdenDePotencia[1].setBounds(430, 200, 150, 20);
