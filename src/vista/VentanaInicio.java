@@ -159,7 +159,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[1].addKeyListener(new KeyAdapter() {//validacion letras
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsComprador[1].getText().equals("")?true:!(jtfsComprador[1].getText().charAt(jtfsComprador[1].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE))) {
+				char ch = ke.getKeyChar();
+				if ((jtfsComprador[1].getText().equals("")?true:!(jtfsComprador[1].getText().charAt(jtfsComprador[1].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&(((Character.isLetter(ch)||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[1].getText().length()<150||(code==KeyEvent.VK_BACK_SPACE))) {
 					jtfsComprador[1].setEditable(true);
 				}else{
 					jtfsComprador[1].setEditable(false);
@@ -189,7 +190,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[4].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsComprador[4].getText().equals("")?true:!(jtfsComprador[4].getText().charAt(jtfsComprador[4].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[4].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
+				char ch = ke.getKeyChar();
+				if ((jtfsComprador[4].getText().equals("")?true:!(jtfsComprador[4].getText().charAt(jtfsComprador[4].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((Character.isLetter(ch))||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[4].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
 					jtfsComprador[4].setEditable(true);
 				}else{
 					jtfsComprador[4].setEditable(false);
@@ -199,7 +201,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[5].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsComprador[5].getText().equals("")?true:!(jtfsComprador[5].getText().charAt(jtfsComprador[5].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[5].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
+				char ch = ke.getKeyChar();
+				if ((jtfsComprador[5].getText().equals("")?true:!(jtfsComprador[5].getText().charAt(jtfsComprador[5].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((Character.isLetter(ch))||(code==KeyEvent.VK_SPACE)))&&jtfsComprador[5].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
 					jtfsComprador[5].setEditable(true);
 				}else{
 					jtfsComprador[5].setEditable(false);
@@ -219,7 +222,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsComprador[7].addKeyListener(new KeyAdapter() {//validacion tamaño
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsComprador[7].getText().equals("")?true:!(jtfsComprador[7].getText().charAt(jtfsComprador[7].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&(jtfsComprador[7].getText().length()<50||code==KeyEvent.VK_BACK_SPACE)) {
+				char ch = ke.getKeyChar();
+				if ((jtfsComprador[7].getText().equals("")?true:!(jtfsComprador[7].getText().charAt(jtfsComprador[7].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&(((Character.isLetter(ch)||Character.isDigit(ch)||ch=='@'||ch=='.')&&jtfsComprador[7].getText().length()<50)||code==KeyEvent.VK_BACK_SPACE)) {
 					jtfsComprador[7].setEditable(true);
 				}else{
 					jtfsComprador[7].setEditable(false);
@@ -248,7 +252,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsContratista[1].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsContratista[1].getText().equals("")?true:!(jtfsContratista[1].getText().charAt(jtfsContratista[1].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((ke.getKeyChar() >= 'a' && ke.getKeyChar() <= 'z')||(ke.getKeyChar() >= 'A' && ke.getKeyChar() <= 'Z')||(code==KeyEvent.VK_SPACE)))&&jtfsContratista[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
+				char ch = ke.getKeyChar();
+				if ((jtfsContratista[1].getText().equals("")?true:!(jtfsContratista[1].getText().charAt(jtfsContratista[1].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((((Character.isLetter(ch))||(code==KeyEvent.VK_SPACE)))&&jtfsContratista[1].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
 					jtfsContratista[1].setEditable(true);
 				}else{
 					jtfsContratista[1].setEditable(false);
@@ -298,7 +303,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsCriptomoneda[2].addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
-				if ((jtfsCriptomoneda[2].getText().equals("")?true:!(jtfsCriptomoneda[2].getText().charAt(jtfsCriptomoneda[2].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&(jtfsCriptomoneda[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE))) {
+				char ch = ke.getKeyChar();
+				if ((jtfsCriptomoneda[2].getText().equals("")?true:!(jtfsCriptomoneda[2].getText().charAt(jtfsCriptomoneda[2].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((Character.isLetter(ch)||Character.isDigit(ch)||code==KeyEvent.VK_SPACE)&&(jtfsCriptomoneda[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)))) {
 					jtfsCriptomoneda[2].setEditable(true);
 				}else{
 					jtfsCriptomoneda[2].setEditable(false);
