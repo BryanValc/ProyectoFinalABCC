@@ -22,11 +22,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.security.AllPermission;
 import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -1645,6 +1649,75 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 }
 
+class Login extends JFrame implements ActionListener{
+	
+	ConexionBD conexion = ConexionBD.getInstance();
+	
+	UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
+	JLabel lblUsuario = new JLabel("Usuario");
+	JLabel lblContraseña = new JLabel("Contraseña");
+	JTextField jtfUsuario = new JTextField();
+	JPasswordField jpfContraseña = new JPasswordField();
+	JButton ingresar = new JButton("Ingresar");
+	BufferedImage image = ImageIO.read(new File("./archivos/usuario.PNG"));
+    JLabel label = new JLabel(new ImageIcon(image));
+    
+	
+	public Login() throws IOException {
+		getContentPane().setLayout(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(300,430);
+		setLocationRelativeTo(null);
+		setTitle("Login");
+		setVisible(true);
+	 
+		label.setBounds(75,35,150,150);
+		lblUsuario.setBounds(50,200,200,20);
+		jtfUsuario.setBounds(50,230,200,20);
+		lblContraseña.setBounds(50,260,200,20);
+		jpfContraseña.setBounds(50,290,200,20);
+		ingresar.setBounds(100,320,100,20);
+		
+		ingresar.setBackground(Color.RED);
+		ingresar.setForeground(Color.WHITE);
+		ingresar.addActionListener(this);
+		
+		add(label);
+		add(lblUsuario);
+		add(jtfUsuario);
+		add(lblContraseña);
+		add(jpfContraseña);
+		add(ingresar);
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (verificar()) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					new Interfaz();
+				}
+			});
+			setVisible(false);
+		}
+	}
+	
+	public boolean verificar() {
+		try {
+			ArrayList<Usuario> listaUsuarios = usuarioDAO.buscarUsuarios("SELECT * FROM Usuario WHERE nombre = '"+jtfUsuario.getText()+"'");
+			Usuario usuario = listaUsuarios.get(0);
+			return usuario.getContraseña().equals(jpfContraseña.getText());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+	
+}
+
 public class VentanaInicio {
 
 	public static void main(String[] args) {
@@ -1652,10 +1725,13 @@ public class VentanaInicio {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new Interfaz();
+				try {
+					new Login();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
 	}
-
 }

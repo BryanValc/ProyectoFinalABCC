@@ -1,0 +1,59 @@
+CREATE DATABASE NiceHash;
+USE NiceHash;
+
+CREATE TABLE Pool(
+poolId VARCHAR(10) PRIMARY KEY,
+potenciaDeMinadoMHs BIGINT,
+cantidadDeTrabajadores INT,
+cantidadDeMineros INT
+);
+
+CREATE TABLE Contratista(
+contratistaId MEDIUMINT PRIMARY KEY,
+nombreContratista VARCHAR(50),
+mesesOperando SMALLINT
+);
+
+CREATE TABLE Criptomoneda(
+criptomonedaId VARCHAR(20) PRIMARY KEY,
+precioUnidad DOUBLE,
+descripcionUnidad VARCHAR(50)
+);
+
+CREATE TABLE Comprador(
+compradorId INT PRIMARY KEY,
+nombre VARCHAR(150),
+wallet VARCHAR(100),
+direccion VARCHAR(100),
+ciudad VARCHAR(50),
+estado VARCHAR(50),
+telefono VARCHAR(15),
+email VARCHAR(50)
+);
+
+CREATE TABLE Orden(
+ordenId BIGINT PRIMARY KEY,
+fechaOrden VARCHAR(11),
+compradorId INT,
+CONSTRAINT fk_compradorIdInOrden FOREIGN KEY (compradorId) REFERENCES Comprador(compradorId),
+horasDeOperacion MEDIUMINT
+);
+
+CREATE TABLE OrdenDePotencia(
+compraId BIGINT PRIMARY KEY,
+ordenId BIGINT,
+CONSTRAINT fk_ordenIdInOrdenDePotencia FOREIGN KEY (ordenId) REFERENCES Orden(ordenId),
+criptomonedaId VARCHAR(20),
+CONSTRAINT fk_criptomonedaIdInOrdenDePotencia FOREIGN KEY (criptomonedaId) REFERENCES Criptomoneda(criptomonedaId),
+contratistaId MEDIUMINT,
+CONSTRAINT fk_contratistaIdInOrdenDePotencia FOREIGN KEY (contratistaId) REFERENCES Contratista(contratistaId),
+poolId VARCHAR(10),
+CONSTRAINT fk_poolIdInOrdenDePotencia FOREIGN KEY (poolId) REFERENCES Pool(poolId),
+cantidadDeCriptomonedas DOUBLE,
+precioFiat DOUBLE
+);
+
+CREATE TABLE Usuario(
+nombre VARCHAR(15) PRIMARY KEY,
+contraseña VARCHAR(15)
+);
