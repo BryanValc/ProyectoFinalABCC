@@ -1809,14 +1809,18 @@ class Login extends JFrame implements ActionListener{
 				}
 			});
 			setVisible(false);
+		}else {
+			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
 		}
 	}
 	
 	public boolean verificar() {
 		try {
 			ArrayList<Usuario> listaUsuarios = usuarioDAO.buscarUsuarios("SELECT * FROM Usuario WHERE nombre = '"+jtfUsuario.getText()+"'");
-			Usuario usuario = listaUsuarios.get(0);
-			return usuario.getContraseña().equals(jpfContraseña.getText());
+			if (listaUsuarios.size()!=0) {
+				Usuario usuario = listaUsuarios.get(0);
+				return usuario.getContraseña().equals(jpfContraseña.getText());
+			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
