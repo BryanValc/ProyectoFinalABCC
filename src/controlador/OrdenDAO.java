@@ -8,6 +8,51 @@ import java.util.concurrent.ArrayBlockingQueue;
 import conexionBD.ConexionBD;
 import modelo.Orden;
 
+class ConsultaOrdenes implements Runnable{
+	ArrayList<Orden> listaOrdenes = new ArrayList<Orden>();
+	String filtro;
+	
+	public ConsultaOrdenes(String filtro) {
+		this.filtro = filtro;
+	}
+
+	@Override
+	public void run() {
+		ResultSet rs;
+		
+		rs = ConexionBD.ejecutarConsulta(filtro);
+		try {
+			if (rs.next()) {
+				do {
+					listaOrdenes.add(new Orden(
+							rs.getLong(1),
+							rs.getString(2),
+							rs.getInt(3),
+							rs.getInt(4)));
+				} while (rs.next());			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Orden> getListaOrdenes() {
+		return listaOrdenes;
+	}
+
+	public void setListaOrdenes(ArrayList<Orden> listaOrdenes) {
+		this.listaOrdenes = listaOrdenes;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+	
+}
+
 public class OrdenDAO {
 	
 	private static OrdenDAO ordenDAO=null;
@@ -46,25 +91,15 @@ public class OrdenDAO {
 	}
 	
 	public synchronized ArrayList<Orden> buscarOrdenes(String filtro){
-		ArrayList<Orden> listaOrdenes = new ArrayList<Orden>();
-		
-		ResultSet rs;
-		
-		rs = ConexionBD.ejecutarConsulta(filtro);
+		ConsultaOrdenes co = new ConsultaOrdenes(filtro);
+		Thread h1 = new Thread(co);
+		h1.start();
 		try {
-			if (rs.next()) {
-				do {
-					listaOrdenes.add(new Orden(
-							rs.getLong(1),
-							rs.getString(2),
-							rs.getInt(3),
-							rs.getInt(4)));
-				} while (rs.next());			}
-		} catch (SQLException e) {
+			h1.join();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return listaOrdenes;
+		return co.getListaOrdenes();
 	}
 	
 }

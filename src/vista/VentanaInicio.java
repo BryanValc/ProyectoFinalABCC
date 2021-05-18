@@ -1736,14 +1736,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
 					comboContratistaIdOrdenDePotencia.removeAllItems();
 					comboPoolIdOrdenDePotencia.removeAllItems();
-					ArrayList<Comprador> compradores = (ArrayList<Comprador>) compradorDAO.buscarCompradores("SELECT * FROM Comprador").clone();
-					System.out.println(compradores);
+					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
 					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
-					System.out.println(ordenes);
 					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
-					System.out.println(criptomonedas);
 					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
-					System.out.println(contratistas);
 					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
 					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
 					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}

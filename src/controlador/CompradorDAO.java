@@ -16,7 +16,7 @@ class ConsultaCompradores implements Runnable{
 		this.filtro = filtro;
 	}
 
-	public synchronized void run(){
+	public void run(){
 		
 		ResultSet rs;
 		

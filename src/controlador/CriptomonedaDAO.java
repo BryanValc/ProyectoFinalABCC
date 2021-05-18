@@ -8,6 +8,51 @@ import java.util.concurrent.ArrayBlockingQueue;
 import conexionBD.ConexionBD;
 import modelo.Criptomoneda;
 
+class ConsultaCriptomonedas implements Runnable{
+	ArrayList<Criptomoneda> listaCriptomonedas = new ArrayList<Criptomoneda>();
+	String filtro;
+	
+	public ConsultaCriptomonedas(String filtro) {
+		this.filtro = filtro;
+	}
+
+	@Override
+	public void run() {
+		ResultSet rs;
+		
+		rs = ConexionBD.ejecutarConsulta(filtro);
+		try {
+			if (rs.next()) {
+				do {
+					listaCriptomonedas.add(new Criptomoneda(
+							rs.getString(1),
+							rs.getDouble(2),
+							rs.getString(3)));
+				} while (rs.next());			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public ArrayList<Criptomoneda> getListaCriptomonedas() {
+		return listaCriptomonedas;
+	}
+
+	public void setListaCriptomonedas(ArrayList<Criptomoneda> listaCriptomonedas) {
+		this.listaCriptomonedas = listaCriptomonedas;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+	
+}
+
 public class CriptomonedaDAO {
 
 	private static CriptomonedaDAO criptomonedaDAO=null;
@@ -43,24 +88,15 @@ public class CriptomonedaDAO {
 	}
 	
 	public synchronized ArrayList<Criptomoneda> buscarCriptomonedas(String filtro){
-		ArrayList<Criptomoneda> listaCriptomonedas = new ArrayList<Criptomoneda>();
-		
-		ResultSet rs;
-		
-		rs = ConexionBD.ejecutarConsulta(filtro);
+		ConsultaCriptomonedas cc = new ConsultaCriptomonedas(filtro);
+		Thread h1 = new Thread(cc);
+		h1.start();
 		try {
-			if (rs.next()) {
-				do {
-					listaCriptomonedas.add(new Criptomoneda(
-							rs.getString(1),
-							rs.getDouble(2),
-							rs.getString(3)));
-				} while (rs.next());			}
-		} catch (SQLException e) {
+			h1.join();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return listaCriptomonedas;
+		return cc.getListaCriptomonedas();
 	}
 	
 }

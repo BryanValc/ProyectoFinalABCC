@@ -8,6 +8,51 @@ import java.util.concurrent.ArrayBlockingQueue;
 import conexionBD.ConexionBD;
 import modelo.Pool;
 
+class ConsultaPools implements Runnable{
+	ArrayList<Pool> listaPools = new ArrayList<Pool>();
+	String filtro;
+	
+	public ConsultaPools(String filtro) {
+		this.filtro = filtro;
+	}
+
+	@Override
+	public void run() {
+		ResultSet rs;
+		
+		rs = ConexionBD.ejecutarConsulta(filtro);
+		try {
+			if (rs.next()) {
+				do {
+					listaPools.add(new Pool(
+							rs.getString(1),
+							rs.getLong(2),
+							rs.getInt(3),
+							rs.getInt(4)));
+				} while (rs.next());			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Pool> getListaPools() {
+		return listaPools;
+	}
+
+	public void setListaPools(ArrayList<Pool> listaPools) {
+		this.listaPools = listaPools;
+	}
+
+	public String getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+	
+}
+
 public class PoolDAO {
 	
 	private static PoolDAO poolDAO=null;
@@ -44,25 +89,15 @@ public class PoolDAO {
 	}
 
 	public synchronized ArrayList<Pool> buscarPools(String filtro){
-		ArrayList<Pool> listaPools = new ArrayList<Pool>();
-		
-		ResultSet rs;
-		
-		rs = ConexionBD.ejecutarConsulta(filtro);
+		ConsultaPools cp = new ConsultaPools(filtro);
+		Thread h1 = new Thread(cp);
+		h1.start();
 		try {
-			if (rs.next()) {
-				do {
-					listaPools.add(new Pool(
-							rs.getString(1),
-							rs.getLong(2),
-							rs.getInt(3),
-							rs.getInt(4)));
-				} while (rs.next());			}
-		} catch (SQLException e) {
+			h1.join();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return listaPools;
+		return cp.getListaPools();
 	}
 
 }
