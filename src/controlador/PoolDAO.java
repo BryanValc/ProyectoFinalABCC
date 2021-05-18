@@ -43,7 +43,7 @@ public class PoolDAO {
 		return resultado;
 	}
 
-	public ArrayList<Pool> buscarPools(String filtro){
+	public synchronized ArrayList<Pool> buscarPools(String filtro){
 		ArrayList<Pool> listaPools = new ArrayList<Pool>();
 		
 		ResultSet rs;

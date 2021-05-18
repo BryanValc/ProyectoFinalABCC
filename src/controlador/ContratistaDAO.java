@@ -42,7 +42,7 @@ public class ContratistaDAO{
 		return resultado;
 	}
 	
-	public ArrayList<Contratista> buscarContratistas(String filtro){
+	public synchronized ArrayList<Contratista> buscarContratistas(String filtro){
 		ArrayList<Contratista> listaContratistas = new ArrayList<Contratista>();
 		
 		ResultSet rs;

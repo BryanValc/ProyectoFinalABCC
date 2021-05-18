@@ -42,7 +42,7 @@ public class OrdenDePotenciaDAO {
 		return resultado;
 	}
 
-	public ArrayList<OrdenDePotencia> buscarOrdenesDePotencia(String filtro){
+	public synchronized ArrayList<OrdenDePotencia> buscarOrdenesDePotencia(String filtro){
 		ArrayList<OrdenDePotencia> listaOrdenesDePotencia = new ArrayList<OrdenDePotencia>();
 		
 		ResultSet rs;

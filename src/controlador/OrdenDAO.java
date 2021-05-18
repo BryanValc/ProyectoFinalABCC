@@ -45,7 +45,7 @@ public class OrdenDAO {
 		return resultado;
 	}
 	
-	public ArrayList<Orden> buscarOrdenes(String filtro){
+	public synchronized ArrayList<Orden> buscarOrdenes(String filtro){
 		ArrayList<Orden> listaOrdenes = new ArrayList<Orden>();
 		
 		ResultSet rs;

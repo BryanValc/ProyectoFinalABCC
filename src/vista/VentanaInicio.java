@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1353,10 +1354,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			lastOpent=frameOrdenDePotencia;
 		}
 		
+		
 		if (x==300||y==300) { 
 			x=0;
 			y=0;
 		}
+		
 		
 		if (src==interacciones[0][0]) {
 			switch (interacciones[0][0].getText()) {
@@ -1733,10 +1736,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
 					comboContratistaIdOrdenDePotencia.removeAllItems();
 					comboPoolIdOrdenDePotencia.removeAllItems();
-					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
+					ArrayList<Comprador> compradores = (ArrayList<Comprador>) compradorDAO.buscarCompradores("SELECT * FROM Comprador").clone();
+					System.out.println(compradores);
 					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+					System.out.println(ordenes);
 					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+					System.out.println(criptomonedas);
 					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
+					System.out.println(contratistas);
 					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
 					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
 					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}

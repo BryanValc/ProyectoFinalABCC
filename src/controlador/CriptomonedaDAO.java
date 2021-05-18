@@ -42,7 +42,7 @@ public class CriptomonedaDAO {
 		return resultado;
 	}
 	
-	public ArrayList<Criptomoneda> buscarCriptomonedas(String filtro){
+	public synchronized ArrayList<Criptomoneda> buscarCriptomonedas(String filtro){
 		ArrayList<Criptomoneda> listaCriptomonedas = new ArrayList<Criptomoneda>();
 		
 		ResultSet rs;

@@ -23,7 +23,7 @@ public class UsuarioDAO {
 		return usuarioDAO;
 	}
 	
-	public ArrayList<Usuario> buscarUsuarios(String filtro){
+	public synchronized ArrayList<Usuario> buscarUsuarios(String filtro){
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		
 		ResultSet rs;
