@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -1058,6 +1059,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		Object src =arg0.getSource();
 		int plusX = 30;
 		int plusY = 30;
+		Rectangle subIconos = new Rectangle(90,150,75,75);
 		if (src==menuItems[0][0]||src==menuItems[0][1]||src==menuItems[0][2]||src==menuItems[0][3]) {//MenuBar comprador
 			interacciones[0][0].setVisible(true);
 			interacciones[0][0].setEnabled(true);
@@ -1097,8 +1099,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[0][1].setBounds(45,105,150,150);
+			imgs[0][1].setBounds(subIconos);
 			panelComprador.add(imgs[0][1]);
+			panelComprador.remove(imgs[0][0]);
+			panelComprador.add(imgs[0][0]);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 			lastOpent=frameComprador;
@@ -1141,8 +1145,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[1][1].setBounds(45,105,150,150);
+			imgs[1][1].setBounds(subIconos);
 			panelContratista.add(imgs[1][1]);
+			panelContratista.remove(imgs[1][0]);
+			panelContratista.add(imgs[1][0]);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 			lastOpent=frameContratista;
@@ -1185,8 +1191,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[2][1].setBounds(45,105,150,150);
+			imgs[2][1].setBounds(subIconos);
 			panelCriptomoneda.add(imgs[2][1]);
+			panelCriptomoneda.remove(imgs[2][0]);
+			panelCriptomoneda.add(imgs[2][0]);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 			lastOpent = frameCriptomoneda;
@@ -1229,8 +1237,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[3][1].setBounds(45,105,150,150);
+			imgs[3][1].setBounds(subIconos);
 			panelPool.add(imgs[3][1]);
+			panelPool.remove(imgs[3][0]);
+			panelPool.add(imgs[3][0]);
 			framePool.toFront();
 			framePool.setVisible(true);
 			lastOpent=framePool;
@@ -1276,8 +1286,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[4][1].setBounds(45,105,150,150);
+			imgs[4][1].setBounds(subIconos);
 			panelOrden.add(imgs[4][1]);
+			panelOrden.remove(imgs[4][0]);
+			panelOrden.add(imgs[4][0]);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 			lastOpent=frameOrden;
@@ -1332,8 +1344,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
-			imgs[5][1].setBounds(45,105,150,150);
+			imgs[5][1].setBounds(subIconos);
 			panelOrdenDePotencia.add(imgs[5][1]);
+			panelOrdenDePotencia.remove(imgs[5][0]);
+			panelOrdenDePotencia.add(imgs[5][0]);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
 			lastOpent=frameOrdenDePotencia;
