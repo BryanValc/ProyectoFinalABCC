@@ -1828,7 +1828,7 @@ class Login extends JFrame implements ActionListener{
 		
 	}
 	
-}
+} 
 
 public class VentanaInicio {
 
