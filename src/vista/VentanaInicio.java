@@ -37,8 +37,6 @@ import javax.swing.border.Border;
 import controlador.*;
 import modelo.*;
 
-
-
 class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 	ConexionBD conexion = ConexionBD.getInstance();
@@ -100,6 +98,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JInternalFrame frameOrdenDePotencia=new JInternalFrame();
 	JInternalFrame lastOpent;
 	JDesktopPane dp = new JDesktopPane();
+	
+	BufferedImage imgComprador, imgContratista,imgCriptomoneda,imgPool,imgOrden,imgOrdenDePotencia,imgAlta,imgBaja,imgCambio,imgConsulta;
+    JLabel [][] imgs = new JLabel[6][2];
+
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -525,6 +527,32 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			panelOrdenDePotencia.add(i);
 		}
 		//==================================================================================================Fin Formulario======================================
+		imgs[0][0]=new JLabel(new ImageIcon(imgComprador));
+		imgs[1][0]=new JLabel(new ImageIcon(imgContratista));
+		imgs[2][0]=new JLabel(new ImageIcon(imgCriptomoneda));
+		imgs[3][0]=new JLabel(new ImageIcon(imgPool));
+		imgs[4][0]=new JLabel(new ImageIcon(imgOrden));
+		imgs[5][0]=new JLabel(new ImageIcon(imgOrdenDePotencia));
+		
+		for (int i = 0; i < imgs.length; i++) {
+			imgs[i][0].setBounds(5,65,150,150);
+			imgs[i][1] = new JLabel(new ImageIcon(imgAlta));
+		}
+		
+		
+		
+		panelComprador.add(imgs[0][1]);
+		panelComprador.add(imgs[0][0]);
+		panelContratista.add(imgs[1][1]);
+		panelContratista.add(imgs[1][0]);
+		panelCriptomoneda.add(imgs[2][1]);
+		panelCriptomoneda.add(imgs[2][0]);
+		panelPool.add(imgs[3][1]);
+		panelPool.add(imgs[3][0]);
+		panelOrden.add(imgs[4][1]);
+		panelOrden.add(imgs[4][0]);
+		panelOrdenDePotencia.add(imgs[5][1]);
+		panelOrdenDePotencia.add(imgs[5][0]);
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
@@ -616,6 +644,30 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		framePool.setMaximumSize(new Dimension(750,495));
 		frameOrden.setMaximumSize(new Dimension(750,495));
 		frameOrdenDePotencia.setMaximumSize(new Dimension(750,525));
+		
+		
+		try {
+			imgComprador = ImageIO.read(new File("./archivos/comprador.PNG"));
+			imgContratista = ImageIO.read(new File("./archivos/contratista.PNG"));
+			imgCriptomoneda = ImageIO.read(new File("./archivos/criptomoneda.PNG"));
+			imgPool = ImageIO.read(new File("./archivos/pool.PNG"));
+			imgOrden = ImageIO.read(new File("./archivos/orden.PNG"));
+			imgOrdenDePotencia = ImageIO.read(new File("./archivos/ordendepotencia.PNG"));
+			
+			imgAlta = ImageIO.read(new File("./archivos/alta.PNG"));
+			imgBaja = ImageIO.read(new File("./archivos/baja.PNG"));
+			imgCambio = ImageIO.read(new File("./archivos/cambio.PNG"));
+			imgConsulta = ImageIO.read(new File("./archivos/consulta.PNG"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	  
+	    
+	    
+	    
+	    
+	    
 		
 	}
 	public void metodoQueRestableceTODO(Component...componentesGraficos) {
@@ -1012,12 +1064,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[0][3].setVisible(true);
 			interacciones[0][3].setEnabled(true);
 			for(JTextField i:jtfsComprador) {	i.setEditable(true);};
+			panelComprador.remove(imgs[0][1]);
 			if(src==menuItems[0][0]) {
 				interacciones[0][3].setVisible(false);
 				interacciones[0][3].setEnabled(false);
 				interacciones[0][0].setText("Agregar");
 				interacciones[0][0].setToolTipText("Agrega un nuevo comprador a la tabla");
 				lblOpComprador.setText("Altas");
+				imgs[0][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[0][1]) {
 				metodoQueRestableceTODO(jtfsComprador);
 				for(JTextField i:jtfsComprador) {	i.setEditable(false);};
@@ -1025,14 +1079,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setText("Eliminar");
 				interacciones[0][0].setToolTipText("Elimina el comprador de la tabla");
 				lblOpComprador.setText("Bajas");
+				imgs[0][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[0][2]) {
 				interacciones[0][0].setText("Modificar");
 				interacciones[0][0].setToolTipText("Modifica el comprador seleccionado");
 				lblOpComprador.setText("Cambios");
+				imgs[0][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[0][3]) {
 				interacciones[0][0].setVisible(false);
 				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
+				imgs[0][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaComprador("SELECT * FROM Comprador");
 			if (frameComprador!=lastOpent) {
@@ -1040,6 +1097,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[0][1].setBounds(45,105,150,150);
+			panelComprador.add(imgs[0][1]);
 			frameComprador.toFront();
 			frameComprador.setVisible(true);
 			lastOpent=frameComprador;
@@ -1049,12 +1108,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[1][3].setVisible(true);
 			interacciones[1][3].setEnabled(true);
 			for(JTextField i:jtfsContratista) {	i.setEditable(true);};
+			panelContratista.remove(imgs[1][1]);
 			if(src==menuItems[1][0]) {
 				interacciones[1][3].setVisible(false);
 				interacciones[1][3].setEnabled(false);
 				interacciones[1][0].setText("Agregar");
 				interacciones[1][0].setToolTipText("Agrega un nuevo contratista a la tabla");
 				lblOpContratista.setText("Altas");
+				imgs[1][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[1][1]) {
 				metodoQueRestableceTODO(jtfsContratista);
 				for(JTextField i:jtfsContratista) {	i.setEditable(false);};
@@ -1062,14 +1123,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setText("Eliminar");
 				interacciones[1][0].setToolTipText("Elimina el contratista de la tabla");
 				lblOpContratista.setText("Bajas");
+				imgs[1][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[1][2]) {
 				interacciones[1][0].setText("Modificar");
 				interacciones[1][0].setToolTipText("Modifica el contratista seleccionado");
 				lblOpContratista.setText("Cambios");
+				imgs[1][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[1][3]) {
 				interacciones[1][0].setVisible(false);
 				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
+				imgs[1][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaContratista("SELECT * FROM Contratista");
 			if (frameContratista!=lastOpent) {
@@ -1077,6 +1141,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[1][1].setBounds(45,105,150,150);
+			panelContratista.add(imgs[1][1]);
 			frameContratista.toFront();
 			frameContratista.setVisible(true);
 			lastOpent=frameContratista;
@@ -1086,12 +1152,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[2][3].setVisible(true);
 			interacciones[2][3].setEnabled(true);
 			for(JTextField i:jtfsCriptomoneda) {	i.setEditable(true);};
+			panelCriptomoneda.remove(imgs[2][1]);
 			if(src==menuItems[2][0]) {
 				interacciones[2][3].setVisible(false);
 				interacciones[2][3].setEnabled(false);
 				interacciones[2][0].setText("Agregar");
 				interacciones[2][0].setToolTipText("Agrega una nueva criptomoneda a la tabla");
 				lblOpCriptomoneda.setText("Altas");
+				imgs[2][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[2][1]) {
 				metodoQueRestableceTODO(jtfsCriptomoneda);
 				for(JTextField i:jtfsCriptomoneda) {	i.setEditable(false);};
@@ -1099,14 +1167,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setText("Eliminar");
 				interacciones[2][0].setToolTipText("Elimina la criptomoneda de la tabla");
 				lblOpCriptomoneda.setText("Bajas");
+				imgs[2][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[2][2]) {
 				interacciones[2][0].setText("Modificar");
 				interacciones[2][0].setToolTipText("Modifica la criptomoneda seleccionada");
 				lblOpCriptomoneda.setText("Cambios");
+				imgs[2][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[2][3]) {
 				interacciones[2][0].setVisible(false);
 				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
+				imgs[2][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 			if (frameCriptomoneda!=lastOpent) {
@@ -1114,6 +1185,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[2][1].setBounds(45,105,150,150);
+			panelCriptomoneda.add(imgs[2][1]);
 			frameCriptomoneda.toFront();
 			frameCriptomoneda.setVisible(true);
 			lastOpent = frameCriptomoneda;
@@ -1123,12 +1196,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[3][3].setVisible(true);
 			interacciones[3][3].setEnabled(true);
 			for(JTextField i:jtfsPool) {	i.setEditable(true);};
+			panelPool.remove(imgs[3][1]);
 			if(src==menuItems[3][0]) {
 				interacciones[3][3].setVisible(false);
 				interacciones[3][3].setEnabled(false);
 				interacciones[3][0].setText("Agregar");
 				interacciones[3][0].setToolTipText("Agrega una nueva pool a la tabla");
 				lblOpPool.setText("Altas");
+				imgs[3][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[3][1]) {
 				metodoQueRestableceTODO(jtfsPool);
 				for(JTextField i:jtfsPool) {	i.setEditable(false);};
@@ -1136,14 +1211,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setText("Eliminar");
 				interacciones[3][0].setToolTipText("Elimina la pool de la tabla");
 				lblOpPool.setText("Bajas");
+				imgs[3][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[3][2]) {
 				interacciones[3][0].setText("Modificar");
 				interacciones[3][0].setToolTipText("Modifica la pool seleccionada");
 				lblOpPool.setText("Cambios");
+				imgs[3][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[3][3]) {
 				interacciones[3][0].setVisible(false);
 				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
+				imgs[3][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaPool("SELECT * FROM Pool");
 			if (framePool!=lastOpent) {
@@ -1151,6 +1229,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[3][1].setBounds(45,105,150,150);
+			panelPool.add(imgs[3][1]);
 			framePool.toFront();
 			framePool.setVisible(true);
 			lastOpent=framePool;
@@ -1161,12 +1241,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[4][3].setEnabled(true);
 			for(JTextField i:jtfsOrden) {	i.setEditable(true);};
 			comboCompradorIdOrden.setEnabled(true);
+			panelOrden.remove(imgs[4][1]);
 			if(src==menuItems[4][0]) {
 				interacciones[4][3].setVisible(false);
 				interacciones[4][3].setEnabled(false);
 				interacciones[4][0].setText("Agregar");
 				interacciones[4][0].setToolTipText("Agrega una nueva orden a la tabla");
 				lblOpOrden.setText("Altas");
+				imgs[4][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[4][1]) {
 				metodoQueRestableceTODO(jtfsOrden);
 				for(JTextField i:jtfsOrden) {	i.setEditable(false);};
@@ -1176,14 +1258,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setText("Eliminar");
 				interacciones[4][0].setToolTipText("Elimina la orden de la tabla");
 				lblOpOrden.setText("Bajas");
+				imgs[4][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[4][2]) {
 				interacciones[4][0].setText("Modificar");
 				interacciones[4][0].setToolTipText("Modifica la orden seleccionada");
 				lblOpOrden.setText("Cambios");
+				imgs[4][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[4][3]) {
 				interacciones[4][0].setVisible(false);
 				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
+				imgs[4][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaOrden("SELECT * FROM Orden");
 			if (frameOrden!=lastOpent) {
@@ -1191,6 +1276,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[4][1].setBounds(45,105,150,150);
+			panelOrden.add(imgs[4][1]);
 			frameOrden.toFront();
 			frameOrden.setVisible(true);
 			lastOpent=frameOrden;
@@ -1204,12 +1291,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			comboCriptomonedaIdOrdenDePotencia.setEnabled(true);
 			comboContratistaIdOrdenDePotencia.setEnabled(true);
 			comboPoolIdOrdenDePotencia.setEnabled(true);
+			panelOrdenDePotencia.remove(imgs[5][1]);
 			if(src==menuItems[5][0]) {
 				interacciones[5][3].setVisible(false);
 				interacciones[5][3].setEnabled(false);
 				interacciones[5][0].setText("Agregar");
 				interacciones[5][0].setToolTipText("Agrega una nueva orden de potencia a la tabla");
 				lblOpOrdenDePotencia.setText("Altas");
+				imgs[5][1]=new JLabel(new ImageIcon(imgAlta));
 			}else if(src==menuItems[5][1]) {
 				metodoQueRestableceTODO(jtfsOrdenDePotencia);
 				for(JTextField i:jtfsOrdenDePotencia) {	i.setEditable(false);};
@@ -1225,14 +1314,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setText("Eliminar");
 				interacciones[5][0].setToolTipText("Elimina la orden de potencia de la tabla");
 				lblOpOrdenDePotencia.setText("Bajas");
+				imgs[5][1]=new JLabel(new ImageIcon(imgBaja));
 			}else if(src==menuItems[5][2]) {
 				interacciones[5][0].setText("Modificar");
 				interacciones[5][0].setToolTipText("Modifica la orden de potencia seleccionada");
 				lblOpOrdenDePotencia.setText("Cambios");
+				imgs[5][1]=new JLabel(new ImageIcon(imgCambio));
 			}else if(src==menuItems[5][3]) {
 				interacciones[5][0].setVisible(false);
 				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
+				imgs[5][1]=new JLabel(new ImageIcon(imgConsulta));
 			}
 			actualizarTablaOrdenDePotencia("SELECT * FROM OrdenDePotencia");
 			if (frameOrdenDePotencia!=lastOpent) {
@@ -1240,6 +1332,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				x+=plusX;
 				y+=plusY;
 			}
+			imgs[5][1].setBounds(45,105,150,150);
+			panelOrdenDePotencia.add(imgs[5][1]);
 			frameOrdenDePotencia.toFront();
 			frameOrdenDePotencia.setVisible(true);
 			lastOpent=frameOrdenDePotencia;
@@ -1650,9 +1744,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 }
 
 class Login extends JFrame implements ActionListener{
-	
 	ConexionBD conexion = ConexionBD.getInstance();
-	
 	UsuarioDAO usuarioDAO = UsuarioDAO.getInstance();
 	JLabel lblUsuario = new JLabel("Usuario");
 	JLabel lblContraseña = new JLabel("Contraseña");
@@ -1661,7 +1753,6 @@ class Login extends JFrame implements ActionListener{
 	JButton ingresar = new JButton("Ingresar");
 	BufferedImage image = ImageIO.read(new File("./archivos/usuario.PNG"));
     JLabel label = new JLabel(new ImageIcon(image));
-    
 	
 	public Login() throws IOException {
 		getContentPane().setLayout(null);
