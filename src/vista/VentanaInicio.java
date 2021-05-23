@@ -1362,9 +1362,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		
 		if (src==interacciones[0][0]) {
+			int lleno=1;
+			for(JTextField i:jtfsComprador) {	if (i.getText().equals("")) {	lleno*=0;}};
 			switch (interacciones[0][0].getText()) {
 			case "Agregar":
-				int lleno=1;
+				lleno=1;
 				for(JTextField i:jtfsComprador) {	if (i.getText().equals("")) {	lleno*=0;}};
 				if(!validate(jtfsComprador[7].getText())) {
 					JOptionPane.showMessageDialog(null,"Email no válido");
@@ -1377,12 +1379,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					try  {
+					
 						if (compradorDAO.insertarRegistro(comprador)) {
 							JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
-						}
-					}catch(Exception e) {
-						JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
+						}else {
+							JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
 						}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");	}
 				break;
@@ -1394,15 +1395,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Modificar":
-				int vacio =0;
-				boolean flags[]= new boolean[7];
-				for (int i = 0; i < flags.length; i++) {
-					flags[i]=!jtfsComprador[i+1].getText().equals("");
-					if (flags[i]) {	vacio+=1;}
-				}
+				lleno=1;
+				for(JTextField i:jtfsComprador) {	if (i.getText().equals("")) {	lleno*=0;}};
+				boolean flags[]= new boolean[7];				
 				if (jtfsComprador[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador");
 				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {	JOptionPane.showMessageDialog(null,"Email no válido");
-				}else if(vacio==0){	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else if(lleno==0){	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar un comprador");
 				}else{
 					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
 							jtfsComprador[1].getText(),
@@ -1418,6 +1416,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			comboCompradorIdOrden.removeAllItems();
+			ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
+			for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
+			comboCompradorIdOrden.setSelectedIndex(-1);
 			
 			actualizarTablaComprador("SELECT * FROM Comprador");
 		}else if(src==interacciones[0][1]) {
@@ -1432,9 +1434,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[1][0]) {
+			int lleno=1;
 			switch (interacciones[1][0].getText()) {
 			case "Agregar":
-				int lleno=1;
+				lleno=1;
 				for(JTextField i:jtfsContratista) {	if (i.getText().equals("")) {	lleno*=0;	}}
 				if (lleno==1) {
 					Contratista contratista = new Contratista(
@@ -1453,15 +1456,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Modificar":
-				int vacio=0;
+				lleno=1;
 				boolean flags[]=new boolean[2];
-				for (int i = 0; i < flags.length; i++) {
-					flags[i]=!jtfsContratista[i+1].getText().equals("");
-					if (flags[i]) {	vacio+=1;	}
-				}
-				
+				flags[0]=true;
+				flags[1]=true;
+				for(JTextField i:jtfsContratista) {	if (i.getText().equals("")) {	lleno*=0;	}}
 				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del contratista");
-				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar un contratista");
 				}else {
 					Contratista contratista = new Contratista(
 							Integer.parseInt(jtfsContratista[0].getText()),
@@ -1474,6 +1475,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			comboContratistaIdOrdenDePotencia.removeAllItems();
+			ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
+			for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
+			comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
+			
 			actualizarTablaContratista("SELECT * FROM Contratista");
 		}else if(src==interacciones[1][1]) {
 			metodoQueRestableceTODO(jtfsContratista);
@@ -1487,9 +1493,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[2][0]) {
+			int lleno=1;
 			switch (interacciones[2][0].getText()) {
 			case "Agregar":
-				int lleno=1;
 				for (JTextField i:jtfsCriptomoneda) {	if (i.getText().equals("")) {	lleno*=0;}}
 				if (lleno==1) {
 					Criptomoneda criptomoneda = new Criptomoneda(
@@ -1509,6 +1515,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				
 				break;
 			case "Modificar":
+				for (JTextField i:jtfsCriptomoneda) {	if (i.getText().equals("")) {	lleno*=0;}}
 				int vacio=0;
 				boolean flags[]=new boolean[2];
 				for (int i = 0; i < flags.length; i++) {
@@ -1516,7 +1523,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (flags[i]) {	vacio+=1;}
 				}
 				if (jtfsCriptomoneda[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda");
-				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una criptomoneda");
 				}else {
 					Criptomoneda criptomoneda = new Criptomoneda(
 							jtfsCriptomoneda[0].getText(),
@@ -1528,6 +1535,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			comboCriptomonedaIdOrdenDePotencia.removeAllItems();
+			ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+			for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
+			comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
+			
 			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 		}else if(src==interacciones[2][1]) {
 			metodoQueRestableceTODO(jtfsCriptomoneda);
@@ -1541,9 +1553,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[3][0]) {
+			int lleno=1;
 			switch (interacciones[3][0].getText()) {
 			case "Agregar":
-				int lleno=1;
 				for(JTextField i:jtfsPool) {	if (i.getText().equals("")) {lleno*=0;}};
 				if (lleno==1) {
 					Pool pool = new Pool(
@@ -1563,14 +1575,15 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Modificar":
+				for(JTextField i:jtfsPool) {	if (i.getText().equals("")) {lleno*=0;}};
 				int vacio=0;
 				boolean flags[]=new boolean[3];
 				for (int i = 0; i < flags.length; i++) {
 					flags[i]=!jtfsPool[i+1].getText().equals("");
 					if (flags[i]) {	vacio+=1;}
 				}
-				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool");
-				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una pool");
+				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
 					Pool pool = new Pool(
 							jtfsPool[0].getText(),
@@ -1583,6 +1596,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			comboPoolIdOrdenDePotencia.removeAllItems();
+			ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
+			for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}
+			comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
+			
 			actualizarTablaPool("SELECT * FROM Pool");
 		}else if(src==interacciones[3][1]) {
 			metodoQueRestableceTODO(jtfsPool);
@@ -1597,10 +1615,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[4][0]) {
 			jtfsOrden[1].setText(comboFecha[0].getSelectedItem()+"-"+comboFecha[1].getSelectedItem()+"-"+comboFecha[2].getSelectedItem());
-			System.out.println(jtfsOrden[1].getText());
+			int lleno=1;
 			switch (interacciones[4][0].getText()) {
 			case "Agregar":
-				int lleno=1;
 				for(JTextField i:jtfsOrden) {	if (i.getText().equals("")) {	lleno*=0;}};
 				if (comboCompradorIdOrden.getSelectedIndex()==-1) {	lleno*=0;	}
 				if (lleno==1) {
@@ -1621,6 +1638,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Modificar":
+				for(JTextField i:jtfsOrden) {	if (i.getText().equals("")) {	lleno*=0;}};
+				if (comboCompradorIdOrden.getSelectedIndex()==-1) {	lleno*=0;	}
 				int vacio =0;
 				boolean flags[]=new boolean[3];
 				flags[0]=!jtfsOrden[1].getText().equals("");
@@ -1628,7 +1647,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				flags[2]=!jtfsOrden[2].getText().equals("");
 				for (boolean i:flags) {	if (i) {	vacio+=1;}}
 				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden");
-				}else if(vacio==0){	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else if(lleno==0){	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una orden");
 				}else {
 					Orden orden = new Orden(
 							Long.parseLong(jtfsOrden[0].getText()),
@@ -1641,6 +1660,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				break;
 			default:break;
 			}
+			comboOrdenIdOrdenDePotencia.removeAllItems();
+			ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+			for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
+			comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
+			
 			actualizarTablaOrden("SELECT * FROM Orden");
 		}else if(src==interacciones[4][1]) {
 			metodoQueRestableceTODO(jtfsOrden);
@@ -1655,9 +1679,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		if (src==interacciones[5][0]) {
+			int lleno = 1;
 			switch (interacciones[5][0].getText()) {
 			case "Agregar":
-				int lleno = 1;
 				for (JTextField i:jtfsOrdenDePotencia) {	if (i.getText().equals("")) {	lleno*=0;}}
 				if (	comboOrdenIdOrdenDePotencia.getSelectedIndex()==-1
 						||comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()==-1
@@ -1687,6 +1711,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}
 				break;
 			case "Modificar":
+				for (JTextField i:jtfsOrdenDePotencia) {	if (i.getText().equals("")) {	lleno*=0;}}
+				if (	comboOrdenIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboContratistaIdOrdenDePotencia.getSelectedIndex()==-1
+						||comboPoolIdOrdenDePotencia.getSelectedIndex()==-1) {
+					lleno*=0;
+				}
 				int vacio=0;
 				boolean flags[]=new boolean[6];
 				flags[0]=comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1;
@@ -1697,7 +1728,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				flags[5]=!jtfsOrdenDePotencia[2].getText().equals("");
 				for (boolean i:flags) {	if (i) {	vacio+=1;}}
 				if (jtfsOrdenDePotencia[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia");
-				}else if (vacio==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
+				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una orden de potencia");
 				}else {
 					OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
 							jtfsOrdenDePotencia[0].getText().equals("")?0:Long.parseLong(jtfsOrdenDePotencia[0].getText()),
@@ -1728,29 +1759,34 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			actualizarTablaOrdenDePotencia(sql);
 		}
 		
-		for (int i = 0; i < interacciones.length; i++) {
-			for (int j = 0; j < interacciones[i].length; j++) {
-				if ((src==menuItems[i][j])||(src==interacciones[i][0]&&(interacciones[i][0].getText().equals("Agregar")||interacciones[i][0].getText().equals("Eliminar")))) {
+		for (int i = 0; i < menuItems.length; i++) {
+			for (int j = 0; j < menuItems[i].length; j++) {
+				if (src==menuItems[i][j]) {
 					comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
-					comboOrdenIdOrdenDePotencia.removeAllItems();
-					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
-					comboContratistaIdOrdenDePotencia.removeAllItems();
-					comboPoolIdOrdenDePotencia.removeAllItems();
 					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
-					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
-					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
-					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
-					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
 					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
-					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
-					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
-					for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
-					for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}//debe ir hasta el FINAL
 					comboCompradorIdOrden.setSelectedIndex(-1);
+					
+					comboOrdenIdOrdenDePotencia.removeAllItems();
+					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
 					comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
+					
+					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
+					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
 					comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
+					
+					comboContratistaIdOrdenDePotencia.removeAllItems();
+					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
+					for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
 					comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
+					
+					comboPoolIdOrdenDePotencia.removeAllItems();
+					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
+					for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}
 					comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
+					
 				
 				}
 			}

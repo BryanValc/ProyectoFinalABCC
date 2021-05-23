@@ -11,10 +11,11 @@ import modelo.*;
 
 public class ConexionBD {
 	
-	private static ConexionBD conexionBD;
-	private static Connection conexion= null;
 	private static PreparedStatement pstm;
 	private static ResultSet rs;
+	
+	private static ConexionBD conexionBD;
+	private static Connection conexion= null;
 	
 	private ConexionBD() {
 		try {
@@ -259,8 +260,6 @@ public class ConexionBD {
 		}
 		return false;
 	}
-
-	
 	
 	
 }//class
