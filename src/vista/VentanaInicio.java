@@ -1363,7 +1363,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[0][0]) {
 			int lleno=1;
-			for(JTextField i:jtfsComprador) {	if (i.getText().equals("")) {	lleno*=0;}};
+			ArrayList<Comprador> comprobacion = new ArrayList<Comprador>();
 			switch (interacciones[0][0].getText()) {
 			case "Agregar":
 				lleno=1;
@@ -1388,10 +1388,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");	}
 				break;
 			case "Eliminar":
+				
 				if (jtfsComprador[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del comprador a eliminar");
 				}else {
-					if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {	JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");	}
+					comprobacion = compradorDAO.buscarCompradores("SELECT * FROM Comprador WHERE compradorId ="+jtfsComprador[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar el comprador a eliminar");
+					}else {
+						if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {	JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");	}
+					}
 				}
 				break;
 			case "Modificar":
@@ -1402,16 +1408,21 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				}else if(flags[6]&&!validate(jtfsComprador[7].getText())) {	JOptionPane.showMessageDialog(null,"Email no válido");
 				}else if(lleno==0){	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar un comprador");
 				}else{
-					Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
-							jtfsComprador[1].getText(),
-							jtfsComprador[2].getText(),
-							jtfsComprador[3].getText(),
-							jtfsComprador[4].getText(),
-							jtfsComprador[5].getText(),
-							jtfsComprador[6].getText(),
-							jtfsComprador[7].getText());
-					if (compradorDAO.modificarRegistro(comprador,flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
-					}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar el comprador");	}
+					comprobacion = compradorDAO.buscarCompradores("SELECT * FROM Comprador WHERE compradorId ="+jtfsComprador[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar el comprador a modificar");
+					}else {
+						Comprador comprador = new Comprador(Integer.parseInt(jtfsComprador[0].getText()),
+								jtfsComprador[1].getText(),
+								jtfsComprador[2].getText(),
+								jtfsComprador[3].getText(),
+								jtfsComprador[4].getText(),
+								jtfsComprador[5].getText(),
+								jtfsComprador[6].getText(),
+								jtfsComprador[7].getText());
+						if (compradorDAO.modificarRegistro(comprador,flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+						}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar el comprador");	}
+					}
 				}
 				break;
 			default:break;
@@ -1435,6 +1446,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[1][0]) {
 			int lleno=1;
+			ArrayList<Contratista> comprobacion = new ArrayList<Contratista>();
 			switch (interacciones[1][0].getText()) {
 			case "Agregar":
 				lleno=1;
@@ -1451,8 +1463,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			case "Eliminar":
 				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null, "No se esta especificando el ID del contratista a eliminar");
 				}else {
-					if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {	JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
-					}else {	JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");}
+					comprobacion = contratistaDAO.buscarContratistas("SELECT * FROM Contratista WHERE contratistaId ="+jtfsContratista[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar el contratista a eliminar");
+					}else {
+						if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {	JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
+						}else {	JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");}
+					}
 				}
 				break;
 			case "Modificar":
@@ -1464,12 +1481,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID del contratista");
 				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar un contratista");
 				}else {
-					Contratista contratista = new Contratista(
-							Integer.parseInt(jtfsContratista[0].getText()),
-							jtfsContratista[1].getText(),
-							jtfsContratista[2].getText().equals("")?0:Integer.parseInt(jtfsContratista[2].getText()));
-					if (contratistaDAO.modificarRegistro(contratista, flags)) {	JOptionPane.showMessageDialog(null, "Contratista modificado exitosamente");
-					}else {	JOptionPane.showMessageDialog(null, "No se pudo modificar el contratista");	}
+					comprobacion = contratistaDAO.buscarContratistas("SELECT * FROM Contratista WHERE contratistaId ="+jtfsContratista[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar el contratista a modificar");
+					}else {
+						Contratista contratista = new Contratista(
+								Integer.parseInt(jtfsContratista[0].getText()),
+								jtfsContratista[1].getText(),
+								jtfsContratista[2].getText().equals("")?0:Integer.parseInt(jtfsContratista[2].getText()));
+						if (contratistaDAO.modificarRegistro(contratista, flags)) {	JOptionPane.showMessageDialog(null, "Contratista modificado exitosamente");
+						}else {	JOptionPane.showMessageDialog(null, "No se pudo modificar el contratista");	}
+					}
 				}
 				
 				break;
@@ -1494,6 +1516,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[2][0]) {
 			int lleno=1;
+			ArrayList<Criptomoneda> comprobacion = new ArrayList<Criptomoneda>();
 			switch (interacciones[2][0].getText()) {
 			case "Agregar":
 				for (JTextField i:jtfsCriptomoneda) {	if (i.getText().equals("")) {	lleno*=0;}}
@@ -1509,8 +1532,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			case "Eliminar":
 				if (jtfsCriptomoneda[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda a eliminar");
 				}else {
-					if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {	JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");}
+					comprobacion = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda WHERE criptomonedaId = '"+jtfsCriptomoneda[0].getText()+"'");
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la criptomoneda a eliminar");
+					}else {
+						if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {	JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");}
+					}
+					
 				}
 				
 				break;
@@ -1525,12 +1554,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				if (jtfsCriptomoneda[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la criptomoneda");
 				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una criptomoneda");
 				}else {
-					Criptomoneda criptomoneda = new Criptomoneda(
-							jtfsCriptomoneda[0].getText(),
-							jtfsCriptomoneda[1].getText().equals("")?0:Double.parseDouble(jtfsCriptomoneda[1].getText()), 
-							jtfsCriptomoneda[2].getText());
-					if (criptomonedaDAO.modificarRegistro(criptomoneda, flags)) {	JOptionPane.showMessageDialog(null,"Criptomoneda modificada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la criptomoneda");}
+					comprobacion = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda WHERE criptomonedaId = '"+jtfsCriptomoneda[0].getText()+"'");
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la criptomoneda a modificar");
+					}else {
+						Criptomoneda criptomoneda = new Criptomoneda(
+								jtfsCriptomoneda[0].getText(),
+								jtfsCriptomoneda[1].getText().equals("")?0:Double.parseDouble(jtfsCriptomoneda[1].getText()), 
+								jtfsCriptomoneda[2].getText());
+						if (criptomonedaDAO.modificarRegistro(criptomoneda, flags)) {	JOptionPane.showMessageDialog(null,"Criptomoneda modificada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la criptomoneda");}
+					}
 				}
 				break;
 			default:break;
@@ -1554,6 +1588,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[3][0]) {
 			int lleno=1;
+			ArrayList<Pool> comprobacion = new ArrayList<Pool>();
 			switch (interacciones[3][0].getText()) {
 			case "Agregar":
 				for(JTextField i:jtfsPool) {	if (i.getText().equals("")) {lleno*=0;}};
@@ -1570,8 +1605,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			case "Eliminar":
 				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la pool a eliminar");
 				}else {
-					if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {	JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");}
+					comprobacion = poolDAO.buscarPools("SELECT * FROM Pool WHERE poolId = '"+jtfsPool[0].getText()+"'");
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la pool a eliminar");
+					}else {
+						if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {	JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");}
+					}
+					
 				}
 				break;
 			case "Modificar":
@@ -1585,13 +1626,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				if (jtfsPool[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una pool");
 				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"No se está ingresando nada aparte del ID");
 				}else {
-					Pool pool = new Pool(
-							jtfsPool[0].getText(),
-							jtfsPool[1].getText().equals("")?0:Long.parseLong(jtfsPool[1].getText()),
-							jtfsPool[2].getText().equals("")?0:Integer.parseInt(jtfsPool[2].getText()),
-							jtfsPool[3].getText().equals("")?0:Integer.parseInt(jtfsPool[3].getText()));
-					if (poolDAO.modificarRegistro(pool, flags)) {	JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
-					}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");}
+					comprobacion = poolDAO.buscarPools("SELECT * FROM Pool WHERE poolId = '"+jtfsPool[0].getText()+"'");
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la pool a modificar");
+					}else {
+						Pool pool = new Pool(
+								jtfsPool[0].getText(),
+								jtfsPool[1].getText().equals("")?0:Long.parseLong(jtfsPool[1].getText()),
+								jtfsPool[2].getText().equals("")?0:Integer.parseInt(jtfsPool[2].getText()),
+								jtfsPool[3].getText().equals("")?0:Integer.parseInt(jtfsPool[3].getText()));
+						if (poolDAO.modificarRegistro(pool, flags)) {	JOptionPane.showMessageDialog(null,"Pool modificada exitosamente");
+						}else{	JOptionPane.showMessageDialog(null,"No se pudo modificar la pool, quizá la misma es llamada en otro tipo de registro");}
+					}
 				}
 				break;
 			default:break;
@@ -1616,6 +1662,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if (src==interacciones[4][0]) {
 			jtfsOrden[1].setText(comboFecha[0].getSelectedItem()+"-"+comboFecha[1].getSelectedItem()+"-"+comboFecha[2].getSelectedItem());
 			int lleno=1;
+			ArrayList<Orden> comprobacion = new ArrayList<Orden>();
 			switch (interacciones[4][0].getText()) {
 			case "Agregar":
 				for(JTextField i:jtfsOrden) {	if (i.getText().equals("")) {	lleno*=0;}};
@@ -1633,8 +1680,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			case "Eliminar":
 				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden a eliminar");
 				}else {
-					if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");	}
+					comprobacion = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE ordenId ="+jtfsOrden[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden a modificar");
+					}else {
+						if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");	}
+					}
 				}
 				break;
 			case "Modificar":
@@ -1649,13 +1701,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden");
 				}else if(lleno==0){	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una orden");
 				}else {
-					Orden orden = new Orden(
-							Long.parseLong(jtfsOrden[0].getText()),
-							jtfsOrden[1].getText(),
-							(String)comboCompradorIdOrden.getSelectedItem()==""?0:Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()),
-							jtfsOrden[2].getText().equals("")?0:Integer.parseInt(jtfsOrden[2].getText()));
-					if (ordenDAO.modificarRegistro(orden, flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden, quizá la misma es llamada en otro tipo de registro");}
+					comprobacion = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE ordenId ="+jtfsOrden[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden a eliminar");
+					}else {
+						Orden orden = new Orden(
+								Long.parseLong(jtfsOrden[0].getText()),
+								jtfsOrden[1].getText(),
+								(String)comboCompradorIdOrden.getSelectedItem()==""?0:Integer.parseInt((String)comboCompradorIdOrden.getSelectedItem()),
+								jtfsOrden[2].getText().equals("")?0:Integer.parseInt(jtfsOrden[2].getText()));
+						if (ordenDAO.modificarRegistro(orden, flags)) {	JOptionPane.showMessageDialog(null,"Comprador modificado exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden, quizá la misma es llamada en otro tipo de registro");}
+					}
 				}
 				break;
 			default:break;
@@ -1680,6 +1737,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		
 		if (src==interacciones[5][0]) {
 			int lleno = 1;
+			ArrayList<OrdenDePotencia> comprobacion = new ArrayList<OrdenDePotencia>();
 			switch (interacciones[5][0].getText()) {
 			case "Agregar":
 				for (JTextField i:jtfsOrdenDePotencia) {	if (i.getText().equals("")) {	lleno*=0;}}
@@ -1706,8 +1764,14 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			case "Eliminar":
 				if (jtfsOrdenDePotencia[0].getText().equals("")) {JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia a eliminar");
 				}else {
-					if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");}
+					comprobacion = ordenDePotenciaDAO.buscarOrdenesDePotencia("SELECT * FROM OrdenDePotencia WHERE compraId ="+jtfsOrdenDePotencia[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden de potencia a eliminar");
+					}else {
+						if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");}	
+					}
+					
 				}
 				break;
 			case "Modificar":
@@ -1730,16 +1794,21 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				if (jtfsOrdenDePotencia[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia");
 				}else if (lleno==0) {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para modificar una orden de potencia");
 				}else {
-					OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
-							jtfsOrdenDePotencia[0].getText().equals("")?0:Long.parseLong(jtfsOrdenDePotencia[0].getText()),
-							(String)comboOrdenIdOrdenDePotencia.getSelectedItem()==""?0:Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
-							(String)comboCriptomonedaIdOrdenDePotencia.getSelectedItem(),
-							(String)comboContratistaIdOrdenDePotencia.getSelectedItem()==""?0:Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
-							(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
-							jtfsOrdenDePotencia[1].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
-							jtfsOrdenDePotencia[2].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
-					if (ordenDePotenciaDAO.modificarRegistro(ordenDePotencia, flags)) {	JOptionPane.showMessageDialog(null,"Orden de potencia modificada exitosamente");
-					}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden de potencia");}
+					comprobacion = ordenDePotenciaDAO.buscarOrdenesDePotencia("SELECT * FROM OrdenDePotencia WHERE compraId ="+jtfsOrdenDePotencia[0].getText());
+					if (comprobacion.size()==0) {
+						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden de potencia a modificar");
+					}else {
+						OrdenDePotencia ordenDePotencia= new OrdenDePotencia(
+								jtfsOrdenDePotencia[0].getText().equals("")?0:Long.parseLong(jtfsOrdenDePotencia[0].getText()),
+								(String)comboOrdenIdOrdenDePotencia.getSelectedItem()==""?0:Long.parseLong((String)comboOrdenIdOrdenDePotencia.getSelectedItem()),
+								(String)comboCriptomonedaIdOrdenDePotencia.getSelectedItem(),
+								(String)comboContratistaIdOrdenDePotencia.getSelectedItem()==""?0:Integer.parseInt((String)comboContratistaIdOrdenDePotencia.getSelectedItem()),
+								(String)comboPoolIdOrdenDePotencia.getSelectedItem(),
+								jtfsOrdenDePotencia[1].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[1].getText()),
+								jtfsOrdenDePotencia[2].getText().equals("")?0:Double.parseDouble(jtfsOrdenDePotencia[2].getText()));
+						if (ordenDePotenciaDAO.modificarRegistro(ordenDePotencia, flags)) {	JOptionPane.showMessageDialog(null,"Orden de potencia modificada exitosamente");
+						}else {	JOptionPane.showMessageDialog(null,"No se pudo modificar la orden de potencia");}
+					}
 				}
 				
 				break;
