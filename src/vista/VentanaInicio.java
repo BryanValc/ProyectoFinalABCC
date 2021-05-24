@@ -1882,7 +1882,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
 					for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}
 					comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
-					
+					 
 				
 				}
 			}
