@@ -1386,6 +1386,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							JOptionPane.showMessageDialog(null,"No se pudo agregar el comprador, quizá ya hay uno con el mismo ID");
 						}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un comprador");	}
+				for (int i = 1; i < Integer.MAX_VALUE; i++) {
+					comprobacion = compradorDAO.buscarCompradores("SELECT * FROM Comprador WHERE compradorId = "+i);
+					if (comprobacion.size()==0) {
+						jtfsComprador[0].setText(""+i);
+						break;
+					}
+				}
 				break;
 			case "Eliminar":
 				
@@ -1459,6 +1466,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (contratistaDAO.insertarRegistro(contratista)) {	JOptionPane.showMessageDialog(null,"Contratista agregado exitosamente");
 					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar el contratista, quizá ya hay uno con el mismo ID");	}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir un contratista");	}
+				for (int i = 1; i < Integer.MAX_VALUE; i++) {
+					comprobacion = contratistaDAO.buscarContratistas("SELECT * FROM Contratista WHERE contratistaId = "+i);
+					if (comprobacion.size()==0) {
+						jtfsContratista[0].setText(""+i);
+						break;
+					}
+				}
 				break;
 			case "Eliminar":
 				if (jtfsContratista[0].getText().equals("")) {	JOptionPane.showMessageDialog(null, "No se esta especificando el ID del contratista a eliminar");
@@ -1676,6 +1690,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (ordenDAO.insertarRegistro(orden)) {	JOptionPane.showMessageDialog(null,"Orden agregada exitosamente");
 					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar la orden, quizá ya hay una con el mismo ID");}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden");	}
+				for (int i = 1; i < Integer.MAX_VALUE; i++) {
+					comprobacion = ordenDAO.buscarOrdenes("SELECT * FROM Orden WHERE ordenId = "+i);
+					if (comprobacion.size()==0) {
+						jtfsOrden[0].setText(""+i);
+						break;
+					}
+				}
 				break;
 			case "Eliminar":
 				if (jtfsOrden[0].getText().equals("")) {	JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden a eliminar");
@@ -1759,7 +1780,13 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (ordenDePotenciaDAO.insertarRegistro(ordenDePotencia)) {	JOptionPane.showMessageDialog(null,"Orden de potencia agregada exitosamente");
 					}else {	JOptionPane.showMessageDialog(null,"No se pudo agregar la orden de potencia, quizá ya hay una con el mismo ID");}
 				}else {	JOptionPane.showMessageDialog(null,"Falta uno o más datos para añadir una orden de potencia");}
-				
+				for (int i = 1; i < Integer.MAX_VALUE; i++) {
+					comprobacion = ordenDePotenciaDAO.buscarOrdenesDePotencia("SELECT * FROM OrdenDePotencia WHERE compraId = "+i);
+					if (comprobacion.size()==0) {
+						jtfsOrdenDePotencia[0].setText(""+i);
+						break;
+					}
+				}
 				break;
 			case "Eliminar":
 				if (jtfsOrdenDePotencia[0].getText().equals("")) {JOptionPane.showMessageDialog(null,"No se está especificando el ID de la orden de potencia a eliminar");
