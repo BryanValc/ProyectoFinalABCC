@@ -34,18 +34,18 @@ public class ConexionBD {
 		}
 	}
 	
-	public static Connection getConexion() {
-		if (conexion == null) {
-			new ConexionBD();
-		}
-		return conexion;
-	}
-	
 	public static synchronized ConexionBD getInstance() {
 		if (conexionBD == null) {
 			new ConexionBD();
 		}
 		return conexionBD;
+	}
+	
+	public static Connection getConexion() {
+		if (conexion == null) {
+			new ConexionBD();
+		}
+		return conexion;
 	}
 	
 	static void cerrarConnexion() {
@@ -65,7 +65,7 @@ public class ConexionBD {
 	        pstm.executeUpdate();
 	        return true;
 	 } catch (Exception ex) {
-	        System.out.println(ex.toString());
+		 
 	 }
 	 return false;
 	}
@@ -76,7 +76,7 @@ public class ConexionBD {
 			pstm = conexion.prepareStatement(consulta);
 			return pstm.executeQuery();
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			
 		}
 		return null;
 	}
@@ -95,7 +95,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -108,7 +107,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -121,7 +119,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -135,7 +132,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -149,7 +145,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -166,14 +161,13 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
 	
 	public static boolean agregarRegistro(Comprador comprador) {
 		try {
-			pstm = conexion.prepareStatement("INSERT INTO Comprador VALUES("+comprador.getCompradorId()+",?,?,?,?,?,?,?)");
+			pstm = conexion.prepareStatement("INSERT INTO Comprador VALUES("+comprador.getCompradorId()+",?,?,?,?,?,?,?");
 			pstm.setString(1, comprador.getNombre());
 			pstm.setString(2, comprador.getWallet());
 			pstm.setString(3, comprador.getDireccion());
@@ -185,7 +179,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -198,7 +191,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -211,7 +203,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -225,7 +216,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -239,7 +229,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}
@@ -256,7 +245,6 @@ public class ConexionBD {
 			pstm.executeUpdate();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	}

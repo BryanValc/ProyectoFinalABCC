@@ -1379,7 +1379,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 							jtfsComprador[5].getText(),
 							jtfsComprador[6].getText(),
 							jtfsComprador[7].getText());
-					
 						if (compradorDAO.insertarRegistro(comprador)) {
 							JOptionPane.showMessageDialog(null,"Comprador agregado exitosamente");
 						}else {
@@ -1859,31 +1858,30 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			for (int j = 0; j < menuItems[i].length; j++) {
 				if (src==menuItems[i][j]) {
 					comboCompradorIdOrden.removeAllItems();//debe ir hasta el FINAL
-					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
-					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
-					comboCompradorIdOrden.setSelectedIndex(-1);
-					
 					comboOrdenIdOrdenDePotencia.removeAllItems();
-					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
-					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
-					comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
-					
 					comboCriptomonedaIdOrdenDePotencia.removeAllItems();
-					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
-					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
-					comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
-					
 					comboContratistaIdOrdenDePotencia.removeAllItems();
-					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
-					for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
-					comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
-					
 					comboPoolIdOrdenDePotencia.removeAllItems();
+					
+					ArrayList<Comprador> compradores = compradorDAO.buscarCompradores("SELECT * FROM Comprador");
+					ArrayList<Orden> ordenes = ordenDAO.buscarOrdenes("SELECT * FROM Orden");
+					ArrayList<Criptomoneda> criptomonedas = criptomonedaDAO.buscarCriptomonedas("SELECT * FROM Criptomoneda");
+					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
 					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
+					
+					
+					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
+					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
+					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
+					for(Contratista k:contratistas) {	comboContratistaIdOrdenDePotencia.addItem(""+k.getContratistaId());}
 					for(Pool k:pools) {	comboPoolIdOrdenDePotencia.addItem(""+k.getPoolId());}
+					
+					comboCompradorIdOrden.setSelectedIndex(-1);
+					comboOrdenIdOrdenDePotencia.setSelectedIndex(-1);
+					comboCriptomonedaIdOrdenDePotencia.setSelectedIndex(-1);
+					comboContratistaIdOrdenDePotencia.setSelectedIndex(-1);
 					comboPoolIdOrdenDePotencia.setSelectedIndex(-1);
 					 
-				
 				}
 			}
 		}
