@@ -167,7 +167,7 @@ public class ConexionBD {
 	
 	public static boolean agregarRegistro(Comprador comprador) {
 		try {
-			pstm = conexion.prepareStatement("INSERT INTO Comprador VALUES("+comprador.getCompradorId()+",?,?,?,?,?,?,?");
+			pstm = conexion.prepareStatement("INSERT INTO Comprador VALUES("+comprador.getCompradorId()+",?,?,?,?,?,?,?)");
 			pstm.setString(1, comprador.getNombre());
 			pstm.setString(2, comprador.getWallet());
 			pstm.setString(3, comprador.getDireccion());

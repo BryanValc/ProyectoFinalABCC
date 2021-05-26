@@ -1,4 +1,3 @@
-
 package vista;
 
 import conexionBD.ConexionBD;
@@ -32,6 +31,9 @@ import java.sql.SQLException;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -83,6 +85,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JComboBox<String> comboContratistaIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboPoolIdOrdenDePotencia = new JComboBox<String>();
 	JComboBox<String> comboFecha[]=new JComboBox[3];
+	JComboBox<String> comboFiltro[]=new JComboBox[6];
 	JButton interacciones[][] = new JButton[6][4];
 	JTable tablas[]=new JTable[6];//=========================Tablas
 	JScrollPane sp[] = new JScrollPane[6];
@@ -410,9 +413,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrden[1]=new JTextField();//Se va a reutilizar como buffer
 		//jtfsOrden[1].setBounds(400, 80, 150, 20);
 		panelOrden.add(jtfsOrden[1]);
-		comboCompradorIdOrden.setBounds(400, 110, 150, 20);
-		comboCompradorIdOrden.setToolTipText("Solo se pueden poner compradores que ya estén en la base de datos");
-		panelOrden.add(comboCompradorIdOrden);
 		jtfsOrden[2]=new JTextField();
 		jtfsOrden[2].setBounds(400, 140, 150, 20);
 		panelOrden.add(jtfsOrden[2]);
@@ -456,6 +456,9 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		jtfsOrdenDePotencia[0]=new JTextField();
 		jtfsOrdenDePotencia[0].setBounds(430, 50, 150, 20);
 		panelOrdenDePotencia.add(jtfsOrdenDePotencia[0]);
+		comboCompradorIdOrden.setBounds(400, 110, 150, 20);
+		comboCompradorIdOrden.setToolTipText("Solo se pueden poner compradores que ya estén en la base de datos");
+		panelOrden.add(comboCompradorIdOrden);
 		comboOrdenIdOrdenDePotencia.setBounds(430, 80, 150, 20);
 		comboOrdenIdOrdenDePotencia.setToolTipText("Solo se pueden poner ordenes que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboOrdenIdOrdenDePotencia);
@@ -468,6 +471,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		comboPoolIdOrdenDePotencia.setBounds(430, 170, 150, 20);
 		comboPoolIdOrdenDePotencia.setToolTipText("Solo se pueden poner pools que ya estén en la base de datos");
 		panelOrdenDePotencia.add(comboPoolIdOrdenDePotencia);
+		AutoCompleteDecorator.decorate(comboCompradorIdOrden);
+		AutoCompleteDecorator.decorate(comboContratistaIdOrdenDePotencia);
+		AutoCompleteDecorator.decorate(comboCriptomonedaIdOrdenDePotencia);
+		AutoCompleteDecorator.decorate(comboOrdenIdOrdenDePotencia);
+		AutoCompleteDecorator.decorate(comboPoolIdOrdenDePotencia);
 		jtfsOrdenDePotencia[1]=new JTextField();
 		jtfsOrdenDePotencia[1].setBounds(430, 200, 150, 20);
 		panelOrdenDePotencia.add(jtfsOrdenDePotencia[1]);
@@ -541,8 +549,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			imgs[i][1] = new JLabel(new ImageIcon(imgAlta));
 		}
 		
-		
-		
 		panelComprador.add(imgs[0][1]);
 		panelComprador.add(imgs[0][0]);
 		panelContratista.add(imgs[1][1]);
@@ -555,6 +561,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		panelOrden.add(imgs[4][0]);
 		panelOrdenDePotencia.add(imgs[5][1]);
 		panelOrdenDePotencia.add(imgs[5][0]);
+		
+		for (JComboBox<String> i:comboFiltro) {
+			i.addItem("Búsqueda precisa");
+			i.addItem("Búsqueda amplia");
+		}
+		
+		panelComprador.add(comboFiltro[0]);
+		panelContratista.add(comboFiltro[1]);
+		panelCriptomoneda.add(comboFiltro[2]);
+		panelPool.add(comboFiltro[3]);
+		panelOrden.add(comboFiltro[4]);
+		panelOrdenDePotencia.add(comboFiltro[5]);
 		
 		dp.setLocation(0, 0);
 		dp.setSize(Toolkit. getDefaultToolkit(). getScreenSize());
@@ -664,12 +682,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	  
-	    
-	    
-	    
-	    
-	    
+		
+		for(int i = 0;i<comboFiltro.length;i+=1) {
+			comboFiltro[i] = new JComboBox<String>();
+			comboFiltro[i].setBounds(315, 20, 150, 20);
+		}
 		
 	}
 	public void metodoQueRestableceTODO(Component...componentesGraficos) {
@@ -699,47 +716,75 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	
 	public String consultaComprador() {//comprador
 		String sql = "SELECT * FROM Comprador ";
+		
+		String op1 = "";
+		String op2 = "";
+		String op3 = "";
+		
+		switch (""+comboFiltro[0].getSelectedItem()) {
+		case "Búsqueda precisa":
+			op1="= ";
+			op2=" AND ";
+			break;
+		case "Búsqueda amplia":
+			op1="LIKE ";
+			op2=" OR ";
+			op3="%";
+			break;
+		default:
+			break;
+		}
+		
 		boolean primero=true;
 		if(!jtfsComprador[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CompradorId="+jtfsComprador[0].getText());
+			sql+=("CompradorId "+op1+jtfsComprador[0].getText()+op3);
 		}
 		if(!jtfsComprador[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Nombre='"+jtfsComprador[1].getText()+"'");
+			sql+=("Nombre "+op1+" '"+jtfsComprador[1].getText()+op3+"'");
 		}
 		if(!jtfsComprador[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Wallet='"+jtfsComprador[2].getText()+"'");
+			sql+=("Wallet "+op1+" '"+jtfsComprador[2].getText()+op3+"'");
 		}
 		if(!jtfsComprador[3].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Direccion='"+jtfsComprador[3].getText()+"'");
+			sql+=("Direccion "+op1+" '"+jtfsComprador[3].getText()+op3+"'");
 		}
 		if(!jtfsComprador[4].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Ciudad='"+jtfsComprador[4].getText()+"'");
+			sql+=("Ciudad "+op1+" '"+jtfsComprador[4].getText()+op3+"'");
 		}
 		if(!jtfsComprador[5].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Estado='"+jtfsComprador[5].getText()+"'");
+			sql+=("Estado "+op1+" '"+jtfsComprador[5].getText()+op3+"'");
 		}
 		if(!jtfsComprador[6].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Telefono='"+jtfsComprador[6].getText()+"'");
+			sql+=("Telefono "+op1+" '"+jtfsComprador[6].getText()+op3+"'");
 		}
 		if(!jtfsComprador[7].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Email='"+jtfsComprador[7].getText()+"'");
+			sql+=("Email "+op1+" '"+jtfsComprador[7].getText()+op3+"'");
 		}
+		
+		/*actualizarTabla(tablaJuegosConsultas, "SELECT * FROM juegos where idJuego like '" + txtIdJuegoConsultas.getText() +
+                "%' OR titulo like '" + txtTituloConsultas.getText() + 
+                "%' OR genero like '" + cboGeneroConsultas.getSelectedItem() + 
+                "%' OR estudio like '" + txtEstudioConsultas.getText() + 
+                "%' OR plataforma like '" + cboPlataformaConsultas.getSelectedItem() + 
+                "%' OR cantidad <= " + Integer.parseInt(spinnerCantidadConsultas.getValue()+"") + 
+                  " OR precio <= " + df.format(Double.parseDouble(spinnerPrecioConsultas.getValue()+"")) + ";");*/
+		
 		return sql;
 	}
 	public void actualizarTablaComprador(String sql) {
@@ -1066,6 +1111,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[0][0].setEnabled(true);
 			interacciones[0][3].setVisible(true);
 			interacciones[0][3].setEnabled(true);
+			comboFiltro[0].setVisible(false);
+			comboFiltro[0].setEnabled(false);
 			for(JTextField i:jtfsComprador) {	i.setEditable(true);};
 			panelComprador.remove(imgs[0][1]);
 			if(src==menuItems[0][0]) {
@@ -1093,6 +1140,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
 				imgs[0][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[0].setVisible(true);
+				comboFiltro[0].setEnabled(true);
 			}
 			actualizarTablaComprador("SELECT * FROM Comprador");
 			if (frameComprador!=lastOpent) {
@@ -1112,6 +1161,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[1][0].setEnabled(true);
 			interacciones[1][3].setVisible(true);
 			interacciones[1][3].setEnabled(true);
+			comboFiltro[1].setVisible(false);
+			comboFiltro[1].setEnabled(false);
 			for(JTextField i:jtfsContratista) {	i.setEditable(true);};
 			panelContratista.remove(imgs[1][1]);
 			if(src==menuItems[1][0]) {
@@ -1139,6 +1190,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
 				imgs[1][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[1].setVisible(true);
+				comboFiltro[1].setEnabled(true);
 			}
 			actualizarTablaContratista("SELECT * FROM Contratista");
 			if (frameContratista!=lastOpent) {
@@ -1158,6 +1211,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[2][0].setEnabled(true);
 			interacciones[2][3].setVisible(true);
 			interacciones[2][3].setEnabled(true);
+			comboFiltro[2].setVisible(false);
+			comboFiltro[2].setEnabled(false);
 			for(JTextField i:jtfsCriptomoneda) {	i.setEditable(true);};
 			panelCriptomoneda.remove(imgs[2][1]);
 			if(src==menuItems[2][0]) {
@@ -1185,6 +1240,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
 				imgs[2][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[2].setVisible(true);
+				comboFiltro[2].setEnabled(true);
 			}
 			actualizarTablaCriptomoneda("SELECT * FROM Criptomoneda");
 			if (frameCriptomoneda!=lastOpent) {
@@ -1204,6 +1261,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[3][0].setEnabled(true);
 			interacciones[3][3].setVisible(true);
 			interacciones[3][3].setEnabled(true);
+			comboFiltro[3].setVisible(false);
+			comboFiltro[3].setEnabled(false);
 			for(JTextField i:jtfsPool) {	i.setEditable(true);};
 			panelPool.remove(imgs[3][1]);
 			if(src==menuItems[3][0]) {
@@ -1231,6 +1290,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
 				imgs[3][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[3].setVisible(true);
+				comboFiltro[3].setEnabled(true);
 			}
 			actualizarTablaPool("SELECT * FROM Pool");
 			if (framePool!=lastOpent) {
@@ -1250,6 +1311,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			interacciones[4][0].setEnabled(true);
 			interacciones[4][3].setVisible(true);
 			interacciones[4][3].setEnabled(true);
+			comboFiltro[4].setVisible(false);
+			comboFiltro[4].setEnabled(false);
 			for(JTextField i:jtfsOrden) {	i.setEditable(true);};
 			comboCompradorIdOrden.setEnabled(true);
 			panelOrden.remove(imgs[4][1]);
@@ -1280,6 +1343,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
 				imgs[4][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[4].setVisible(true);
+				comboFiltro[4].setEnabled(true);
 			}
 			actualizarTablaOrden("SELECT * FROM Orden");
 			if (frameOrden!=lastOpent) {
@@ -1304,6 +1369,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			comboCriptomonedaIdOrdenDePotencia.setEnabled(true);
 			comboContratistaIdOrdenDePotencia.setEnabled(true);
 			comboPoolIdOrdenDePotencia.setEnabled(true);
+			comboFiltro[5].setVisible(false);
+			comboFiltro[5].setEnabled(false);
 			panelOrdenDePotencia.remove(imgs[5][1]);
 			if(src==menuItems[5][0]) {
 				interacciones[5][3].setVisible(false);
@@ -1338,6 +1405,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
 				imgs[5][1]=new JLabel(new ImageIcon(imgConsulta));
+				comboFiltro[5].setVisible(true);
+				comboFiltro[5].setEnabled(true);
 			}
 			actualizarTablaOrdenDePotencia("SELECT * FROM OrdenDePotencia");
 			if (frameOrdenDePotencia!=lastOpent) {
@@ -1869,7 +1938,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					ArrayList<Contratista> contratistas = contratistaDAO.buscarContratistas("SELECT * FROM Contratista");
 					ArrayList<Pool> pools = poolDAO.buscarPools("SELECT * FROM Pool");
 					
-					
 					for(Comprador k:compradores) {	comboCompradorIdOrden.addItem(""+k.getCompradorId());}
 					for(Orden k:ordenes) {	comboOrdenIdOrdenDePotencia.addItem(""+k.getOrdenId());}
 					for(Criptomoneda k:criptomonedas) {	comboCriptomonedaIdOrdenDePotencia.addItem(""+k.getCriptomonedaId());}
@@ -1889,6 +1957,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	
 }
+
+
 
 class Login extends JFrame implements ActionListener{
 	ConexionBD conexion = ConexionBD.getInstance();
