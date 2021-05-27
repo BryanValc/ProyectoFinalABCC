@@ -107,6 +107,10 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	BufferedImage imgComprador, imgContratista,imgCriptomoneda,imgPool,imgOrden,imgOrdenDePotencia,imgAlta,imgBaja,imgCambio,imgConsulta;
     JLabel [][] imgs = new JLabel[6][2];
 
+    String op1 = "";
+	String op2 = "";
+	String op3 = "";
+    
 	
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -315,7 +319,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			public void keyPressed(KeyEvent ke) {
 				int code=ke.getKeyCode();
 				char ch = ke.getKeyChar();
-				if ((jtfsCriptomoneda[2].getText().equals("")?true:!(jtfsCriptomoneda[2].getText().charAt(jtfsCriptomoneda[2].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((Character.isLetter(ch)||Character.isDigit(ch)||code==KeyEvent.VK_SPACE)&&(jtfsCriptomoneda[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)))) {
+				if (code==KeyEvent.VK_BACK_SPACE||(jtfsCriptomoneda[2].getText().equals("")?true:!(jtfsCriptomoneda[2].getText().charAt(jtfsCriptomoneda[2].getText().length()-1)==' '&&code==KeyEvent.VK_SPACE))&&((Character.isLetter(ch)||Character.isDigit(ch)||code==KeyEvent.VK_SPACE)&&(jtfsCriptomoneda[2].getText().length()<50||(code==KeyEvent.VK_BACK_SPACE)))) {
 					jtfsCriptomoneda[2].setEditable(true);
 				}else{
 					jtfsCriptomoneda[2].setEditable(false);
@@ -714,17 +718,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		panel.add(label);
 	}
 	
-	public String consultaComprador() {//comprador
-		String sql = "SELECT * FROM Comprador ";
-		
-		String op1 = "";
-		String op2 = "";
-		String op3 = "";
-		
-		switch (""+comboFiltro[0].getSelectedItem()) {
+	public void setOps(JComboBox<String> caja) {
+		switch (""+caja.getSelectedItem()) {
 		case "Búsqueda precisa":
 			op1="= ";
 			op2=" AND ";
+			op3="";
 			break;
 		case "Búsqueda amplia":
 			op1="LIKE ";
@@ -734,12 +733,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		default:
 			break;
 		}
-		
+	}
+	
+	public String consultaComprador() {//comprador
+		String sql = "SELECT * FROM Comprador ";
+		setOps(comboFiltro[0]);
+	
 		boolean primero=true;
 		if(!jtfsComprador[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CompradorId "+op1+jtfsComprador[0].getText()+op3);
+			sql+=("CompradorId "+op1+" '"+jtfsComprador[0].getText()+op3+"'");
 		}
 		if(!jtfsComprador[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
@@ -776,16 +780,8 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			primero=false;
 			sql+=("Email "+op1+" '"+jtfsComprador[7].getText()+op3+"'");
 		}
-		
-		/*actualizarTabla(tablaJuegosConsultas, "SELECT * FROM juegos where idJuego like '" + txtIdJuegoConsultas.getText() +
-                "%' OR titulo like '" + txtTituloConsultas.getText() + 
-                "%' OR genero like '" + cboGeneroConsultas.getSelectedItem() + 
-                "%' OR estudio like '" + txtEstudioConsultas.getText() + 
-                "%' OR plataforma like '" + cboPlataformaConsultas.getSelectedItem() + 
-                "%' OR cantidad <= " + Integer.parseInt(spinnerCantidadConsultas.getValue()+"") + 
-                  " OR precio <= " + df.format(Double.parseDouble(spinnerPrecioConsultas.getValue()+"")) + ";");*/
-		
 		return sql;
+		
 	}
 	public void actualizarTablaComprador(String sql) {
 		ResultSetTableModel modeloDatos =null;
@@ -817,21 +813,23 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	public String consultaContratista() {//Contratista
 		String sql = "SELECT * FROM Contratista ";
+		setOps(comboFiltro[1]);
+		
 		boolean primero=true;
 		if(!jtfsContratista[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ContratistaId="+jtfsContratista[0].getText());
+			sql+=("ContratistaId "+op1+" '"+jtfsContratista[0].getText()+op3+"'");
 		}
 		if(!jtfsContratista[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("NombreContratista='"+jtfsContratista[1].getText()+"'");
+			sql+=("NombreContratista "+op1+" '"+jtfsContratista[1].getText()+op3+"'");
 		}
 		if(!jtfsContratista[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("MesesOperando="+jtfsContratista[2].getText());
+			sql+=("MesesOperando "+op1+" '"+jtfsContratista[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -865,21 +863,23 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	public String consultaCriptomoneda() {//Criptomoneda
 		String sql = "SELECT * FROM Criptomoneda ";
+		setOps(comboFiltro[2]);
+		
 		boolean primero=true;
 		if(!jtfsCriptomoneda[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CriptomonedaId='"+jtfsCriptomoneda[0].getText()+"'");
+			sql+=("CriptomonedaId "+op1+" '"+jtfsCriptomoneda[0].getText()+op3+"'");
 		}
 		if(!jtfsCriptomoneda[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PrecioUnidad="+jtfsCriptomoneda[1].getText());
+			sql+=("PrecioUnidad "+op1+" '"+jtfsCriptomoneda[1].getText()+op3+"'");
 		}
 		if(!jtfsCriptomoneda[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("DescripcionUnidad='"+jtfsCriptomoneda[2].getText()+"'");
+			sql+=("DescripcionUnidad "+op1+" '"+jtfsCriptomoneda[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -913,26 +913,28 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	public String consultaPool() {//Pool
 		String sql = "SELECT * FROM Pool ";
+		setOps(comboFiltro[3]);
+		
 		boolean primero=true;
 		if(!jtfsPool[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PoolId='"+jtfsPool[0].getText()+"'");
+			sql+=("PoolId "+op1+" '"+jtfsPool[0].getText()+op3+"'");
 		}
 		if(!jtfsPool[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PotenciaDeMinadoMHs="+jtfsPool[1].getText());
+			sql+=("PotenciaDeMinadoMHs "+op1+" '"+jtfsPool[1].getText()+op3+"'");
 		}
 		if(!jtfsPool[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CantidadDeTrabajadores="+jtfsPool[2].getText());
+			sql+=("CantidadDeTrabajadores "+op1+" '"+jtfsPool[2].getText()+op3+"'");
 		}
 		if(!jtfsPool[3].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CantidadDeMineros="+jtfsPool[3].getText());
+			sql+=("CantidadDeMineros "+op1+" '"+jtfsPool[3].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -966,26 +968,28 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	public String consultaOrden() {//Orden
 		String sql = "SELECT * FROM Orden ";
+		setOps(comboFiltro[4]);
+		
 		boolean primero=true;
 		if(!jtfsOrden[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ordenId="+jtfsOrden[0].getText());
+			sql+=("ordenId "+op1+" '"+jtfsOrden[0].getText()+op3+"'");
 		}
 		if(!jtfsOrden[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("fechaOrden='"+jtfsOrden[1].getText()+"'");
+			sql+=("fechaOrden "+op1+" '"+jtfsOrden[1].getText()+op3+"'");
 		}
 		if(comboCompradorIdOrden.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("compradorId="+comboCompradorIdOrden.getSelectedItem());
+			sql+=("compradorId "+op1+" '"+comboCompradorIdOrden.getSelectedItem()+op3+"'");
 		}
 		if(!jtfsOrden[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("horasDeOperacion="+jtfsOrden[2].getText());
+			sql+=("horasDeOperacion "+op1+" '"+jtfsOrden[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -1024,41 +1028,43 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	}
 	public String consultaOrdenDePotencia() {//Orden de potencia
 		String sql = "SELECT * FROM OrdenDePotencia ";
+		setOps(comboFiltro[5]);
+		
 		boolean primero=true;
 		if(!jtfsOrdenDePotencia[0].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("compraId="+jtfsOrdenDePotencia[0].getText());
+			sql+=("compraId "+op1+" '"+jtfsOrdenDePotencia[0].getText()+op3+"'");
 		}
 		if(comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ordenId="+comboOrdenIdOrdenDePotencia.getSelectedItem());
+			sql+=("ordenId "+op1+" '"+comboOrdenIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("criptomonedaId='"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+"'");
+			sql+=("criptomonedaId "+op1+" '"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("contratistaId="+comboContratistaIdOrdenDePotencia.getSelectedItem());
+			sql+=("contratistaId "+op1+" '"+comboContratistaIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("poolId='"+comboPoolIdOrdenDePotencia.getSelectedItem()+"'");
+			sql+=("poolId "+op1+" '"+comboPoolIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(!jtfsOrdenDePotencia[1].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("cantidadDeCriptomonedas="+jtfsOrdenDePotencia[1].getText());
+			sql+=("cantidadDeCriptomonedas "+op1+" '"+jtfsOrdenDePotencia[1].getText()+op3+"'");
 		}
 		if(!jtfsOrdenDePotencia[2].getText().equals("")) {
-			if (!primero) {sql+=" AND ";}else {sql+="WHERE ";}
+			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("precioFiat="+jtfsOrdenDePotencia[2].getText());
+			sql+=("precioFiat "+op1+" '"+jtfsOrdenDePotencia[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -1815,6 +1821,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		}else if(src==interacciones[4][1]) {
 			metodoQueRestableceTODO(jtfsOrden);
 			metodoQueRestableceTODO(comboCompradorIdOrden);
+			metodoQueRestableceTODO(comboFecha);
 			actualizarTablaOrden("SELECT * FROM Orden");
 		}else if(src==interacciones[4][2]) {
 			frameOrden.setVisible(false);
@@ -1919,7 +1926,6 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			panelOrdenDePotencia.setVisible(false);
 		}else if(src==interacciones[5][3]) {
 			String sql = consultaOrdenDePotencia();
-			System.out.println(sql);
 			actualizarTablaOrdenDePotencia(sql);
 		}
 		
