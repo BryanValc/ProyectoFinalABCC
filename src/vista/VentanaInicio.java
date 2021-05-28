@@ -3,46 +3,46 @@ package vista;
 import conexionBD.ConexionBD;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
+//import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
+//import java.util.Arrays;
+//import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Insets;
+//import java.awt.Graphics;
+//import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+//import java.awt.event.MouseEvent;
+//import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.security.AllPermission;
+//import java.security.AllPermission;
 import java.sql.SQLException;
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+//import javax.swing.table.DefaultTableModel;
+//import javax.swing.table.JTableHeader;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
 
 import controlador.*;
 import modelo.*;
 
 class Interfaz extends JFrame implements ActionListener, ItemListener{
-	
+
 	ConexionBD conexion = ConexionBD.getInstance();
 	
 	int x=0;
@@ -1476,8 +1476,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar el comprador a eliminar");
 					}else {
-						if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {	JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
-						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");	}
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el comprador?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (compradorDAO.eliminarRegistro(Integer.parseInt(jtfsComprador[0].getText()))) {	JOptionPane.showMessageDialog(null,"Comprador eliminado exitosamente");
+							}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar el comprador, quizá el mismo es llamado en otro tipo de registro");	}
+						}
+						
 					}
 				}
 				break;
@@ -1555,8 +1559,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar el contratista a eliminar");
 					}else {
-						if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {	JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
-						}else {	JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");}
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el contratista?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (contratistaDAO.eliminarRegistro(Integer.parseInt(jtfsContratista[0].getText()))) {	JOptionPane.showMessageDialog(null, "Contratista eliminado exitosamente");
+							}else {	JOptionPane.showMessageDialog(null, "No se pudo eliminar el contratista, quizá el mismo es llamado en otro tipo de registro");}
+						}
 					}
 				}
 				break;
@@ -1624,8 +1631,12 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar la criptomoneda a eliminar");
 					}else {
-						if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {	JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
-						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");}
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la criptomoneda?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (criptomonedaDAO.eliminarRegistro(jtfsCriptomoneda[0].getText())) {	JOptionPane.showMessageDialog(null,"Criptomoneda eliminada exitosamente");
+							}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la criptomoneda, quizá la misma es llamada en otro tipo de registro ");}
+						}
+			
 					}
 					
 				}
@@ -1697,8 +1708,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar la pool a eliminar");
 					}else {
-						if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {	JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
-						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");}
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la pool?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (poolDAO.eliminarRegistro(jtfsPool[0].getText())) {	JOptionPane.showMessageDialog(null,"Pool eliminada exitosamente");
+							}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la pool, quizá la misma es llamada en otro tipo de registro ");}
+						}
 					}
 					
 				}
@@ -1779,8 +1793,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden a modificar");
 					}else {
-						if (ordenDAO.eliminarRegistro(Integer.parseInt(jtfsOrden[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
-						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");	}
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la orden?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (ordenDAO.eliminarRegistro(Long.parseLong(jtfsOrden[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden eliminada exitosamente");
+							}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden, quizá la misma es llamada en otro tipo de registro ");	}
+						}
 					}
 				}
 				break;
@@ -1870,8 +1887,11 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 					if (comprobacion.size()==0) {
 						JOptionPane.showMessageDialog(null,"No se pudo encontrar la orden de potencia a eliminar");
 					}else {
-						if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
-						}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");}	
+						int reply = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la orden de potencia?", "¡Alerta!", JOptionPane.YES_NO_OPTION);
+						if (reply == JOptionPane.YES_OPTION) {
+							if (ordenDePotenciaDAO.eliminarRegistro(Long.parseLong(jtfsOrdenDePotencia[0].getText()))) {	JOptionPane.showMessageDialog(null,"Orden de potencia eliminada exitosamente");
+							}else {	JOptionPane.showMessageDialog(null,"No se pudo eliminar la orden de potencia, quizá la misma es llamada en otro tipo de registro ");}	
+						}
 					}
 					
 				}

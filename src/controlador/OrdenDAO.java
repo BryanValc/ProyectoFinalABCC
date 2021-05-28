@@ -3,7 +3,6 @@ package controlador;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import conexionBD.ConexionBD;
 import modelo.Orden;
@@ -85,7 +84,6 @@ public class OrdenDAO {
 	
 	public boolean modificarRegistro(Orden o, boolean flags[]) {
 		boolean resultado = false;
-		boolean primero=true;
 		resultado = ConexionBD.actualizarRegistro(o);
 		return resultado;
 	}

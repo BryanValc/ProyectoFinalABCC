@@ -3,7 +3,6 @@ package controlador;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import conexionBD.ConexionBD;
 import modelo.Pool;
