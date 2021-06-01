@@ -743,42 +743,42 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsComprador[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CompradorId "+op1+" '"+jtfsComprador[0].getText()+op3+"'");
+			sql+=("CompradorId "+op1+" '"+op3+jtfsComprador[0].getText()+op3+"'");
 		}
 		if(!jtfsComprador[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Nombre "+op1+" '"+jtfsComprador[1].getText()+op3+"'");
+			sql+=("Nombre "+op1+" '"+op3+jtfsComprador[1].getText()+op3+"'");
 		}
 		if(!jtfsComprador[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Wallet "+op1+" '"+jtfsComprador[2].getText()+op3+"'");
+			sql+=("Wallet "+op1+" '"+op3+jtfsComprador[2].getText()+op3+"'");
 		}
 		if(!jtfsComprador[3].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Direccion "+op1+" '"+jtfsComprador[3].getText()+op3+"'");
+			sql+=("Direccion "+op1+" '"+op3+jtfsComprador[3].getText()+op3+"'");
 		}
 		if(!jtfsComprador[4].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Ciudad "+op1+" '"+jtfsComprador[4].getText()+op3+"'");
+			sql+=("Ciudad "+op1+" '"+op3+jtfsComprador[4].getText()+op3+"'");
 		}
 		if(!jtfsComprador[5].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Estado "+op1+" '"+jtfsComprador[5].getText()+op3+"'");
+			sql+=("Estado "+op1+" '"+op3+jtfsComprador[5].getText()+op3+"'");
 		}
 		if(!jtfsComprador[6].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Telefono "+op1+" '"+jtfsComprador[6].getText()+op3+"'");
+			sql+=("Telefono "+op1+" '"+op3+jtfsComprador[6].getText()+op3+"'");
 		}
 		if(!jtfsComprador[7].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("Email "+op1+" '"+jtfsComprador[7].getText()+op3+"'");
+			sql+=("Email "+op1+" '"+op3+jtfsComprador[7].getText()+op3+"'");
 		}
 		return sql;
 		
@@ -819,17 +819,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsContratista[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ContratistaId "+op1+" '"+jtfsContratista[0].getText()+op3+"'");
+			sql+=("ContratistaId "+op1+" '"+op3+jtfsContratista[0].getText()+op3+"'");
 		}
 		if(!jtfsContratista[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("NombreContratista "+op1+" '"+jtfsContratista[1].getText()+op3+"'");
+			sql+=("NombreContratista "+op1+" '"+op3+jtfsContratista[1].getText()+op3+"'");
 		}
 		if(!jtfsContratista[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("MesesOperando "+op1+" '"+jtfsContratista[2].getText()+op3+"'");
+			sql+=("MesesOperando "+op1+" '"+op3+jtfsContratista[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -869,17 +869,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsCriptomoneda[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CriptomonedaId "+op1+" '"+jtfsCriptomoneda[0].getText()+op3+"'");
+			sql+=("CriptomonedaId "+op1+" '"+op3+jtfsCriptomoneda[0].getText()+op3+"'");
 		}
 		if(!jtfsCriptomoneda[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PrecioUnidad "+op1+" '"+jtfsCriptomoneda[1].getText()+op3+"'");
+			sql+=("PrecioUnidad "+op1+" '"+op3+jtfsCriptomoneda[1].getText()+op3+"'");
 		}
 		if(!jtfsCriptomoneda[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("DescripcionUnidad "+op1+" '"+jtfsCriptomoneda[2].getText()+op3+"'");
+			sql+=("DescripcionUnidad "+op1+" '"+op3+jtfsCriptomoneda[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -919,22 +919,22 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsPool[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PoolId "+op1+" '"+jtfsPool[0].getText()+op3+"'");
+			sql+=("PoolId "+op1+" '"+op3+jtfsPool[0].getText()+op3+"'");
 		}
 		if(!jtfsPool[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("PotenciaDeMinadoMHs "+op1+" '"+jtfsPool[1].getText()+op3+"'");
+			sql+=("PotenciaDeMinadoMHs "+op1+" '"+op3+jtfsPool[1].getText()+op3+"'");
 		}
 		if(!jtfsPool[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CantidadDeTrabajadores "+op1+" '"+jtfsPool[2].getText()+op3+"'");
+			sql+=("CantidadDeTrabajadores "+op1+" '"+op3+jtfsPool[2].getText()+op3+"'");
 		}
 		if(!jtfsPool[3].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("CantidadDeMineros "+op1+" '"+jtfsPool[3].getText()+op3+"'");
+			sql+=("CantidadDeMineros "+op1+" '"+op3+jtfsPool[3].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -974,22 +974,22 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsOrden[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ordenId "+op1+" '"+jtfsOrden[0].getText()+op3+"'");
+			sql+=("ordenId "+op1+" '"+op3+jtfsOrden[0].getText()+op3+"'");
 		}
 		if(!jtfsOrden[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("fechaOrden "+op1+" '"+jtfsOrden[1].getText()+op3+"'");
+			sql+=("fechaOrden "+op1+" '"+op3+jtfsOrden[1].getText()+op3+"'");
 		}
 		if(comboCompradorIdOrden.getSelectedIndex()!=-1) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("compradorId "+op1+" '"+comboCompradorIdOrden.getSelectedItem()+op3+"'");
+			sql+=("compradorId "+op1+" '"+op3+comboCompradorIdOrden.getSelectedItem()+op3+"'");
 		}
 		if(!jtfsOrden[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("horasDeOperacion "+op1+" '"+jtfsOrden[2].getText()+op3+"'");
+			sql+=("horasDeOperacion "+op1+" '"+op3+jtfsOrden[2].getText()+op3+"'");
 		}
 		return sql;
 	}
@@ -1034,37 +1034,37 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		if(!jtfsOrdenDePotencia[0].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("compraId "+op1+" '"+jtfsOrdenDePotencia[0].getText()+op3+"'");
+			sql+=("compraId "+op1+" '"+op3+jtfsOrdenDePotencia[0].getText()+op3+"'");
 		}
 		if(comboOrdenIdOrdenDePotencia.getSelectedIndex()!=-1) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("ordenId "+op1+" '"+comboOrdenIdOrdenDePotencia.getSelectedItem()+op3+"'");
+			sql+=("ordenId "+op1+" '"+op3+comboOrdenIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboCriptomonedaIdOrdenDePotencia.getSelectedIndex()!=-1) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("criptomonedaId "+op1+" '"+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+op3+"'");
+			sql+=("criptomonedaId "+op1+" '"+op3+comboCriptomonedaIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboContratistaIdOrdenDePotencia.getSelectedIndex()!=-1) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("contratistaId "+op1+" '"+comboContratistaIdOrdenDePotencia.getSelectedItem()+op3+"'");
+			sql+=("contratistaId "+op1+" '"+op3+comboContratistaIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(comboPoolIdOrdenDePotencia.getSelectedIndex()!=-1) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("poolId "+op1+" '"+comboPoolIdOrdenDePotencia.getSelectedItem()+op3+"'");
+			sql+=("poolId "+op1+" '"+op3+comboPoolIdOrdenDePotencia.getSelectedItem()+op3+"'");
 		}
 		if(!jtfsOrdenDePotencia[1].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("cantidadDeCriptomonedas "+op1+" '"+jtfsOrdenDePotencia[1].getText()+op3+"'");
+			sql+=("cantidadDeCriptomonedas "+op1+" '"+op3+jtfsOrdenDePotencia[1].getText()+op3+"'");
 		}
 		if(!jtfsOrdenDePotencia[2].getText().equals("")) {
 			if (!primero) {sql+=op2;}else {sql+="WHERE ";}
 			primero=false;
-			sql+=("precioFiat "+op1+" '"+jtfsOrdenDePotencia[2].getText()+op3+"'");
+			sql+=("precioFiat "+op1+" '"+op3+jtfsOrdenDePotencia[2].getText()+op3+"'");
 		}
 		return sql;
 	}
