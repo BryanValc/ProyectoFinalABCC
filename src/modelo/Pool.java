@@ -3,13 +3,13 @@ package modelo;
 public class Pool {
 
 	String poolId;
-	long potenciaDeMinadoMHs;
+	long PotenciaDeMinadoMHs;
 	int cantidadDeTrabajadores;
 	int cantidadDeMineros;
 	
 	public Pool(String poolId, long potenciaDeMinadoMHs, int cantidadDeTrabajadores, int cantidadDeMineros) {
 		this.poolId = poolId;
-		this.potenciaDeMinadoMHs = potenciaDeMinadoMHs;
+		this.PotenciaDeMinadoMHs = potenciaDeMinadoMHs;
 		this.cantidadDeTrabajadores = cantidadDeTrabajadores;
 		this.cantidadDeMineros = cantidadDeMineros;
 	}
@@ -23,11 +23,11 @@ public class Pool {
 	}
 
 	public long getPotenciaDeMinadoMHs() {
-		return potenciaDeMinadoMHs;
+		return PotenciaDeMinadoMHs;
 	}
 
 	public void setPotenciaDeMinadoMHs(long potenciaDeMinadoMHs) {
-		this.potenciaDeMinadoMHs = potenciaDeMinadoMHs;
+		this.PotenciaDeMinadoMHs = potenciaDeMinadoMHs;
 	}
 
 	public int getCantidadDeTrabajadores() {
@@ -48,7 +48,7 @@ public class Pool {
 
 	@Override
 	public String toString() {
-		return "Pool [poolId=" + poolId + ", potenciaDeMinadoMHs=" + potenciaDeMinadoMHs + ", cantidadDeTrabajadores="
+		return "Pool [poolId=" + poolId + ", potenciaDeMinadoMHs=" + PotenciaDeMinadoMHs + ", cantidadDeTrabajadores="
 				+ cantidadDeTrabajadores + ", cantidadDeMineros=" + cantidadDeMineros + "]";
 	}
 	

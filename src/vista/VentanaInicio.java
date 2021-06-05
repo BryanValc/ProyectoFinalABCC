@@ -104,7 +104,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 	JInternalFrame lastOpent;
 	JDesktopPane dp = new JDesktopPane();
 	
-	BufferedImage imgComprador, imgContratista,imgCriptomoneda,imgPool,imgOrden,imgOrdenDePotencia,imgAlta,imgBaja,imgCambio,imgConsulta;
+	static ImageIcon imgComprador, imgContratista,imgCriptomoneda,imgPool,imgOrden,imgOrdenDePotencia,imgAlta,imgBaja,imgCambio,imgConsulta;
     JLabel [][] imgs = new JLabel[6][2];
 
     String op1 = "";
@@ -541,16 +541,16 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 			panelOrdenDePotencia.add(i);
 		}
 		//==================================================================================================Fin Formulario======================================
-		imgs[0][0]=new JLabel(new ImageIcon(imgComprador));
-		imgs[1][0]=new JLabel(new ImageIcon(imgContratista));
-		imgs[2][0]=new JLabel(new ImageIcon(imgCriptomoneda));
-		imgs[3][0]=new JLabel(new ImageIcon(imgPool));
-		imgs[4][0]=new JLabel(new ImageIcon(imgOrden));
-		imgs[5][0]=new JLabel(new ImageIcon(imgOrdenDePotencia));
+		imgs[0][0]=new JLabel(imgComprador);
+		imgs[1][0]=new JLabel(imgContratista);
+		imgs[2][0]=new JLabel(imgCriptomoneda);
+		imgs[3][0]=new JLabel(imgPool);
+		imgs[4][0]=new JLabel(imgOrden);
+		imgs[5][0]=new JLabel(imgOrdenDePotencia);
 		
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i][0].setBounds(5,65,150,150);
-			imgs[i][1] = new JLabel(new ImageIcon(imgAlta));
+			imgs[i][1] = new JLabel(imgAlta);
 		}
 		
 		panelComprador.add(imgs[0][1]);
@@ -670,22 +670,18 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 		frameOrdenDePotencia.setMaximumSize(new Dimension(750,525));
 		
 		
-		try {
-			imgComprador = ImageIO.read(new File("./archivos/comprador.PNG"));
-			imgContratista = ImageIO.read(new File("./archivos/contratista.PNG"));
-			imgCriptomoneda = ImageIO.read(new File("./archivos/criptomoneda.PNG"));
-			imgPool = ImageIO.read(new File("./archivos/pool.PNG"));
-			imgOrden = ImageIO.read(new File("./archivos/orden.PNG"));
-			imgOrdenDePotencia = ImageIO.read(new File("./archivos/ordendepotencia.PNG"));
+		imgComprador = new ImageIcon(getClass().getClassLoader().getResource("comprador.png"));
+		imgContratista = new ImageIcon(getClass().getClassLoader().getResource("contratista.png"));
+		imgCriptomoneda = new ImageIcon(getClass().getClassLoader().getResource("criptomoneda.png"));
+		imgPool = new ImageIcon(getClass().getClassLoader().getResource("pool.png"));
+		imgOrden = new ImageIcon(getClass().getClassLoader().getResource("orden.png"));
+		imgOrdenDePotencia = new ImageIcon(getClass().getClassLoader().getResource("ordendepotencia.png"));
 			
-			imgAlta = ImageIO.read(new File("./archivos/alta.PNG"));
-			imgBaja = ImageIO.read(new File("./archivos/baja.PNG"));
-			imgCambio = ImageIO.read(new File("./archivos/cambio.PNG"));
-			imgConsulta = ImageIO.read(new File("./archivos/consulta.PNG"));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		imgAlta = new ImageIcon(getClass().getClassLoader().getResource("alta.png"));
+		imgBaja = new ImageIcon(getClass().getClassLoader().getResource("baja.png"));
+		imgCambio = new ImageIcon(getClass().getClassLoader().getResource("cambio.png"));
+		imgConsulta = new ImageIcon(getClass().getClassLoader().getResource("consulta.png"));
+		
 		
 		for(int i = 0;i<comboFiltro.length;i+=1) {
 			comboFiltro[i] = new JComboBox<String>();
@@ -1127,7 +1123,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setText("Agregar");
 				interacciones[0][0].setToolTipText("Agrega un nuevo comprador a la tabla");
 				lblOpComprador.setText("Altas");
-				imgs[0][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[0][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[0][1]) {
 				metodoQueRestableceTODO(jtfsComprador);
 				for(JTextField i:jtfsComprador) {	i.setEditable(false);};
@@ -1135,17 +1131,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[0][0].setText("Eliminar");
 				interacciones[0][0].setToolTipText("Elimina el comprador de la tabla");
 				lblOpComprador.setText("Bajas");
-				imgs[0][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[0][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[0][2]) {
 				interacciones[0][0].setText("Modificar");
 				interacciones[0][0].setToolTipText("Modifica el comprador seleccionado");
 				lblOpComprador.setText("Cambios");
-				imgs[0][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[0][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[0][3]) {
 				interacciones[0][0].setVisible(false);
 				interacciones[0][0].setEnabled(false);
 				lblOpComprador.setText("Consultas");
-				imgs[0][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[0][1]=new JLabel(imgConsulta);
 				comboFiltro[0].setVisible(true);
 				comboFiltro[0].setEnabled(true);
 			}
@@ -1177,7 +1173,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setText("Agregar");
 				interacciones[1][0].setToolTipText("Agrega un nuevo contratista a la tabla");
 				lblOpContratista.setText("Altas");
-				imgs[1][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[1][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[1][1]) {
 				metodoQueRestableceTODO(jtfsContratista);
 				for(JTextField i:jtfsContratista) {	i.setEditable(false);};
@@ -1185,17 +1181,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[1][0].setText("Eliminar");
 				interacciones[1][0].setToolTipText("Elimina el contratista de la tabla");
 				lblOpContratista.setText("Bajas");
-				imgs[1][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[1][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[1][2]) {
 				interacciones[1][0].setText("Modificar");
 				interacciones[1][0].setToolTipText("Modifica el contratista seleccionado");
 				lblOpContratista.setText("Cambios");
-				imgs[1][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[1][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[1][3]) {
 				interacciones[1][0].setVisible(false);
 				interacciones[1][0].setEnabled(false);
 				lblOpContratista.setText("Consultas");
-				imgs[1][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[1][1]=new JLabel(imgConsulta);
 				comboFiltro[1].setVisible(true);
 				comboFiltro[1].setEnabled(true);
 			}
@@ -1227,7 +1223,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setText("Agregar");
 				interacciones[2][0].setToolTipText("Agrega una nueva criptomoneda a la tabla");
 				lblOpCriptomoneda.setText("Altas");
-				imgs[2][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[2][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[2][1]) {
 				metodoQueRestableceTODO(jtfsCriptomoneda);
 				for(JTextField i:jtfsCriptomoneda) {	i.setEditable(false);};
@@ -1235,17 +1231,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[2][0].setText("Eliminar");
 				interacciones[2][0].setToolTipText("Elimina la criptomoneda de la tabla");
 				lblOpCriptomoneda.setText("Bajas");
-				imgs[2][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[2][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[2][2]) {
 				interacciones[2][0].setText("Modificar");
 				interacciones[2][0].setToolTipText("Modifica la criptomoneda seleccionada");
 				lblOpCriptomoneda.setText("Cambios");
-				imgs[2][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[2][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[2][3]) {
 				interacciones[2][0].setVisible(false);
 				interacciones[2][0].setEnabled(false);
 				lblOpCriptomoneda.setText("Consultas");
-				imgs[2][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[2][1]=new JLabel(imgConsulta);
 				comboFiltro[2].setVisible(true);
 				comboFiltro[2].setEnabled(true);
 			}
@@ -1277,7 +1273,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setText("Agregar");
 				interacciones[3][0].setToolTipText("Agrega una nueva pool a la tabla");
 				lblOpPool.setText("Altas");
-				imgs[3][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[3][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[3][1]) {
 				metodoQueRestableceTODO(jtfsPool);
 				for(JTextField i:jtfsPool) {	i.setEditable(false);};
@@ -1285,17 +1281,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[3][0].setText("Eliminar");
 				interacciones[3][0].setToolTipText("Elimina la pool de la tabla");
 				lblOpPool.setText("Bajas");
-				imgs[3][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[3][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[3][2]) {
 				interacciones[3][0].setText("Modificar");
 				interacciones[3][0].setToolTipText("Modifica la pool seleccionada");
 				lblOpPool.setText("Cambios");
-				imgs[3][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[3][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[3][3]) {
 				interacciones[3][0].setVisible(false);
 				interacciones[3][0].setEnabled(false);
 				lblOpPool.setText("Consultas");
-				imgs[3][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[3][1]=new JLabel(imgConsulta);
 				comboFiltro[3].setVisible(true);
 				comboFiltro[3].setEnabled(true);
 			}
@@ -1328,7 +1324,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setText("Agregar");
 				interacciones[4][0].setToolTipText("Agrega una nueva orden a la tabla");
 				lblOpOrden.setText("Altas");
-				imgs[4][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[4][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[4][1]) {
 				metodoQueRestableceTODO(jtfsOrden);
 				for(JTextField i:jtfsOrden) {	i.setEditable(false);};
@@ -1338,17 +1334,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[4][0].setText("Eliminar");
 				interacciones[4][0].setToolTipText("Elimina la orden de la tabla");
 				lblOpOrden.setText("Bajas");
-				imgs[4][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[4][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[4][2]) {
 				interacciones[4][0].setText("Modificar");
 				interacciones[4][0].setToolTipText("Modifica la orden seleccionada");
 				lblOpOrden.setText("Cambios");
-				imgs[4][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[4][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[4][3]) {
 				interacciones[4][0].setVisible(false);
 				interacciones[4][0].setEnabled(false);
 				lblOpOrden.setText("Consultas");
-				imgs[4][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[4][1]=new JLabel(imgConsulta);
 				comboFiltro[4].setVisible(true);
 				comboFiltro[4].setEnabled(true);
 			}
@@ -1384,7 +1380,7 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setText("Agregar");
 				interacciones[5][0].setToolTipText("Agrega una nueva orden de potencia a la tabla");
 				lblOpOrdenDePotencia.setText("Altas");
-				imgs[5][1]=new JLabel(new ImageIcon(imgAlta));
+				imgs[5][1]=new JLabel(imgAlta);
 			}else if(src==menuItems[5][1]) {
 				metodoQueRestableceTODO(jtfsOrdenDePotencia);
 				for(JTextField i:jtfsOrdenDePotencia) {	i.setEditable(false);};
@@ -1400,17 +1396,17 @@ class Interfaz extends JFrame implements ActionListener, ItemListener{
 				interacciones[5][0].setText("Eliminar");
 				interacciones[5][0].setToolTipText("Elimina la orden de potencia de la tabla");
 				lblOpOrdenDePotencia.setText("Bajas");
-				imgs[5][1]=new JLabel(new ImageIcon(imgBaja));
+				imgs[5][1]=new JLabel(imgBaja);
 			}else if(src==menuItems[5][2]) {
 				interacciones[5][0].setText("Modificar");
 				interacciones[5][0].setToolTipText("Modifica la orden de potencia seleccionada");
 				lblOpOrdenDePotencia.setText("Cambios");
-				imgs[5][1]=new JLabel(new ImageIcon(imgCambio));
+				imgs[5][1]=new JLabel(imgCambio);
 			}else if(src==menuItems[5][3]) {
 				interacciones[5][0].setVisible(false);
 				interacciones[5][0].setEnabled(false);
 				lblOpOrdenDePotencia.setText("Consultas");
-				imgs[5][1]=new JLabel(new ImageIcon(imgConsulta));
+				imgs[5][1]=new JLabel(imgConsulta);
 				comboFiltro[5].setVisible(true);
 				comboFiltro[5].setEnabled(true);
 			}
@@ -1994,10 +1990,12 @@ class Login extends JFrame implements ActionListener{
 	JTextField jtfUsuario = new JTextField();
 	JPasswordField jpfContraseña = new JPasswordField();
 	JButton ingresar = new JButton("Ingresar");
-	BufferedImage image = ImageIO.read(new File("./archivos/usuario.PNG"));
-    JLabel label = new JLabel(new ImageIcon(image));
+	static ImageIcon image;
+	JLabel label;
 	
 	public Login() throws IOException {
+		image = new ImageIcon(getClass().getClassLoader().getResource("usuario.png"));
+		label = new JLabel(image);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(300,430);
